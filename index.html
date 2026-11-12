@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plate and Pantry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky header, filter bar, responsive card grid; recipe view is a two-column ingredients/steps spread. */
+:root {
+  --bg: #f3f5f0;
+  --surface: #ffffff;
+  --ink: #17261f;
+  --muted: #5b6a62;
+  --line: #d9dfd6;
+  --accent: #f0b429;
+  --accent-ink: #2a1f00;
+  --deep: #1f4d3a;
+  --tile-l: 80%;
+  --tile-ink: #17261f;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101713; --surface: #18221c; --ink: #e9efe9; --muted: #98a89e; --line: #2b382f;
+    --accent: #f0b429; --accent-ink: #2a1f00; --deep: #7fd1a8; --tile-l: 26%; --tile-ink: #eef3ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101713; --surface: #18221c; --ink: #e9efe9; --muted: #98a89e; --line: #2b382f;
+  --accent: #f0b429; --accent-ink: #2a1f00; --deep: #7fd1a8; --tile-l: 26%; --tile-ink: #eef3ee;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.5; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+header.top { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 5; }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 12px; padding-bottom: 12px; }
+.brand { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand i { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); display: inline-block; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent); }
+.top .tag { color: var(--muted); font-size: 0.9rem; }
+
+.hero { padding: 36px 0 12px; }
+.hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 10px; text-wrap: balance; max-width: 16ch; }
+.hero p { margin: 0; color: var(--muted); max-width: 46ch; }
+
+.tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 20px 0 8px; }
+.search { flex: 1 1 220px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
+.chip[aria-pressed="true"] { background: var(--deep); border-color: var(--deep); color: var(--bg); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; padding: 12px 0 56px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: transform .15s ease, border-color .15s ease; }
+.card:hover { transform: translateY(-3px); border-color: var(--deep); }
+.tile { background: hsl(var(--h) 55% var(--tile-l)); color: var(--tile-ink); padding: 16px; height: 120px; display: flex; flex-direction: column; justify-content: space-between; }
+.tile .cat { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.tile .mins { font-family: var(--display); font-weight: 800; font-size: 2.6rem; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.tile .mins small { font-size: 1rem; font-weight: 600; margin-left: 4px; letter-spacing: 0; }
+.card .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+.card h3 { margin: 0; font-family: var(--display); font-size: 1.25rem; line-height: 1.15; letter-spacing: -0.01em; }
+.card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.empty { color: var(--muted); padding: 24px 0 56px; }
+
+.back { display: inline-flex; gap: 8px; align-items: center; margin: 22px 0 6px; font-weight: 600; text-decoration: none; color: var(--deep); }
+.back:hover { text-decoration: underline; }
+.rhead { background: hsl(var(--h) 55% var(--tile-l)); color: var(--tile-ink); border-radius: 16px; padding: 24px; margin: 8px 0 24px; }
+.rhead .cat { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.rhead h1 { font-family: var(--display); font-weight: 800; font-size: clamp(1.9rem, 6vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; margin: 6px 0 8px; text-wrap: balance; }
+.rhead p { margin: 0 0 16px; max-width: 54ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.facts div { font-size: 0.9rem; }
+.facts b { display: block; font-family: var(--display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+
+.spread { display: grid; grid-template-columns: 1fr; gap: 32px; padding-bottom: 64px; }
+@media (min-width: 800px) { .spread { grid-template-columns: 340px 1fr; } }
+.spread h2 { font-family: var(--display); font-size: 1.4rem; margin: 0 0 12px; letter-spacing: -0.01em; }
+.servings { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.servings button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.2rem; line-height: 1; }
+.servings button:hover { border-color: var(--deep); }
+.servings output { min-width: 5.5em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+ul.ing { list-style: none; margin: 0 0 14px; padding: 0; border-top: 1px solid var(--line); }
+ul.ing li { border-bottom: 1px solid var(--line); }
+ul.ing label { display: flex; gap: 12px; padding: 10px 2px; cursor: pointer; align-items: baseline; }
+ul.ing input { accent-color: var(--deep); width: 18px; height: 18px; flex: none; transform: translateY(3px); }
+ul.ing .q { font-weight: 700; min-width: 4.5em; font-variant-numeric: tabular-nums; }
+ul.ing input:checked ~ span { color: var(--muted); text-decoration: line-through; }
+.copy { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 700; cursor: pointer; }
+.copy:hover { filter: brightness(0.95); }
+ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 18px; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; }
+ol.steps li::before { content: counter(s); width: 36px; height: 36px; border-radius: 50%; background: var(--deep); color: var(--bg); display: grid; place-items: center; font-family: var(--display); font-weight: 700; }
+ol.steps p { margin: 0; max-width: 62ch; }
+.tip { margin-top: 28px; border-left: 4px solid var(--accent); padding: 4px 0 4px 14px; color: var(--muted); max-width: 62ch; }
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home"><i></i>Plate and Pantry</a>
+    <span class="tag">Everyday recipes, scaled to your table</span>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<footer><div class="wrap">Plate and Pantry. Tap ingredients to cross them off while you shop or cook.</div></footer>
+
+<script>
+var RECIPES = [
+  { id: "shakshuka", name: "Skillet Shakshuka", cat: "Breakfast", h: 12, mins: 35, level: "Easy", base: 4,
+    blurb: "Eggs poached in spiced tomato and pepper sauce, finished with feta.",
+    ing: [[2,"tbsp","olive oil"],[1,"","large onion, diced"],[1,"","red bell pepper, diced"],[3,"","garlic cloves, minced"],[1,"tsp","ground cumin"],[1,"tsp","smoked paprika"],[800,"g","crushed tomatoes"],[6,"","eggs"],[80,"g","feta, crumbled"],[0.25,"cup","chopped parsley"]],
+    steps: ["Warm the oil in a wide, deep skillet over medium heat. Cook the onion and pepper for 8 minutes until soft.","Stir in the garlic, cumin and paprika and cook for 1 minute until fragrant.","Add the tomatoes and a good pinch of salt. Simmer for 10 minutes until the sauce thickens.","Make small wells in the sauce and crack an egg into each. Cover and cook 5 to 7 minutes, until the whites are set and the yolks are still soft.","Scatter with feta and parsley and serve straight from the pan with bread."],
+    tip: "For firmer yolks, give the covered pan 2 extra minutes. For softer, pull it at 5." },
+  { id: "tomato-pasta", name: "Creamy Tomato Pasta", cat: "Dinner", h: 4, mins: 25, level: "Easy", base: 4,
+    blurb: "A weeknight pasta with a silky tomato cream sauce and plenty of garlic.",
+    ing: [[400,"g","short pasta, such as penne"],[2,"tbsp","olive oil"],[4,"","garlic cloves, sliced"],[1,"tbsp","tomato paste"],[400,"g","canned crushed tomatoes"],[120,"ml","heavy cream"],[50,"g","grated Parmesan"],[6,"","fresh basil leaves"]],
+    steps: ["Boil the pasta in well-salted water until 1 minute short of the package time. Save a mug of pasta water, then drain.","In a large pan, warm the oil over medium heat. Cook the garlic for 1 minute without browning it.","Stir in the tomato paste for 1 minute, then add the tomatoes. Simmer 8 minutes.","Pour in the cream and add the pasta with a splash of pasta water. Toss for 2 minutes until the sauce coats the pasta.","Off the heat, stir in the Parmesan, tear in the basil and serve."],
+    tip: "The pasta water is what makes the sauce cling. Add it a splash at a time." },
+  { id: "lemon-chicken", name: "Sheet-Pan Lemon Chicken", cat: "Dinner", h: 40, mins: 50, level: "Easy", base: 4,
+    blurb: "Crisp-skinned thighs roasted over potatoes and lemon on one tray.",
+    ing: [[8,"","bone-in chicken thighs"],[700,"g","baby potatoes, halved"],[2,"","lemons"],[4,"","garlic cloves, smashed"],[3,"tbsp","olive oil"],[2,"tsp","dried oregano"],[1,"tsp","salt"]],
+    steps: ["Heat the oven to 220 C (425 F). Toss the potatoes with half the oil, half the salt and the oregano on a large tray.","Rub the chicken with the remaining oil and salt. Set it skin-side up on the tray with the garlic and lemon halves.","Roast 40 to 45 minutes, until the skin is deep golden and the chicken reaches 74 C (165 F) inside.","Rest 5 minutes, then squeeze the roasted lemon over everything and spoon the pan juices on top."],
+    tip: "Pat the skin dry before oiling. Dry skin is what crisps." },
+  { id: "black-bean-tacos", name: "Smoky Black Bean Tacos", cat: "Dinner", h: 150, mins: 20, level: "Easy", base: 4,
+    blurb: "Pantry beans, charred corn tortillas and a quick lime slaw.",
+    ing: [[2,"","cans black beans (400 g each), drained"],[1,"tbsp","olive oil"],[1,"tsp","smoked paprika"],[1,"tsp","ground cumin"],[8,"","small corn tortillas"],[200,"g","shredded red cabbage"],[2,"","limes"],[1,"","ripe avocado, sliced"]],
+    steps: ["Warm the oil in a pan, add the beans, paprika, cumin and salt. Cook 6 minutes, lightly mashing about a third of the beans.","Toss the cabbage with the juice of one lime and a pinch of salt.","Char the tortillas directly over a gas flame, or in a dry pan, about 30 seconds per side.","Fill each tortilla with beans, slaw and avocado. Serve with the remaining lime cut into wedges."],
+    tip: "Keep the tortillas wrapped in a clean towel so they stay soft while you fill the rest." },
+  { id: "oat-pancakes", name: "Banana Oat Pancakes", cat: "Breakfast", h: 48, mins: 20, level: "Easy", base: 4,
+    blurb: "Blender pancakes with ripe banana and rolled oats, no flour needed.",
+    ing: [[2,"","ripe bananas"],[150,"g","rolled oats"],[3,"","eggs"],[180,"ml","milk"],[1,"tsp","baking powder"],[0.5,"tsp","cinnamon"],[1,"tbsp","butter, for the pan"]],
+    steps: ["Blend the bananas, oats, eggs, milk, baking powder and cinnamon until smooth. Rest the batter 5 minutes to thicken.","Melt a little butter in a nonstick pan over medium-low heat.","Pour in about 60 ml of batter per pancake. Cook 2 to 3 minutes until bubbles form and the edges look set, then flip and cook 1 to 2 minutes more.","Serve warm with fruit or yogurt."],
+    tip: "Keep the heat on medium-low. Oat batter browns quickly and needs time to cook through." },
+  { id: "chickpea-salad", name: "Crunchy Chickpea Salad", cat: "Lunch", h: 95, mins: 15, level: "Easy", base: 2,
+    blurb: "A fridge-friendly salad that tastes better on day two.",
+    ing: [[1,"","can chickpeas (400 g), drained"],[1,"","cucumber, diced"],[200,"g","cherry tomatoes, halved"],[0.5,"","red onion, finely sliced"],[2,"tbsp","olive oil"],[1,"","lemon, juiced"],[0.25,"tsp","salt"],[0.25,"cup","chopped mint or parsley"]],
+    steps: ["Soak the sliced onion in cold water for 5 minutes, then drain. This softens the bite.","Combine the chickpeas, cucumber, tomatoes and onion in a large bowl.","Whisk the oil, lemon juice and salt, pour over the salad and toss with the herbs.","Eat now, or chill for up to 2 days."],
+    tip: "Add the herbs just before serving so they stay bright." }
+];
+
+var app = document.getElementById("app");
+var state = { q: "", cat: "All", servings: null };
+var FRACS = { 0: "", 0.25: "¼", 0.5: "½", 0.75: "¾" };
+
+function fmt(q, u) {
+  var v;
+  if (u === "g" || u === "ml") { v = Math.max(5, Math.round(q / 5) * 5); return v + (u ? " " + u : ""); }
+  v = Math.round(q * 4) / 4; if (v < 0.25) v = 0.25;
+  var whole = Math.floor(v), frac = FRACS[Math.round((v - whole) * 100) / 100] || "";
+  var s = (whole ? String(whole) : "") + frac;
+  return s + (u ? " " + u : "");
+}
+function find(id) { for (var i = 0; i < RECIPES.length; i++) if (RECIPES[i].id === id) return RECIPES[i]; return null; }
+
+function renderHome() {
+  var cats = ["All"]; RECIPES.forEach(function (r) { if (cats.indexOf(r.cat) < 0) cats.push(r.cat); });
+  var list = RECIPES.filter(function (r) {
+    var hay = (r.name + " " + r.blurb + " " + r.cat + " " + r.ing.map(function (i) { return i[2]; }).join(" ")).toLowerCase();
+    return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0;
+  });
+  app.innerHTML =
+    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Six tested recipes with ingredient amounts that scale to however many you are feeding.</p></section>' +
+    '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + state.q.replace(/"/g, "&quot;") + '">' +
+    '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === state.cat) + '">' + c + '</button>'; }).join("") + '</div></div>' +
+    (list.length ? '<div class="grid">' + list.map(function (r) {
+      return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><span class="mins">' + r.mins + '<small>min</small></span></div>' +
+        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p></div></a>';
+    }).join("") + '</div>' : '<p class="empty">No recipes match. Try a different word or clear the filter.</p>');
+  var q = document.getElementById("q");
+  q.addEventListener("input", function () { state.q = q.value; var pos = q.selectionStart; renderHome(); var n = document.getElementById("q"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} });
+  Array.prototype.forEach.call(app.querySelectorAll(".chip"), function (b) { b.addEventListener("click", function () { state.cat = b.getAttribute("data-cat"); renderHome(); }); });
+}
+
+function renderRecipe(r) {
+  if (state.servings === null || state.rid !== r.id) { state.servings = r.base; state.rid = r.id; }
+  var s = state.servings, k = s / r.base;
+  app.innerHTML =
+    '<a class="back" href="#home">← All recipes</a>' +
+    '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><h1>' + r.name + '</h1><p>' + r.blurb + '</p>' +
+    '<div class="facts"><div><b>' + r.mins + ' min</b>Total time</div><div><b>' + r.level + '</b>Difficulty</div><div><b>' + r.base + '</b>Default servings</div></div></section>' +
+    '<div class="spread"><section><h2>Ingredients</h2>' +
+    '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
+    '<ul class="ing">' + r.ing.map(function (i, n) { return '<li><label><input type="checkbox" id="i' + n + '"><span class="q">' + fmt(i[0] * k, i[1]) + '</span><span>' + i[2] + '</span></label></li>'; }).join("") + '</ul>' +
+    '<button class="copy" type="button" id="copy">Copy shopping list</button></section>' +
+    '<section><h2>Method</h2><ol class="steps">' + r.steps.map(function (t) { return '<li><p>' + t + '</p></li>'; }).join("") + '</ol>' +
+    '<p class="tip">' + r.tip + '</p></section></div>';
+  document.getElementById("minus").addEventListener("click", function () { if (state.servings > 1) { state.servings--; var c = checks(); renderRecipe(r); restore(c); } });
+  document.getElementById("plus").addEventListener("click", function () { if (state.servings < 24) { state.servings++; var c = checks(); renderRecipe(r); restore(c); } });
+  document.getElementById("copy").addEventListener("click", function () {
+    var text = r.name + " (" + s + " servings)\n" + r.ing.map(function (i) { return "- " + fmt(i[0] * k, i[1]) + " " + i[2]; }).join("\n");
+    var btn = this;
+    try { navigator.clipboard.writeText(text).then(function () { btn.textContent = "Copied"; }, function () { btn.textContent = "Copy blocked"; }); }
+    catch (e) { btn.textContent = "Copy blocked"; }
+  });
+}
+function checks() { return Array.prototype.map.call(app.querySelectorAll(".ing input"), function (i) { return i.checked; }); }
+function restore(c) { Array.prototype.forEach.call(app.querySelectorAll(".ing input"), function (i, n) { i.checked = !!c[n]; }); }
+
+function route() {
+  var id = location.hash.replace("#", ""), r = id && id !== "home" ? find(id) : null;
+  if (r) renderRecipe(r); else renderHome();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
