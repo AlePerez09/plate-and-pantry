@@ -82,6 +82,11 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 .facts div { font-size: 0.9rem; }
 .facts b { display: block; font-family: var(--display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
 
+.mline { font-variant-numeric: tabular-nums; font-size: 0.85rem !important; font-weight: 600; color: var(--deep) !important; }
+.macros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; max-width: 460px; }
+.macros div { background: color-mix(in srgb, var(--surface) 55%, transparent); border-radius: 10px; padding: 8px 10px; font-size: 0.8rem; font-weight: 600; }
+.macros b { display: block; font-family: var(--display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.rhead .note { margin: 8px 0 0; font-size: 0.8rem; opacity: 0.8; }
 .spread { display: grid; grid-template-columns: 1fr; gap: 32px; padding-bottom: 64px; }
 @media (min-width: 800px) { .spread { grid-template-columns: 340px 1fr; } }
 .spread h2 { font-family: var(--display); font-size: 1.4rem; margin: 0 0 12px; letter-spacing: -0.01em; }
@@ -120,31 +125,37 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
 var RECIPES = [
   { id: "shakshuka", name: "Skillet Shakshuka", cat: "Breakfast", h: 12, mins: 35, level: "Easy", base: 4,
     blurb: "Eggs poached in spiced tomato and pepper sauce, finished with feta.",
+    macros: { kcal: 320, p: 16, f: 19, c: 21 },
     ing: [[2,"tbsp","olive oil"],[1,"","large onion, diced"],[1,"","red bell pepper, diced"],[3,"","garlic cloves, minced"],[1,"tsp","ground cumin"],[1,"tsp","smoked paprika"],[800,"g","crushed tomatoes"],[6,"","eggs"],[80,"g","feta, crumbled"],[0.25,"cup","chopped parsley"]],
     steps: ["Warm the oil in a wide, deep skillet over medium heat. Cook the onion and pepper for 8 minutes until soft.","Stir in the garlic, cumin and paprika and cook for 1 minute until fragrant.","Add the tomatoes and a good pinch of salt. Simmer for 10 minutes until the sauce thickens.","Make small wells in the sauce and crack an egg into each. Cover and cook 5 to 7 minutes, until the whites are set and the yolks are still soft.","Scatter with feta and parsley and serve straight from the pan with bread."],
     tip: "For firmer yolks, give the covered pan 2 extra minutes. For softer, pull it at 5." },
   { id: "tomato-pasta", name: "Creamy Tomato Pasta", cat: "Dinner", h: 4, mins: 25, level: "Easy", base: 4,
     blurb: "A weeknight pasta with a silky tomato cream sauce and plenty of garlic.",
+    macros: { kcal: 625, p: 20, f: 23, c: 84 },
     ing: [[400,"g","short pasta, such as penne"],[2,"tbsp","olive oil"],[4,"","garlic cloves, sliced"],[1,"tbsp","tomato paste"],[400,"g","canned crushed tomatoes"],[120,"ml","heavy cream"],[50,"g","grated Parmesan"],[6,"","fresh basil leaves"]],
     steps: ["Boil the pasta in well-salted water until 1 minute short of the package time. Save a mug of pasta water, then drain.","In a large pan, warm the oil over medium heat. Cook the garlic for 1 minute without browning it.","Stir in the tomato paste for 1 minute, then add the tomatoes. Simmer 8 minutes.","Pour in the cream and add the pasta with a splash of pasta water. Toss for 2 minutes until the sauce coats the pasta.","Off the heat, stir in the Parmesan, tear in the basil and serve."],
     tip: "The pasta water is what makes the sauce cling. Add it a splash at a time." },
   { id: "lemon-chicken", name: "Sheet-Pan Lemon Chicken", cat: "Dinner", h: 40, mins: 50, level: "Easy", base: 4,
     blurb: "Crisp-skinned thighs roasted over potatoes and lemon on one tray.",
+    macros: { kcal: 695, p: 51, f: 40, c: 34 },
     ing: [[8,"","bone-in chicken thighs"],[700,"g","baby potatoes, halved"],[2,"","lemons"],[4,"","garlic cloves, smashed"],[3,"tbsp","olive oil"],[2,"tsp","dried oregano"],[1,"tsp","salt"]],
     steps: ["Heat the oven to 220 C (425 F). Toss the potatoes with half the oil, half the salt and the oregano on a large tray.","Rub the chicken with the remaining oil and salt. Set it skin-side up on the tray with the garlic and lemon halves.","Roast 40 to 45 minutes, until the skin is deep golden and the chicken reaches 74 C (165 F) inside.","Rest 5 minutes, then squeeze the roasted lemon over everything and spoon the pan juices on top."],
     tip: "Pat the skin dry before oiling. Dry skin is what crisps." },
   { id: "black-bean-tacos", name: "Smoky Black Bean Tacos", cat: "Dinner", h: 150, mins: 20, level: "Easy", base: 4,
     blurb: "Pantry beans, charred corn tortillas and a quick lime slaw.",
+    macros: { kcal: 380, p: 15, f: 11, c: 58 },
     ing: [[2,"","cans black beans (400 g each), drained"],[1,"tbsp","olive oil"],[1,"tsp","smoked paprika"],[1,"tsp","ground cumin"],[8,"","small corn tortillas"],[200,"g","shredded red cabbage"],[2,"","limes"],[1,"","ripe avocado, sliced"]],
     steps: ["Warm the oil in a pan, add the beans, paprika, cumin and salt. Cook 6 minutes, lightly mashing about a third of the beans.","Toss the cabbage with the juice of one lime and a pinch of salt.","Char the tortillas directly over a gas flame, or in a dry pan, about 30 seconds per side.","Fill each tortilla with beans, slaw and avocado. Serve with the remaining lime cut into wedges."],
     tip: "Keep the tortillas wrapped in a clean towel so they stay soft while you fill the rest." },
   { id: "oat-pancakes", name: "Banana Oat Pancakes", cat: "Breakfast", h: 48, mins: 20, level: "Easy", base: 4,
     blurb: "Blender pancakes with ripe banana and rolled oats, no flour needed.",
+    macros: { kcal: 310, p: 13, f: 11, c: 41 },
     ing: [[2,"","ripe bananas"],[150,"g","rolled oats"],[3,"","eggs"],[180,"ml","milk"],[1,"tsp","baking powder"],[0.5,"tsp","cinnamon"],[1,"tbsp","butter, for the pan"]],
     steps: ["Blend the bananas, oats, eggs, milk, baking powder and cinnamon until smooth. Rest the batter 5 minutes to thicken.","Melt a little butter in a nonstick pan over medium-low heat.","Pour in about 60 ml of batter per pancake. Cook 2 to 3 minutes until bubbles form and the edges look set, then flip and cook 1 to 2 minutes more.","Serve warm with fruit or yogurt."],
     tip: "Keep the heat on medium-low. Oat batter browns quickly and needs time to cook through." },
   { id: "chickpea-salad", name: "Crunchy Chickpea Salad", cat: "Lunch", h: 95, mins: 15, level: "Easy", base: 2,
     blurb: "A fridge-friendly salad that tastes better on day two.",
+    macros: { kcal: 380, p: 13, f: 17, c: 46 },
     ing: [[1,"","can chickpeas (400 g), drained"],[1,"","cucumber, diced"],[200,"g","cherry tomatoes, halved"],[0.5,"","red onion, finely sliced"],[2,"tbsp","olive oil"],[1,"","lemon, juiced"],[0.25,"tsp","salt"],[0.25,"cup","chopped mint or parsley"]],
     steps: ["Soak the sliced onion in cold water for 5 minutes, then drain. This softens the bite.","Combine the chickpeas, cucumber, tomatoes and onion in a large bowl.","Whisk the oil, lemon juice and salt, pour over the salad and toss with the herbs.","Eat now, or chill for up to 2 days."],
     tip: "Add the herbs just before serving so they stay bright." }
@@ -171,12 +182,12 @@ function renderHome() {
     return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0;
   });
   app.innerHTML =
-    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Six tested recipes with ingredient amounts that scale to however many you are feeding.</p></section>' +
+    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Six recipes with calories, protein, fat and carbs per serving, and ingredient amounts that scale to however many you are feeding.</p></section>' +
     '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + state.q.replace(/"/g, "&quot;") + '">' +
     '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === state.cat) + '">' + c + '</button>'; }).join("") + '</div></div>' +
     (list.length ? '<div class="grid">' + list.map(function (r) {
       return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><span class="mins">' + r.mins + '<small>min</small></span></div>' +
-        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p></div></a>';
+        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p><p class="mline">' + r.macros.kcal + ' kcal \u00B7 ' + r.macros.p + 'g protein \u00B7 ' + r.macros.f + 'g fat \u00B7 ' + r.macros.c + 'g carbs</p></div></a>';
     }).join("") + '</div>' : '<p class="empty">No recipes match. Try a different word or clear the filter.</p>');
   var q = document.getElementById("q");
   q.addEventListener("input", function () { state.q = q.value; var pos = q.selectionStart; renderHome(); var n = document.getElementById("q"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} });
@@ -189,7 +200,8 @@ function renderRecipe(r) {
   app.innerHTML =
     '<a class="back" href="#home">← All recipes</a>' +
     '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><h1>' + r.name + '</h1><p>' + r.blurb + '</p>' +
-    '<div class="facts"><div><b>' + r.mins + ' min</b>Total time</div><div><b>' + r.level + '</b>Difficulty</div><div><b>' + r.base + '</b>Default servings</div></div></section>' +
+    '<div class="facts"><div><b>' + r.mins + ' min</b>Total time</div><div><b>' + r.level + '</b>Difficulty</div><div><b>' + r.base + '</b>Default servings</div></div>' +
+    '<div class="macros" role="group" aria-label="Estimated nutrition per serving"><div><b>' + r.macros.kcal + '</b>Calories</div><div><b>' + r.macros.p + 'g</b>Protein</div><div><b>' + r.macros.f + 'g</b>Fat</div><div><b>' + r.macros.c + 'g</b>Carbs</div></div><p class="note">Estimated per serving. Brands and portions vary.</p></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
     '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
     '<ul class="ing">' + r.ing.map(function (i, n) { return '<li><label><input type="checkbox" id="i' + n + '"><span class="q">' + fmt(i[0] * k, i[1]) + '</span><span>' + i[2] + '</span></label></li>'; }).join("") + '</ul>' +
