@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* Layout: sticky header, filter bar, responsive card grid; recipe view is a two-column ingredients/steps spread. */
+/* Layout: sticky header, filter bar, responsive card grid; recipe view is a two-column ingredients/method spread. */
 :root {
   --bg: #f3f5f0;
   --surface: #ffffff;
@@ -52,7 +52,7 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 
 .hero { padding: 36px 0 12px; }
 .hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 10px; text-wrap: balance; max-width: 16ch; }
-.hero p { margin: 0; color: var(--muted); max-width: 46ch; }
+.hero p { margin: 0; color: var(--muted); max-width: 50ch; }
 
 .tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 20px 0 8px; }
 .search { flex: 1 1 220px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
@@ -70,6 +70,7 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 .card .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
 .card h3 { margin: 0; font-family: var(--display); font-size: 1.25rem; line-height: 1.15; letter-spacing: -0.01em; }
 .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.card p.mline { font-variant-numeric: tabular-nums; font-size: 0.85rem; font-weight: 600; color: var(--deep); }
 .empty { color: var(--muted); padding: 24px 0 56px; }
 
 .back { display: inline-flex; gap: 8px; align-items: center; margin: 22px 0 6px; font-weight: 600; text-decoration: none; color: var(--deep); }
@@ -81,14 +82,13 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 .facts { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .facts div { font-size: 0.9rem; }
 .facts b { display: block; font-family: var(--display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
-
-.mline { font-variant-numeric: tabular-nums; font-size: 0.85rem !important; font-weight: 600; color: var(--deep) !important; }
-.macros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; max-width: 460px; }
+.macros { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 8px; margin-top: 18px; max-width: 560px; }
 .macros div { background: color-mix(in srgb, var(--surface) 55%, transparent); border-radius: 10px; padding: 8px 10px; font-size: 0.8rem; font-weight: 600; }
 .macros b { display: block; font-family: var(--display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
-.rhead .note { margin: 8px 0 0; font-size: 0.8rem; opacity: 0.8; }
+.rhead p.note { margin: 8px 0 0; font-size: 0.8rem; opacity: 0.8; }
+
 .spread { display: grid; grid-template-columns: 1fr; gap: 32px; padding-bottom: 64px; }
-@media (min-width: 800px) { .spread { grid-template-columns: 340px 1fr; } }
+@media (min-width: 800px) { .spread { grid-template-columns: 360px 1fr; } }
 .spread h2 { font-family: var(--display); font-size: 1.4rem; margin: 0 0 12px; letter-spacing: -0.01em; }
 .servings { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .servings button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 1.2rem; line-height: 1; }
@@ -96,10 +96,12 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 .servings output { min-width: 5.5em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
 ul.ing { list-style: none; margin: 0 0 14px; padding: 0; border-top: 1px solid var(--line); }
 ul.ing li { border-bottom: 1px solid var(--line); }
+ul.ing li.grp { border-bottom: 0; padding: 16px 2px 6px; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--deep); }
 ul.ing label { display: flex; gap: 12px; padding: 10px 2px; cursor: pointer; align-items: baseline; }
 ul.ing input { accent-color: var(--deep); width: 18px; height: 18px; flex: none; transform: translateY(3px); }
-ul.ing .q { font-weight: 700; min-width: 4.5em; font-variant-numeric: tabular-nums; }
+ul.ing .q { font-weight: 700; min-width: 5em; font-variant-numeric: tabular-nums; }
 ul.ing input:checked ~ span { color: var(--muted); text-decoration: line-through; }
+.fixednote { color: var(--muted); font-size: 0.85rem; margin: 0 0 14px; }
 .copy { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 700; cursor: pointer; }
 .copy:hover { filter: brightness(0.95); }
 ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 18px; }
@@ -115,79 +117,130 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#home"><i></i>Plate and Pantry</a>
-    <span class="tag">Everyday recipes, scaled to your table</span>
+    <span class="tag">Recipes with macros, scaled to your table</span>
   </div>
 </header>
 <main class="wrap" id="app"></main>
 <footer><div class="wrap">Plate and Pantry. Tap ingredients to cross them off while you shop or cook.</div></footer>
 
 <script>
+/* Ingredient format: [amount, unit, name, fixed?]. amount can be a number, a [low, high] range, or text such as "to taste".
+   {h: "Heading"} starts a group. fixed = true means the amount stays the same when servings change (a batch). */
 var RECIPES = [
-  { id: "shakshuka", name: "Skillet Shakshuka", cat: "Breakfast", h: 12, mins: 35, level: "Easy", base: 4,
-    blurb: "Eggs poached in spiced tomato and pepper sauce, finished with feta.",
-    macros: { kcal: 320, p: 16, f: 19, c: 21 },
-    ing: [[2,"tbsp","olive oil"],[1,"","large onion, diced"],[1,"","red bell pepper, diced"],[3,"","garlic cloves, minced"],[1,"tsp","ground cumin"],[1,"tsp","smoked paprika"],[800,"g","crushed tomatoes"],[6,"","eggs"],[80,"g","feta, crumbled"],[0.25,"cup","chopped parsley"]],
-    steps: ["Warm the oil in a wide, deep skillet over medium heat. Cook the onion and pepper for 8 minutes until soft.","Stir in the garlic, cumin and paprika and cook for 1 minute until fragrant.","Add the tomatoes and a good pinch of salt. Simmer for 10 minutes until the sauce thickens.","Make small wells in the sauce and crack an egg into each. Cover and cook 5 to 7 minutes, until the whites are set and the yolks are still soft.","Scatter with feta and parsley and serve straight from the pan with bread."],
-    tip: "For firmer yolks, give the covered pan 2 extra minutes. For softer, pull it at 5." },
-  { id: "tomato-pasta", name: "Creamy Tomato Pasta", cat: "Dinner", h: 4, mins: 25, level: "Easy", base: 4,
-    blurb: "A weeknight pasta with a silky tomato cream sauce and plenty of garlic.",
-    macros: { kcal: 625, p: 20, f: 23, c: 84 },
-    ing: [[400,"g","short pasta, such as penne"],[2,"tbsp","olive oil"],[4,"","garlic cloves, sliced"],[1,"tbsp","tomato paste"],[400,"g","canned crushed tomatoes"],[120,"ml","heavy cream"],[50,"g","grated Parmesan"],[6,"","fresh basil leaves"]],
-    steps: ["Boil the pasta in well-salted water until 1 minute short of the package time. Save a mug of pasta water, then drain.","In a large pan, warm the oil over medium heat. Cook the garlic for 1 minute without browning it.","Stir in the tomato paste for 1 minute, then add the tomatoes. Simmer 8 minutes.","Pour in the cream and add the pasta with a splash of pasta water. Toss for 2 minutes until the sauce coats the pasta.","Off the heat, stir in the Parmesan, tear in the basil and serve."],
-    tip: "The pasta water is what makes the sauce cling. Add it a splash at a time." },
-  { id: "lemon-chicken", name: "Sheet-Pan Lemon Chicken", cat: "Dinner", h: 40, mins: 50, level: "Easy", base: 4,
-    blurb: "Crisp-skinned thighs roasted over potatoes and lemon on one tray.",
-    macros: { kcal: 695, p: 51, f: 40, c: 34 },
-    ing: [[8,"","bone-in chicken thighs"],[700,"g","baby potatoes, halved"],[2,"","lemons"],[4,"","garlic cloves, smashed"],[3,"tbsp","olive oil"],[2,"tsp","dried oregano"],[1,"tsp","salt"]],
-    steps: ["Heat the oven to 220 C (425 F). Toss the potatoes with half the oil, half the salt and the oregano on a large tray.","Rub the chicken with the remaining oil and salt. Set it skin-side up on the tray with the garlic and lemon halves.","Roast 40 to 45 minutes, until the skin is deep golden and the chicken reaches 74 C (165 F) inside.","Rest 5 minutes, then squeeze the roasted lemon over everything and spoon the pan juices on top."],
-    tip: "Pat the skin dry before oiling. Dry skin is what crisps." },
-  { id: "black-bean-tacos", name: "Smoky Black Bean Tacos", cat: "Dinner", h: 150, mins: 20, level: "Easy", base: 4,
-    blurb: "Pantry beans, charred corn tortillas and a quick lime slaw.",
-    macros: { kcal: 380, p: 15, f: 11, c: 58 },
-    ing: [[2,"","cans black beans (400 g each), drained"],[1,"tbsp","olive oil"],[1,"tsp","smoked paprika"],[1,"tsp","ground cumin"],[8,"","small corn tortillas"],[200,"g","shredded red cabbage"],[2,"","limes"],[1,"","ripe avocado, sliced"]],
-    steps: ["Warm the oil in a pan, add the beans, paprika, cumin and salt. Cook 6 minutes, lightly mashing about a third of the beans.","Toss the cabbage with the juice of one lime and a pinch of salt.","Char the tortillas directly over a gas flame, or in a dry pan, about 30 seconds per side.","Fill each tortilla with beans, slaw and avocado. Serve with the remaining lime cut into wedges."],
-    tip: "Keep the tortillas wrapped in a clean towel so they stay soft while you fill the rest." },
-  { id: "oat-pancakes", name: "Banana Oat Pancakes", cat: "Breakfast", h: 48, mins: 20, level: "Easy", base: 4,
-    blurb: "Blender pancakes with ripe banana and rolled oats, no flour needed.",
-    macros: { kcal: 310, p: 13, f: 11, c: 41 },
-    ing: [[2,"","ripe bananas"],[150,"g","rolled oats"],[3,"","eggs"],[180,"ml","milk"],[1,"tsp","baking powder"],[0.5,"tsp","cinnamon"],[1,"tbsp","butter, for the pan"]],
-    steps: ["Blend the bananas, oats, eggs, milk, baking powder and cinnamon until smooth. Rest the batter 5 minutes to thicken.","Melt a little butter in a nonstick pan over medium-low heat.","Pour in about 60 ml of batter per pancake. Cook 2 to 3 minutes until bubbles form and the edges look set, then flip and cook 1 to 2 minutes more.","Serve warm with fruit or yogurt."],
-    tip: "Keep the heat on medium-low. Oat batter browns quickly and needs time to cook through." },
-  { id: "chickpea-salad", name: "Crunchy Chickpea Salad", cat: "Lunch", h: 95, mins: 15, level: "Easy", base: 2,
-    blurb: "A fridge-friendly salad that tastes better on day two.",
-    macros: { kcal: 380, p: 13, f: 17, c: 46 },
-    ing: [[1,"","can chickpeas (400 g), drained"],[1,"","cucumber, diced"],[200,"g","cherry tomatoes, halved"],[0.5,"","red onion, finely sliced"],[2,"tbsp","olive oil"],[1,"","lemon, juiced"],[0.25,"tsp","salt"],[0.25,"cup","chopped mint or parsley"]],
-    steps: ["Soak the sliced onion in cold water for 5 minutes, then drain. This softens the bite.","Combine the chickpeas, cucumber, tomatoes and onion in a large bowl.","Whisk the oil, lemon juice and salt, pour over the salad and toss with the herbs.","Eat now, or chill for up to 2 days."],
-    tip: "Add the herbs just before serving so they stay bright." }
+  { id: "avocado-toast", name: "Avocado Toast with 2 Eggs", cat: "Breakfast", h: 100, base: 1, prep: 5, cook: 5,
+    blurb: "Mashed lemon avocado on toasted 647 bread, topped with two eggs.",
+    macros: { kcal: 330, p: 18, fib: 14 },
+    ing: [[2,"slice","Schmidt Old Tyme 647 bread, toasted"],[1,"","large avocado"],[1,"tsp","fresh lemon juice"],["to taste","","sea salt"],["to taste","","black pepper"],["to taste","","red pepper (chili) flakes"],["to taste","","garlic powder"],[2,"","large eggs"],[0.5,"tsp","butter"]],
+    steps: ["Toast both slices of 647 bread until golden.","In a bowl, mash the avocado with lemon juice, salt, and pepper.","Spread the mashed avocado evenly over both slices.","Heat a nonstick pan over medium heat and add 1/2 teaspoon butter.","Crack in the eggs and season with salt, garlic powder, and chili flakes.","Cook eggs to your preference (fried or over-easy works best).","Place one egg on each slice of toast and finish with extra chili flakes if desired."] },
+
+  { id: "banana-protein-oats", name: "Banana Protein Overnight Oats", cat: "Breakfast", h: 48, base: 1,
+    blurb: "Protein yogurt, ripe banana and steel oats, chilled overnight.",
+    macros: { kcal: 455, p: 37, c: 60, f: 7, fib: 15 },
+    ing: [[140,"g","Ratio Vanilla Protein Yogurt"],[50,"mL","Fairlife fat-free milk"],[80,"g","banana, ripened, mashed"],[50,"g","steel oats"],[20,"g","allulose"],[10,"g","inulin fiber"],[4,"g","Naked Whey protein powder"]],
+    steps: ["Add yogurt, Fairlife, ripe banana, allulose, inulin, and protein powder in a blender and puree until smooth.","Add the oats and shake until combined.","Cover and refrigerate overnight, or at least 4 to 6 hours."] },
+
+  { id: "chocolate-overnight-oats", name: "Chocolate Overnight Oats", cat: "Breakfast", h: 22, base: 1,
+    blurb: "Cocoa oats made with protein yogurt, chilled for at least 4 hours.",
+    macros: { kcal: 400, p: 31, c: 51, f: 9, fib: 14, net: 37 },
+    ing: [[100,"mL","1% Fairlife milk"],[50,"g","old-fashioned oats"],[140,"g","Ratio protein yogurt"],[20,"g","Hershey's Special Dark powder"],[15,"g","granulated sugar"],[10,"g","inulin fiber"],[40,"g","allulose sweetener"],[2,"g","vanilla extract"],[0.5,"g","salt"]],
+    steps: ["Combine the Fairlife milk, oats, Ratio protein yogurt, Hershey's Special Dark cocoa powder, inulin fiber, allulose sweetener, granulated sugar, vanilla extract, and salt in a container.","Stir thoroughly until the cocoa powder and all other ingredients are evenly incorporated.","Cover and refrigerate for at least 4 hours, preferably overnight, until the oats have softened and the mixture has thickened.","Stir before serving. If the mixture is too thick, add a small amount of milk to reach the desired consistency."] },
+
+  { id: "chicken-crunch-wrap", name: "Chicken Crunch Wrap", cat: "Lunch", h: 30, base: 1,
+    blurb: "Grilled chicken and crunchy slaw in a Hero wrap, tossed in sweet sriracha honey.",
+    macros: { kcal: 400, p: 52, fib: 37 },
+    ing: [{h:"Assembly"},[1,"","Hero burrito wrap"],[4,"oz","grilled chicken"],
+          {h:"Crunch slaw"},[2,"oz","shredded red cabbage"],[2,"oz","thinly sliced cucumber"],[2,"oz","thinly sliced red onion"],[1,"oz","sliced green onion"],[1,"oz","chopped cilantro"],[1,"","lime, juiced"],[3,"tbsp","plain low-fat Greek yogurt"],
+          {h:"Sweet sriracha honey mix"},[1,"tbsp","sriracha"],[0.25,"cup","allulose"],[1,"tbsp","water"],[0.5,"tbsp","garlic powder"],[0.25,"tsp","honey"]],
+    steps: ["In a medium bowl, combine the red cabbage, cucumber, red onion, green onion, cilantro, lime juice, and plain low-fat Greek yogurt.","In a small microwave-safe bowl, combine the sriracha, allulose, water, garlic powder, and honey. Microwave for 30 to 60 seconds, then stir until smooth.","Add the sweet sriracha honey mix to the slaw and toss until all ingredients are evenly coated.","Lay the Hero Wrap flat and add the 4 oz grilled chicken and creamy crunch slaw.","Fold and roll the wrap tightly and serve."] },
+
+  { id: "chicken-salad-wrap", name: "Chicken Salad Wrap", cat: "Lunch", h: 78, base: 1,
+    blurb: "Chopped roasted chicken in a light sour cream and lemon mix, rolled in a Hero tortilla.",
+    macros: { kcal: 460, p: 45, c: 54, f: 13.5, fib: 29 },
+    ing: [[4,"oz","roasted chicken meat, chopped"],[55,"g","light sour cream"],[30,"g","red onion, diced"],[10,"g","green onion, sliced"],[5,"g","fresh parsley, chopped"],[15,"g","lemon juice"],[5,"g","garlic powder"],[1,"g","black pepper"],[1,"g","salt"],[1,"","burrito-size Hero tortilla"],[1,"oz","butter lettuce"]],
+    steps: ["In a large bowl, combine the chicken, sour cream, red onion, green onion, parsley, lemon juice, garlic powder, black pepper, and salt.","Layer the butter lettuce onto the tortilla and spoon the chicken mixture over it.","Fold in the sides and roll tightly into a burrito."] },
+
+  { id: "chicken-salad-wrap-apple", name: "Chicken Salad Wrap with Apple", cat: "Lunch", h: 130, base: 1,
+    blurb: "The chicken salad wrap with chopped apple added for crunch.",
+    macros: { kcal: 460, p: 45, c: 54, f: 13.5, fib: 29 },
+    ing: [[4,"oz","roasted chicken meat, chopped"],[55,"g","light sour cream"],[30,"g","red onion, diced"],[10,"g","green onion, sliced"],[5,"g","fresh parsley, chopped"],[50,"g","apple"],[15,"g","lemon juice"],[5,"g","garlic powder"],[1,"g","black pepper"],[1,"g","salt"],[1,"","burrito-size Hero tortilla"],[1,"oz","butter lettuce"]],
+    steps: ["In a large bowl, combine the chicken, sour cream, red onion, green onion, parsley, apple, lemon juice, garlic powder, black pepper, and salt.","Layer the butter lettuce onto the tortilla and spoon the chicken mixture over it.","Fold in the sides and roll tightly into a burrito."] },
+
+  { id: "chili-crisp-tuna-wrap", name: "Chili Crisp Tuna Wrap", cat: "Lunch", h: 8, base: 1,
+    blurb: "Tuna with sriracha, chili crisp and apple in a Hero tortilla, toasted in the air fryer.",
+    macros: { kcal: 400, p: 42, fib: 38 },
+    ing: [[115,"g","tuna, canned or packaged"],[6,"g","sriracha"],[0.5,"tsp","chili crisp"],[1,"tsp","soy sauce"],[5,"g","ginger paste"],[30,"g","sour cream"],[10,"g","inulin"],[85,"g","apple, julienned"],[1,"","Hero burrito tortilla"]],
+    steps: ["Combine the tuna, sriracha, chili crisp, soy sauce, ginger paste, sour cream, and inulin.","Place the tuna mixture and apple onto a Hero tortilla and wrap.","Toast in the air fryer until warm in the middle."] },
+
+  { id: "blackened-white-fish", name: "Blackened White Fish with Baked Sweet Potato & Broccoli", cat: "Dinner", h: 205, base: 1,
+    blurb: "Pan-seared spiced white fish with a baked sweet potato and steamed broccoli.",
+    macros: { kcal: 300, p: 28, fib: 6 },
+    ing: [[4,"oz","white fish (cod, tilapia, or haddock)"],[1,"","medium sweet potato (whole)"],[2,"cup","broccoli florets"],[1,"tsp","oil (for cooking fish)"],
+          {h:"Seasoning"},[1,"tsp","paprika"],[0.5,"tsp","garlic powder"],[0.5,"tsp","onion powder"],[[0.25,0.5],"tsp","chili flakes"],[0.5,"tsp","dried thyme or oregano"],[0.5,"tsp","salt"],[0.25,"tsp","black pepper"]],
+    steps: ["Preheat oven to 400°F. Pierce sweet potato with a fork and bake 45 to 60 minutes until soft.","Steam or microwave broccoli with a splash of water for 4 to 5 minutes. Season lightly if desired.","Pat fish dry and coat with seasoning.","Heat skillet over medium-high heat, add 1 tsp oil, and cook fish 3 to 4 minutes per side until flaky with a dark crust."] },
+
+  { id: "chicken-fajita-rice-bowl", name: "Chicken Fajita Rice Bowl", cat: "Dinner", h: 355, base: 1,
+    blurb: "Fajita-spiced chicken and peppers over brown rice with cilantro lime crema.",
+    macros: { kcal: 545, p: 32, c: 56, f: 21 },
+    ing: [{h:"Chicken and veggie sauté"},[113,"g","chicken breast, cut into strips (4 oz)"],[160,"g","bell peppers, sliced"],[100,"g","onion, sliced"],[25,"g","portobello mushrooms, sliced"],[1,"tbsp","canola oil"],
+          [1,"tsp","chili powder"],[0.5,"tsp","paprika"],[0.5,"tsp","cumin"],[0.5,"tsp","garlic powder"],[0.25,"tsp","salt"],["dash","","cayenne"],[[1,2],"tbsp","water (for deglazing)"],
+          {h:"Rice base"},[140,"g","steamed brown rice"],
+          {h:"Cilantro lime crema batch (1 serving is 35 g)"},[150,"g","light sour cream",true],[20,"g","fresh lime juice",true],[10,"g","fresh cilantro, finely chopped",true],[15,"g","green onion, chopped",true]],
+    steps: ["Prepare the crema. In a small bowl, whisk together 150 g light sour cream, 20 g lime juice, 10 g chopped cilantro, and 15 g green onion until smooth. Measure out 35 g (1 serving) for this bowl and refrigerate the remaining batch.","Sauté the chicken and veggies. Heat 1 tbsp canola oil in a large skillet over medium-high heat. Add 4 oz sliced chicken breast, 160 g bell peppers, 100 g onion, and 25 g portobello mushrooms. Sauté for 5 to 7 minutes until cooked through and tender.","Season and deglaze. Reduce heat to medium-low. Sprinkle over chili powder, paprika, cumin, garlic powder, salt, and cayenne. Add 1 to 2 tbsp water and stir immediately to deglaze the pan and coat everything in the sauce.","Assemble the bowl. Layer 140 g warm steamed brown rice at the base of your bowl. Pile the entire hot chicken and veggie mixture over the top, and spoon 35 g of the cilantro lime crema over the dish. Serve immediately."],
+    tip: "Amounts in the method are for 1 serving. When you change servings, follow the ingredient list." }
 ];
 
 var app = document.getElementById("app");
-var state = { q: "", cat: "All", servings: null };
+var state = { q: "", cat: "All", servings: null, rid: null };
 var FRACS = { 0: "", 0.25: "¼", 0.5: "½", 0.75: "¾" };
+var FIELDS = [["kcal","Calories",""],["p","Protein","g"],["c","Carbs","g"],["f","Fat","g"],["fib","Fiber","g"],["net","Net carbs","g"]];
 
-function fmt(q, u) {
-  var v;
-  if (u === "g" || u === "ml") { v = Math.max(5, Math.round(q / 5) * 5); return v + (u ? " " + u : ""); }
-  v = Math.round(q * 4) / 4; if (v < 0.25) v = 0.25;
-  var whole = Math.floor(v), frac = FRACS[Math.round((v - whole) * 100) / 100] || "";
-  var s = (whole ? String(whole) : "") + frac;
-  return s + (u ? " " + u : "");
+function isH(i) { return i && i.h !== undefined; }
+function fmtNum(v, u) {
+  var ul = (u || "").toLowerCase();
+  if (ul === "g" || ul === "ml") {
+    if (v < 10) return String(Math.round(v * 2) / 2);
+    if (v < 100) return String(Math.round(v));
+    return String(Math.round(v / 5) * 5);
+  }
+  var w = Math.round(v * 4) / 4; if (w < 0.25) w = 0.25;
+  var whole = Math.floor(w), frac = FRACS[Math.round((w - whole) * 100) / 100] || "";
+  return (whole ? String(whole) : "") + frac;
+}
+function unitLabel(u, v) {
+  if (u === "slice" && v > 1) return "slices";
+  if (u === "cup" && v > 1) return "cups";
+  if (u === "ml") return "mL";
+  return u;
+}
+function fmtQ(it, k) {
+  var q = it[0], u = it[1], kk = it[3] ? 1 : k;
+  if (typeof q === "string") return q.charAt(0).toUpperCase() + q.slice(1);
+  if (Array.isArray(q)) { return fmtNum(q[0] * kk, u) + "–" + fmtNum(q[1] * kk, u) + (u ? " " + unitLabel(u, q[1] * kk) : ""); }
+  var v = q * kk; return fmtNum(v, u) + (u ? " " + unitLabel(u, v) : "");
 }
 function find(id) { for (var i = 0; i < RECIPES.length; i++) if (RECIPES[i].id === id) return RECIPES[i]; return null; }
+function mline(m) {
+  var parts = [];
+  if (m.p !== undefined) parts.push(m.p + "g protein");
+  if (m.c !== undefined) parts.push(m.c + "g carbs");
+  if (m.f !== undefined) parts.push(m.f + "g fat");
+  if (m.fib !== undefined) parts.push(m.fib + "g fiber");
+  return parts.join(" · ");
+}
 
 function renderHome() {
   var cats = ["All"]; RECIPES.forEach(function (r) { if (cats.indexOf(r.cat) < 0) cats.push(r.cat); });
   var list = RECIPES.filter(function (r) {
-    var hay = (r.name + " " + r.blurb + " " + r.cat + " " + r.ing.map(function (i) { return i[2]; }).join(" ")).toLowerCase();
+    var hay = (r.name + " " + r.blurb + " " + r.cat + " " + r.ing.filter(function (i) { return !isH(i); }).map(function (i) { return i[2]; }).join(" ")).toLowerCase();
     return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0;
   });
   app.innerHTML =
-    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Six recipes with calories, protein, fat and carbs per serving, and ingredient amounts that scale to however many you are feeding.</p></section>' +
+    '<section class="hero"><h1>What are we cooking tonight?</h1><p>' + RECIPES.length + ' recipes with calories and macros per serving. Change the servings on any recipe to scale the ingredients.</p></section>' +
     '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + state.q.replace(/"/g, "&quot;") + '">' +
     '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === state.cat) + '">' + c + '</button>'; }).join("") + '</div></div>' +
     (list.length ? '<div class="grid">' + list.map(function (r) {
-      return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><span class="mins">' + r.mins + '<small>min</small></span></div>' +
-        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p><p class="mline">' + r.macros.kcal + ' kcal \u00B7 ' + r.macros.p + 'g protein \u00B7 ' + r.macros.f + 'g fat \u00B7 ' + r.macros.c + 'g carbs</p></div></a>';
+      return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><span class="mins">' + r.macros.kcal + '<small>kcal</small></span></div>' +
+        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p><p class="mline">' + mline(r.macros) + '</p></div></a>';
     }).join("") + '</div>' : '<p class="empty">No recipes match. Try a different word or clear the filter.</p>');
   var q = document.getElementById("q");
   q.addEventListener("input", function () { state.q = q.value; var pos = q.selectionStart; renderHome(); var n = document.getElementById("q"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} });
@@ -196,22 +249,33 @@ function renderHome() {
 
 function renderRecipe(r) {
   if (state.servings === null || state.rid !== r.id) { state.servings = r.base; state.rid = r.id; }
-  var s = state.servings, k = s / r.base;
+  var s = state.servings, k = s / r.base, n = 0;
+  var hasFixed = r.ing.some(function (i) { return !isH(i) && i[3]; });
+  var facts = '<div><b>' + r.base + '</b>' + (r.base === 1 ? 'Serving' : 'Servings') + '</div>' +
+    (r.prep ? '<div><b>' + r.prep + ' min</b>Prep</div>' : '') + (r.cook ? '<div><b>' + r.cook + ' min</b>Cook</div>' : '');
+  var macros = FIELDS.filter(function (f) { return r.macros[f[0]] !== undefined; }).map(function (f) {
+    return '<div><b>' + r.macros[f[0]] + f[2] + '</b>' + f[1] + '</div>';
+  }).join("");
   app.innerHTML =
     '<a class="back" href="#home">← All recipes</a>' +
     '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><h1>' + r.name + '</h1><p>' + r.blurb + '</p>' +
-    '<div class="facts"><div><b>' + r.mins + ' min</b>Total time</div><div><b>' + r.level + '</b>Difficulty</div><div><b>' + r.base + '</b>Default servings</div></div>' +
-    '<div class="macros" role="group" aria-label="Estimated nutrition per serving"><div><b>' + r.macros.kcal + '</b>Calories</div><div><b>' + r.macros.p + 'g</b>Protein</div><div><b>' + r.macros.f + 'g</b>Fat</div><div><b>' + r.macros.c + 'g</b>Carbs</div></div><p class="note">Estimated per serving. Brands and portions vary.</p></section>' +
+    '<div class="facts">' + facts + '</div>' +
+    '<div class="macros" role="group" aria-label="Nutrition per serving">' + macros + '</div><p class="note">Nutrition per serving.</p></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
     '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
-    '<ul class="ing">' + r.ing.map(function (i, n) { return '<li><label><input type="checkbox" id="i' + n + '"><span class="q">' + fmt(i[0] * k, i[1]) + '</span><span>' + i[2] + '</span></label></li>'; }).join("") + '</ul>' +
+    '<ul class="ing">' + r.ing.map(function (i) {
+      if (isH(i)) return '<li class="grp">' + i.h + '</li>';
+      var id = n++;
+      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + i[2] + '</span></label></li>';
+    }).join("") + '</ul>' +
+    (hasFixed ? '<p class="fixednote">Batch amounts stay the same when you change servings.</p>' : '') +
     '<button class="copy" type="button" id="copy">Copy shopping list</button></section>' +
     '<section><h2>Method</h2><ol class="steps">' + r.steps.map(function (t) { return '<li><p>' + t + '</p></li>'; }).join("") + '</ol>' +
-    '<p class="tip">' + r.tip + '</p></section></div>';
+    (r.tip ? '<p class="tip">' + r.tip + '</p>' : '') + '</section></div>';
   document.getElementById("minus").addEventListener("click", function () { if (state.servings > 1) { state.servings--; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("plus").addEventListener("click", function () { if (state.servings < 24) { state.servings++; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("copy").addEventListener("click", function () {
-    var text = r.name + " (" + s + " servings)\n" + r.ing.map(function (i) { return "- " + fmt(i[0] * k, i[1]) + " " + i[2]; }).join("\n");
+    var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + fmtQ(i, k) + " " + i[2]; }).join("\n");
     var btn = this;
     try { navigator.clipboard.writeText(text).then(function () { btn.textContent = "Copied"; }, function () { btn.textContent = "Copy blocked"; }); }
     catch (e) { btn.textContent = "Copy blocked"; }
