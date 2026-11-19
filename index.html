@@ -221,6 +221,19 @@ tr.part td, tr.part th { color: var(--muted); }
 details.srcs { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
 details.srcs summary { cursor: pointer; font-weight: 600; color: var(--deep); }
 details.srcs ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
+
+/* Side doodles: decorative, wide screens only */
+.doodles { display: none; }
+@media (min-width: 1500px) {
+  .doodles { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .dd { position: absolute; opacity: .9; transform: rotate(var(--rot)); animation: bob 7s ease-in-out var(--d) infinite; }
+  .dd svg { display: block; width: 100%; height: auto; }
+  main.wrap, header.top, footer { position: relative; z-index: 1; }
+  header.top { z-index: 5; }
+}
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-10px) rotate(calc(var(--rot) + 4deg)); } }
+@media (prefers-reduced-motion: reduce) { .dd { animation: none; } }
+@media print { .doodles { display: none !important; } }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
@@ -253,6 +266,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
     <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel"><i class="dot"></i>Theme</button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
   </div>
 </header>
+<div class="doodles" aria-hidden="true"><span class="dd l" style="top:14vh;left:6vw;width:96px;--rot:-8deg;--d:0s"><svg viewBox="0 0 100 120"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></svg></span><span class="dd l" style="top:44vh;left:3vw;width:74px;--rot:10deg;--d:2s"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></svg></span><span class="dd l" style="top:72vh;left:7vw;width:84px;--rot:-6deg;--d:4s"><svg viewBox="0 0 110 100"><path d="M52 30c-4-12 2-22 14-24M52 30c8-8 20-8 28-2" stroke="#4f7a32" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="22" fill="#3d4fb8"/><circle cx="70" cy="62" r="24" fill="#5162cf"/><circle cx="28" cy="51" r="5" fill="#fff" opacity=".4"/><circle cx="63" cy="55" r="5" fill="#fff" opacity=".4"/></svg></span><span class="dd r" style="top:12vh;right:4vw;width:100px;--rot:8deg;--d:6s"><svg viewBox="0 0 120 100"><path d="M60 8c26 0 52 10 52 38 0 22-14 24-18 40-3 12-22 10-34 10S28 98 24 84C20 70 8 66 8 46 8 18 34 8 60 8z" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="58" cy="50" r="20" fill="#f6b82b"/><circle cx="51" cy="44" r="5" fill="#fff" opacity=".55"/></svg></span><span class="dd r" style="top:42vh;right:7vw;width:78px;--rot:14deg;--d:8s"><svg viewBox="0 0 100 120"><path d="M50 30c12 0 18 8 16 18L54 112c-1 6-7 6-8 0L34 48c-2-10 4-18 16-18z" fill="#f08a2c"/><g stroke="#c9661a" stroke-width="3" stroke-linecap="round"><path d="M40 56h8M52 70h8M42 84h7"/></g><path d="M50 30C46 18 38 10 30 8M50 30c0-12 2-20 6-26M50 30c6-10 14-14 22-14" stroke="#4f9a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:70vh;right:3vw;width:70px;--rot:-12deg;--d:10s"><svg viewBox="0 0 100 100"><path d="M14 86C10 46 40 12 88 12c2 44-28 78-74 74z" fill="#4f9a3a"/><path d="M20 80C40 58 58 40 78 22" stroke="#a6d68a" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:88vh;right:8vw;width:80px;--rot:6deg;--d:12s"><svg viewBox="0 0 110 100"><path d="M20 40c-12-2-14-30 12-30h46c26 0 24 28 12 30v50H20z" fill="#c68a4a"/><path d="M28 42c-8-2-8-22 8-22h38c16 0 16 20 8 22v40H28z" fill="#f2d39c"/><path d="M40 56c6 6 12 6 18 0" stroke="#6b4423" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="42" cy="48" r="3" fill="#6b4423"/><circle cx="58" cy="48" r="3" fill="#6b4423"/><circle cx="35" cy="56" r="4" fill="#f29a9a" opacity=".7"/><circle cx="65" cy="56" r="4" fill="#f29a9a" opacity=".7"/></svg></span><span class="dd l" style="top:92vh;left:4vw;width:70px;--rot:8deg;--d:14s"><svg viewBox="0 0 100 120"><path d="M50 116V20" stroke="#3f7d34" stroke-width="4" stroke-linecap="round"/><g fill="#5aa547"><ellipse cx="36" cy="40" rx="14" ry="7" transform="rotate(-30 36 40)"/><ellipse cx="64" cy="56" rx="14" ry="7" transform="rotate(30 64 56)"/><ellipse cx="36" cy="72" rx="14" ry="7" transform="rotate(-30 36 72)"/><ellipse cx="64" cy="88" rx="14" ry="7" transform="rotate(30 64 88)"/><ellipse cx="50" cy="18" rx="7" ry="12"/></g></svg></span></div>
 <main class="wrap" id="app"></main>
 <footer><div class="wrap">Plate and Pantry. Tap ingredients to cross them off while you shop or cook.</div></footer>
 
