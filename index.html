@@ -136,6 +136,80 @@ ol.steps p { margin: 0; max-width: 62ch; }
   :root[data-food]:not([data-theme="light"]) { --bg: hsl(var(--H) 24% 8%); --surface: hsl(var(--H) 20% 12%); --ink: hsl(var(--H) 25% 92%); --muted: hsl(var(--H) 12% 66%); --line: hsl(var(--H) 16% 21%); --deep: hsl(var(--H) 55% 68%); }
 }
 :root[data-food][data-theme="dark"] { --bg: hsl(var(--H) 24% 8%); --surface: hsl(var(--H) 20% 12%); --ink: hsl(var(--H) 25% 92%); --muted: hsl(var(--H) 12% 66%); --line: hsl(var(--H) 16% 21%); --deep: hsl(var(--H) 55% 68%); }
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hright { display: flex; align-items: center; gap: 14px; }
+.navlink { font-weight: 700; text-decoration: none; color: var(--deep); }
+.navlink:hover { text-decoration: underline; }
+.btn.solid { background: var(--deep); color: var(--bg); border-color: var(--deep); text-decoration: none; display: inline-block; }
+.btn.solid:hover { filter: brightness(1.08); background: var(--deep); }
+a.btn { text-decoration: none; display: inline-block; }
+.herocta { margin-top: 16px !important; }
+.hero.slim { padding-bottom: 4px; }
+h2.sect { font-family: var(--display); font-size: 1.35rem; letter-spacing: -0.01em; margin: 18px 0 0; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.err { color: #c2410c; font-weight: 600; margin: 8px 0 0; min-height: 0; }
+.err:empty { display: none; }
+
+.nutsec { padding-bottom: 56px; max-width: 680px; }
+.nutsec h2 { font-family: var(--display); font-size: 1.4rem; margin: 0 0 4px; }
+table.nut { width: 100%; border-collapse: collapse; margin-top: 10px; font-variant-numeric: tabular-nums; }
+table.nut th, table.nut td { text-align: left; padding: 7px 4px; border-bottom: 1px solid var(--line); font-weight: 400; }
+table.nut thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
+table.nut tbody th { font-weight: 600; }
+table.nut .num { text-align: right; white-space: nowrap; }
+table.nut .dv { width: 9.5em; }
+.bar { display: inline-block; width: 4.5em; height: 6px; border-radius: 3px; background: var(--line); margin-right: 8px; vertical-align: middle; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--deep); }
+
+.builder { display: grid; grid-template-columns: 1fr; gap: 28px; padding: 12px 0 64px; }
+@media (min-width: 900px) { .builder { grid-template-columns: 1fr 340px; } .bside { position: sticky; top: 80px; align-self: start; } }
+.bmain { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.bmain h2, .bside h2 { font-family: var(--display); font-size: 1.35rem; margin: 14px 0 0; }
+.bside { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.bside h2 { margin-top: 0; }
+.bside h3 { font-family: var(--display); font-size: 1.05rem; margin: 18px 0 0; }
+.fieldrow { display: flex; flex-wrap: wrap; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field.grow { flex: 1 1 220px; }
+.field.small input { width: 6em; }
+.field label { font-weight: 600; font-size: 0.9rem; }
+.field input, .field select, .field textarea, .searchrow input { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; min-width: 0; }
+.field textarea { resize: vertical; font: inherit; }
+.searchrow { display: flex; gap: 8px; }
+.searchrow input { flex: 1; }
+h3.rhd { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 8px 0 6px; }
+ul.results { list-style: none; margin: 0 0 8px; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; max-height: 340px; overflow-y: auto; }
+ul.results li + li { border-top: 1px solid var(--line); }
+ul.results button { width: 100%; text-align: left; background: var(--surface); border: 0; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+ul.results button:hover { background: color-mix(in srgb, var(--deep) 8%, var(--surface)); }
+.rn { font-weight: 600; }
+.rm { color: var(--muted); font-size: 0.85rem; }
+details.label { border: 1px dashed var(--line); border-radius: 12px; padding: 10px 14px; }
+details.label summary { cursor: pointer; font-weight: 600; color: var(--deep); }
+.labelgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 12px 0 6px; }
+.labelgrid .span2 { grid-column: 1 / -1; }
+ul.blist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+ul.blist li { display: grid; grid-template-columns: 1fr 5.5em auto 4.5em 32px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.bname { display: flex; flex-direction: column; min-width: 0; }
+.bname span:first-child { font-weight: 600; overflow-wrap: anywhere; }
+.src { color: var(--muted); font-size: 0.8rem; }
+.grams { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; text-align: right; font-variant-numeric: tabular-nums; }
+.gunit { color: var(--muted); }
+.kc { text-align: right; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.x { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 1.1rem; line-height: 1; }
+.x:hover { border-color: #c2410c; color: #c2410c; }
+.emptyin { margin: 0; }
+.macros.side { max-width: none; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
+.macros.side div { background: color-mix(in srgb, var(--deep) 8%, var(--surface)); }
+@media (max-width: 520px) { ul.blist li { grid-template-columns: 1fr 5em auto 32px; } .kc { display: none; } .hright .navlink { font-size: 0.9rem; } }
+.bside .bar { display: none; }
+.bside table.nut .dv { width: auto; }
+.bside table.nut th, .bside table.nut td { padding: 6px 2px; font-size: 0.9rem; }
+#b-status:empty, #b-results:empty { display: none; }
+.brand { white-space: nowrap; }
+@media (max-width: 520px) { .hright .navlink { display: none; } }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
@@ -143,7 +217,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
   @page { margin: 14mm; }
   :root:root:root:root { --bg: #fff; --surface: #fff; --ink: #000; --muted: #333; --line: #999; --deep: #000; --tile-l: 92%; --tile-ink: #000; color-scheme: light; }
   body { font-size: 11pt; line-height: 1.4; }
-  header.top, footer, .back, .actions, .servings button, .copy, .tools, .hero, .themepanel { display: none !important; }
+  header.top, footer, .back, .actions, .builder, .herocta, .bar, .servings button, .copy, .tools, .hero, .themepanel { display: none !important; }
   .wrap { max-width: none; padding: 0; }
   .rhead { background: none; border-bottom: 2px solid #000; border-radius: 0; padding: 0 0 10px; margin: 0 0 14px; }
   .rhead h1 { font-size: 22pt; }
@@ -165,7 +239,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
   <div class="wrap">
     <a class="brand" href="#home"><i></i>Plate and Pantry</a>
     <span class="tag">Recipes with macros, scaled to your table</span>
-    <div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel"><i class="dot"></i>Theme</button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div>
+    <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel"><i class="dot"></i>Theme</button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
   </div>
 </header>
 <main class="wrap" id="app"></main>
@@ -241,7 +315,18 @@ var app = document.getElementById("app");
 var state = { q: "", cat: "All", servings: null, rid: null };
 var FRACS = { 0: "", 0.25: "¼", 0.5: "½", 0.75: "¾" };
 var FIELDS = [["kcal","Calories",""],["p","Protein","g"],["c","Carbs","g"],["f","Fat","g"],["fib","Fiber","g"],["net","Net carbs","g"]];
+/* Nutrients beyond the main macros: key, label, unit, FDA Daily Value (adults) */
+var MICROS = [
+  ["sat","Saturated fat","g",20],["chol","Cholesterol","mg",300],["na","Sodium","mg",2300],["sug","Total sugars","g",null],["asug","Added sugars","g",50],
+  ["k","Potassium","mg",4700],["ca","Calcium","mg",1300],["fe","Iron","mg",18],["mg","Magnesium","mg",420],["zn","Zinc","mg",11],["ph","Phosphorus","mg",1250],
+  ["vita","Vitamin A","µg",900],["vitc","Vitamin C","mg",90],["vitd","Vitamin D","µg",20],["vite","Vitamin E","mg",15],["vitk","Vitamin K","µg",120],
+  ["b6","Vitamin B6","mg",1.7],["b12","Vitamin B12","µg",2.4],["fol","Folate","µg",400]
+];
+var MAIN_KEYS = ["kcal","p","f","c","fib"];
+var ALL_KEYS = MAIN_KEYS.concat(MICROS.map(function (m) { return m[0]; }));
+var CATS = ["Breakfast","Lunch","Dinner","Snack"];
 
+function esc(t) { return String(t === undefined || t === null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 function isH(i) { return i && i.h !== undefined; }
 function fmtNum(v, u) {
   var ul = (u || "").toLowerCase();
@@ -266,7 +351,7 @@ function fmtQ(it, k) {
   if (Array.isArray(q)) { return fmtNum(q[0] * kk, u) + "–" + fmtNum(q[1] * kk, u) + (u ? " " + unitLabel(u, q[1] * kk) : ""); }
   var v = q * kk; return fmtNum(v, u) + (u ? " " + unitLabel(u, v) : "");
 }
-function find(id) { for (var i = 0; i < RECIPES.length; i++) if (RECIPES[i].id === id) return RECIPES[i]; return null; }
+function amt(v) { if (v === 0) return "0"; if (v < 1) return String(Math.round(v * 100) / 100); if (v < 10) return String(Math.round(v * 10) / 10); return String(Math.round(v)); }
 function mline(m) {
   var parts = [];
   if (m.p !== undefined) parts.push(m.p + "g protein");
@@ -275,26 +360,87 @@ function mline(m) {
   if (m.fib !== undefined) parts.push(m.fib + "g fiber");
   return parts.join(" · ");
 }
+function hueOf(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
+function niceName(s) {
+  s = String(s || "");
+  if (s && s === s.toUpperCase()) s = s.toLowerCase().replace(/(^|[\s,(/-])([a-z])/g, function (m, a, b) { return a + b.toUpperCase(); });
+  return s;
+}
 
+/* ---- Nutrition math: every food stores nutrients per 100 g ---- */
+function totals(ing, servings) {
+  var t = {}, cover = {}, n = ing.length, sv = servings > 0 ? servings : 1;
+  ALL_KEYS.forEach(function (k) {
+    var sum = 0, have = 0;
+    ing.forEach(function (x) { var v = x.n && x.n[k]; if (typeof v === "number") { sum += v * (x.g || 0) / 100; have++; } });
+    if (have) { t[k] = sum / sv; cover[k] = have; }
+  });
+  return { per: t, cover: cover, count: n };
+}
+
+/* ---- My recipes, kept in this browser ---- */
+var MINE = [];
+function loadMine() { try { MINE = JSON.parse(localStorage.getItem("pp-mine") || "[]") || []; } catch (e) { MINE = []; } }
+function saveMine() { try { localStorage.setItem("pp-mine", JSON.stringify(MINE)); return true; } catch (e) { return false; } }
+function mineById(id) { for (var i = 0; i < MINE.length; i++) if (MINE[i].id === id) return MINE[i]; return null; }
+function toDisplay(d) {
+  var t = totals(d.ing, d.servings), p = t.per;
+  var r1 = function (v) { return v === undefined ? undefined : (v < 10 ? Math.round(v * 10) / 10 : Math.round(v)); };
+  return {
+    id: d.id, mine: true, name: d.name, cat: d.cat, h: hueOf(d.name), base: d.servings,
+    blurb: d.blurb || (d.ing.length + " ingredients, nutrition calculated from the USDA database"),
+    macros: { kcal: Math.round(p.kcal || 0), p: r1(p.p), c: r1(p.c), f: r1(p.f), fib: r1(p.fib) },
+    nut: t,
+    ing: d.ing.map(function (x) { return [x.g, "g", x.name]; }),
+    steps: d.steps || []
+  };
+}
+function allRecipes() { return MINE.map(toDisplay).concat(RECIPES); }
+function find(id) { var a = allRecipes(); for (var i = 0; i < a.length; i++) if (a[i].id === id) return a[i]; return null; }
+
+/* ---- Home ---- */
+function cardHtml(r) {
+  return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + esc(r.cat) + (r.mine ? ' · Mine' : '') + '</span><span class="mins">' + r.macros.kcal + '<small>kcal</small></span></div>' +
+    '<div class="body"><h3>' + esc(r.name) + '</h3><p>' + esc(r.blurb) + '</p><p class="mline">' + mline(r.macros) + '</p></div></a>';
+}
 function renderHome() {
-  var cats = ["All"]; RECIPES.forEach(function (r) { if (cats.indexOf(r.cat) < 0) cats.push(r.cat); });
-  var list = RECIPES.filter(function (r) {
+  var all = allRecipes(), cats = ["All"];
+  all.forEach(function (r) { if (cats.indexOf(r.cat) < 0) cats.push(r.cat); });
+  if (cats.indexOf(state.cat) < 0) state.cat = "All";
+  function match(r) {
     var hay = (r.name + " " + r.blurb + " " + r.cat + " " + r.ing.filter(function (i) { return !isH(i); }).map(function (i) { return i[2]; }).join(" ")).toLowerCase();
     return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0;
-  });
+  }
+  var mine = all.filter(function (r) { return r.mine && match(r); }), feat = RECIPES.filter(match);
   app.innerHTML =
-    '<section class="hero"><h1>What are we cooking tonight?</h1><p>' + RECIPES.length + ' recipes with calories and macros per serving. Change the servings on any recipe to scale the ingredients.</p></section>' +
-    '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + state.q.replace(/"/g, "&quot;") + '">' +
-    '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === state.cat) + '">' + c + '</button>'; }).join("") + '</div></div>' +
-    (list.length ? '<div class="grid">' + list.map(function (r) {
-      return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><span class="mins">' + r.macros.kcal + '<small>kcal</small></span></div>' +
-        '<div class="body"><h3>' + r.name + '</h3><p>' + r.blurb + '</p><p class="mline">' + mline(r.macros) + '</p></div></a>';
-    }).join("") + '</div>' : '<p class="empty">No recipes match. Try a different word or clear the filter.</p>');
+    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Recipes with calories, macros and micronutrients per serving. Build your own from the USDA food database, or start from a featured recipe.</p>' +
+    '<p class="herocta"><a class="btn solid" href="#builder">Build a recipe</a></p></section>' +
+    '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + esc(state.q) + '">' +
+    '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === state.cat) + '">' + esc(c) + '</button>'; }).join("") + '</div></div>' +
+    (mine.length ? '<h2 class="sect">My recipes</h2><div class="grid">' + mine.map(cardHtml).join("") + '</div>' : '') +
+    (feat.length ? '<h2 class="sect">Featured recipes</h2><div class="grid">' + feat.map(cardHtml).join("") + '</div>' : '') +
+    (!mine.length && !feat.length ? '<p class="empty">No recipes match. Try a different word or clear the filter.</p>' : '');
   var q = document.getElementById("q");
   q.addEventListener("input", function () { state.q = q.value; var pos = q.selectionStart; renderHome(); var n = document.getElementById("q"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} });
   Array.prototype.forEach.call(app.querySelectorAll(".chip"), function (b) { b.addEventListener("click", function () { state.cat = b.getAttribute("data-cat"); renderHome(); }); });
 }
 
+/* ---- Nutrient table (per serving, with % Daily Value) ---- */
+function nutTable(t) {
+  var rows = MICROS.filter(function (m) { return t.per[m[0]] !== undefined; });
+  if (!rows.length) return '<p class="muted">No vitamin or mineral data for these ingredients.</p>';
+  var partial = false;
+  var html = '<table class="nut"><thead><tr><th scope="col">Nutrient</th><th scope="col" class="num">Amount</th><th scope="col" class="num">% DV</th></tr></thead><tbody>' +
+    rows.map(function (m) {
+      var v = t.per[m[0]], dv = m[3] ? Math.round(v / m[3] * 100) : null, part = t.cover[m[0]] < t.count;
+      if (part) partial = true;
+      return '<tr><th scope="row">' + m[1] + (part ? '<sup>*</sup>' : '') + '</th><td class="num">' + amt(v) + ' ' + m[2] + '</td><td class="num dv">' +
+        (dv === null ? '–' : '<span class="bar"><i style="width:' + Math.min(100, dv) + '%"></i></span>' + dv + '%') + '</td></tr>';
+    }).join("") + '</tbody></table>';
+  return html + '<p class="muted small">% Daily Value is based on FDA values for adults.' + (partial ? ' * Some ingredients have no data for this nutrient, so the real amount may be higher.' : '') + '</p>';
+}
+
+/* ---- Recipe page ---- */
 function renderRecipe(r) {
   if (state.servings === null || state.rid !== r.id) { state.servings = r.base; state.rid = r.id; }
   var s = state.servings, k = s / r.base, n = 0;
@@ -304,27 +450,36 @@ function renderRecipe(r) {
   var macros = FIELDS.filter(function (f) { return r.macros[f[0]] !== undefined; }).map(function (f) {
     return '<div><b>' + r.macros[f[0]] + f[2] + '</b>' + f[1] + '</div>';
   }).join("");
+  var source = r.mine ? 'Calculated from USDA FoodData Central and the labels you entered.' : 'Nutrition per serving, from the recipe author.';
   app.innerHTML =
     '<a class="back" href="#home">← All recipes</a>' +
-    '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + r.cat + '</span><h1>' + r.name + '</h1><p>' + r.blurb + '</p>' +
+    '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + esc(r.cat) + '</span><h1>' + esc(r.name) + '</h1><p>' + esc(r.blurb) + '</p>' +
     '<div class="facts">' + facts + '</div>' +
-    '<div class="macros" role="group" aria-label="Nutrition per serving">' + macros + '</div><p class="note">Nutrition per serving.</p>' +
-    '<div class="actions"><button class="btn" type="button" id="print">Print recipe</button></div></section>' +
+    '<div class="macros" role="group" aria-label="Nutrition per serving">' + macros + '</div><p class="note">Per serving. ' + source + '</p>' +
+    '<div class="actions"><button class="btn" type="button" id="print">Print recipe</button>' +
+    (r.mine ? '<a class="btn" href="#edit-' + r.id + '">Edit</a><button class="btn" type="button" id="del">Delete</button>' : '') + '</div></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
     '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
     '<ul class="ing">' + r.ing.map(function (i) {
-      if (isH(i)) return '<li class="grp">' + i.h + '</li>';
+      if (isH(i)) return '<li class="grp">' + esc(i.h) + '</li>';
       var id = n++;
-      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + i[2] + '</span></label></li>';
+      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + esc(i[2]) + '</span></label></li>';
     }).join("") + '</ul>' +
     (hasFixed ? '<p class="fixednote">Batch amounts stay the same when you change servings.</p>' : '') +
     '<button class="copy" type="button" id="copy">Copy shopping list</button></section>' +
-    '<section><h2>Method</h2><ol class="steps">' + r.steps.map(function (t) { return '<li><p>' + t + '</p></li>'; }).join("") + '</ol>' +
-    (r.tip ? '<p class="tip">' + r.tip + '</p>' : '') + '</section></div>' +
-    '<p class="printfoot">Plate and Pantry \u00B7 nutrition is per serving</p>';
+    '<section><h2>Method</h2>' + (r.steps.length ? '<ol class="steps">' + r.steps.map(function (t) { return '<li><p>' + esc(t) + '</p></li>'; }).join("") + '</ol>' : '<p class="muted">No steps added yet.</p>') +
+    (r.tip ? '<p class="tip">' + esc(r.tip) + '</p>' : '') + '</section></div>' +
+    (r.nut ? '<section class="nutsec"><h2>Vitamins and minerals</h2><p class="muted">Per serving.</p>' + nutTable(r.nut) + '</section>' :
+      '<section class="nutsec"><h2>Vitamins and minerals</h2><p class="muted">Not available yet for this recipe. Featured recipes will get them once their ingredients are linked to the food database.</p></section>') +
+    '<p class="printfoot">Plate and Pantry · nutrition is per serving</p>';
   document.getElementById("minus").addEventListener("click", function () { if (state.servings > 1) { state.servings--; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("plus").addEventListener("click", function () { if (state.servings < 24) { state.servings++; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("print").addEventListener("click", function () { try { window.print(); } catch (e) {} });
+  var del = document.getElementById("del");
+  if (del) del.addEventListener("click", function () {
+    if (del.getAttribute("data-armed") !== "1") { del.setAttribute("data-armed", "1"); del.textContent = "Tap again to delete"; return; }
+    MINE = MINE.filter(function (x) { return x.id !== r.id; }); saveMine(); go("home");
+  });
   document.getElementById("copy").addEventListener("click", function () {
     var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + fmtQ(i, k) + " " + i[2]; }).join("\n");
     var btn = this;
@@ -335,17 +490,162 @@ function renderRecipe(r) {
 function checks() { return Array.prototype.map.call(app.querySelectorAll(".ing input"), function (i) { return i.checked; }); }
 function restore(c) { Array.prototype.forEach.call(app.querySelectorAll(".ing input"), function (i, n) { i.checked = !!c[n]; }); }
 
+/* ---- Recipe builder ---- */
+var draft = null;
+function newDraft() { return { id: null, name: "", cat: "Dinner", servings: 1, blurb: "", steps: [], ing: [] }; }
+function renderBuilder(editId) {
+  var existing = editId ? mineById(editId) : null;
+  if (editId && !existing) { go("builder"); return; }
+  draft = existing ? JSON.parse(JSON.stringify(existing)) : (draft && !draft.id ? draft : newDraft());
+  app.innerHTML =
+    '<a class="back" href="#home">← All recipes</a>' +
+    '<section class="hero slim"><h1>' + (existing ? 'Edit recipe' : 'Build a recipe') + '</h1><p>Search the USDA food database, enter grams, and the nutrition adds up as you go.</p></section>' +
+    '<div class="builder"><div class="bmain">' +
+    '<div class="fieldrow"><div class="field grow"><label for="b-name">Recipe name</label><input id="b-name" type="text" value="' + esc(draft.name) + '" placeholder="Chicken and rice bowl"></div>' +
+    '<div class="field"><label for="b-cat">Meal</label><select id="b-cat">' + CATS.map(function (c) { return '<option' + (c === draft.cat ? ' selected' : '') + '>' + c + '</option>'; }).join("") + '</select></div>' +
+    '<div class="field small"><label for="b-serv">Servings</label><input id="b-serv" type="number" min="1" max="50" step="1" value="' + draft.servings + '"></div></div>' +
+    '<div class="field"><label for="b-blurb">Short description (optional)</label><input id="b-blurb" type="text" value="' + esc(draft.blurb) + '" placeholder="One line shown on the recipe card"></div>' +
+    '<h2>Ingredients</h2>' +
+    '<form id="b-search" class="searchrow" role="search"><label class="vh" for="b-q">Search foods</label><input id="b-q" type="search" placeholder="Search foods, like avocado or Fairlife milk"><button class="btn solid" type="submit">Search</button></form>' +
+    '<p id="b-status" class="muted small" aria-live="polite"></p><div id="b-results"></div>' +
+    '<details class="label"><summary>Add a food from its nutrition label</summary><div class="labelgrid">' +
+    '<div class="field span2"><label for="l-name">Food name</label><input id="l-name" type="text" placeholder="Hero burrito tortilla"></div>' +
+    '<div class="field"><label for="l-serv">Serving size (g)</label><input id="l-serv" type="number" min="0" step="any"></div>' +
+    '<div class="field"><label for="l-kcal">Calories</label><input id="l-kcal" type="number" min="0" step="any"></div>' +
+    '<div class="field"><label for="l-p">Protein (g)</label><input id="l-p" type="number" min="0" step="any"></div>' +
+    '<div class="field"><label for="l-f">Fat (g)</label><input id="l-f" type="number" min="0" step="any"></div>' +
+    '<div class="field"><label for="l-c">Carbs (g)</label><input id="l-c" type="number" min="0" step="any"></div>' +
+    '<div class="field"><label for="l-fib">Fiber (g)</label><input id="l-fib" type="number" min="0" step="any"></div>' +
+    '</div><p class="muted small">Enter the numbers for one serving, as printed on the package. The food is added at one serving; change the grams after.</p>' +
+    '<p id="l-err" class="err" aria-live="polite"></p><button class="btn" type="button" id="l-add">Add food</button></details>' +
+    '<div id="b-list"></div>' +
+    '<h2>Method</h2><div class="field"><label for="b-steps">Steps, one per line</label><textarea id="b-steps" rows="6" placeholder="Preheat the oven to 400°F.">' + esc(draft.steps.join("\n")) + '</textarea></div>' +
+    '<p id="b-err" class="err" aria-live="polite"></p>' +
+    '<div class="actions"><button class="btn solid" type="button" id="b-save">' + (existing ? 'Save changes' : 'Save recipe') + '</button>' +
+    '<button class="btn" type="button" id="b-clear">' + (existing ? 'Cancel' : 'Start over') + '</button></div>' +
+    '<p class="muted small">Recipes are saved in this browser only.</p>' +
+    '</div><aside class="bside" aria-label="Nutrition per serving"><div id="b-tot"></div></aside></div>';
+
+  function sync() {
+    draft.name = document.getElementById("b-name").value;
+    draft.cat = document.getElementById("b-cat").value;
+    draft.servings = Math.max(1, parseInt(document.getElementById("b-serv").value, 10) || 1);
+    draft.blurb = document.getElementById("b-blurb").value;
+    draft.steps = document.getElementById("b-steps").value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean);
+  }
+  ["b-name","b-cat","b-serv","b-blurb","b-steps"].forEach(function (id) { var el = document.getElementById(id); el.addEventListener("input", function () { sync(); if (id === "b-serv") drawTotals(); }); el.addEventListener("change", sync); });
+
+  function drawList() {
+    var box = document.getElementById("b-list");
+    if (!draft.ing.length) { box.innerHTML = '<p class="muted emptyin">No ingredients yet. Search for a food above.</p>'; return; }
+    box.innerHTML = '<ul class="blist">' + draft.ing.map(function (x, i) {
+      var kc = x.n && typeof x.n.kcal === "number" ? Math.round(x.n.kcal * x.g / 100) + ' kcal' : '';
+      return '<li><div class="bname"><span>' + esc(x.name) + '</span><span class="src">' + esc(x.srcLabel || "") + '</span></div>' +
+        '<label class="vh" for="g' + i + '">Grams of ' + esc(x.name) + '</label><input class="grams" id="g' + i + '" data-i="' + i + '" type="number" min="0" step="any" value="' + x.g + '"><span class="gunit">g</span>' +
+        '<span class="kc">' + kc + '</span><button class="x" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(x.name) + '">×</button></li>';
+    }).join("") + '</ul>';
+    Array.prototype.forEach.call(box.querySelectorAll(".grams"), function (el) {
+      el.addEventListener("input", function () {
+        var i = +el.getAttribute("data-i"); draft.ing[i].g = Math.max(0, parseFloat(el.value) || 0);
+        var x = draft.ing[i], kc = el.parentNode.querySelector(".kc");
+        if (kc && x.n && typeof x.n.kcal === "number") kc.textContent = Math.round(x.n.kcal * x.g / 100) + " kcal";
+        drawTotals();
+      });
+    });
+    Array.prototype.forEach.call(box.querySelectorAll("[data-rm]"), function (b) {
+      b.addEventListener("click", function () { draft.ing.splice(+b.getAttribute("data-rm"), 1); drawList(); drawTotals(); });
+    });
+  }
+  function drawTotals() {
+    var t = totals(draft.ing, draft.servings), p = t.per;
+    var tile = function (k, label, unit) { return '<div><b>' + (p[k] === undefined ? '–' : (k === "kcal" ? Math.round(p[k]) : amt(p[k])) + unit) + '</b>' + label + '</div>'; };
+    document.getElementById("b-tot").innerHTML = '<h2>Per serving</h2><div class="macros side">' +
+      tile("kcal","Calories","") + tile("p","Protein","g") + tile("c","Carbs","g") + tile("f","Fat","g") + tile("fib","Fiber","g") + '</div>' +
+      (draft.ing.length ? '<h3>Vitamins and minerals</h3>' + nutTable(t) : '<p class="muted">Add ingredients to see the numbers.</p>');
+  }
+  function addFood(f) {
+    var g = f.serving && f.serving > 0 ? f.serving : 100;
+    var srcLabel = f.type === "Branded" ? (f.brand ? niceName(f.brand) + " · label data" : "Branded") : "USDA " + (f.type === "Foundation" ? "Foundation" : "SR Legacy");
+    draft.ing.push({ name: niceName(f.name), g: Math.round(g * 10) / 10, src: f.type === "Branded" ? "branded" : "usda", srcLabel: srcLabel, fdcId: f.id, n: f.n });
+    drawList(); drawTotals();
+  }
+
+  var lastResults = [];
+  document.getElementById("b-search").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var q = document.getElementById("b-q").value.trim(), status = document.getElementById("b-status"), out = document.getElementById("b-results");
+    if (!q) { status.textContent = "Type a food to search for."; return; }
+    status.textContent = "Searching…"; out.innerHTML = "";
+    fetch("/api/foods?q=" + encodeURIComponent(q)).then(function (res) {
+      return res.json().catch(function () { return { error: "nojson" }; }).then(function (j) { j._status = res.status; return j; });
+    }).then(function (j) {
+      if (j.error === "rate") { status.textContent = "The food database is getting too many searches right now. Wait a few minutes and try again."; return; }
+      if (j.error || !j.generic) { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; return; }
+      lastResults = j.generic.concat(j.branded);
+      if (!lastResults.length) { status.textContent = "No foods found for “" + q + "”. Try a simpler word."; return; }
+      status.textContent = (j.demoKey ? "Using the shared demo key, so searches may run out. " : "") + "Pick a food to add it. Calories are per 100 g.";
+      function group(title, list, off) {
+        if (!list.length) return "";
+        return '<h3 class="rhd">' + title + '</h3><ul class="results">' + list.map(function (f, i) {
+          var kc = typeof f.n.kcal === "number" ? Math.round(f.n.kcal) + " kcal" : "no calories";
+          return '<li><button type="button" data-pick="' + (off + i) + '"><span class="rn">' + esc(niceName(f.name)) + '</span>' +
+            '<span class="rm">' + (f.brand ? esc(niceName(f.brand)) + ' · ' : '') + kc + ' · ' + amt(f.n.p || 0) + 'g protein</span></button></li>';
+        }).join("") + '</ul>';
+      }
+      out.innerHTML = group("Common foods (USDA)", j.generic, 0) + group("Brand-name products", j.branded, j.generic.length);
+      Array.prototype.forEach.call(out.querySelectorAll("[data-pick]"), function (b) {
+        b.addEventListener("click", function () { addFood(lastResults[+b.getAttribute("data-pick")]); status.textContent = "Added. Set the grams in the list below."; out.innerHTML = ""; });
+      });
+    }).catch(function () { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; });
+  });
+
+  document.getElementById("l-add").addEventListener("click", function () {
+    var v = function (id) { var x = parseFloat(document.getElementById(id).value); return isNaN(x) ? undefined : x; };
+    var name = document.getElementById("l-name").value.trim(), sv = v("l-serv"), err = document.getElementById("l-err");
+    if (!name) { err.textContent = "Add the food's name."; return; }
+    if (!sv || sv <= 0) { err.textContent = "Add the serving size in grams, from the label."; return; }
+    var n = {}, per = 100 / sv;
+    [["l-kcal","kcal"],["l-p","p"],["l-f","f"],["l-c","c"],["l-fib","fib"]].forEach(function (pair) { var x = v(pair[0]); if (x !== undefined) n[pair[1]] = x * per; });
+    if (n.kcal === undefined) { err.textContent = "Add the calories, from the label."; return; }
+    err.textContent = "";
+    draft.ing.push({ name: name, g: sv, src: "label", srcLabel: "From label", n: n });
+    ["l-name","l-serv","l-kcal","l-p","l-f","l-c","l-fib"].forEach(function (id) { document.getElementById(id).value = ""; });
+    drawList(); drawTotals();
+  });
+
+  document.getElementById("b-save").addEventListener("click", function () {
+    sync();
+    var err = document.getElementById("b-err");
+    if (!draft.name.trim()) { err.textContent = "Give the recipe a name."; document.getElementById("b-name").focus(); return; }
+    if (!draft.ing.length) { err.textContent = "Add at least one ingredient."; return; }
+    err.textContent = "";
+    if (!draft.id) { draft.id = "my-" + Date.now().toString(36); MINE.unshift(draft); }
+    else { for (var i = 0; i < MINE.length; i++) if (MINE[i].id === draft.id) MINE[i] = draft; }
+    if (!saveMine()) { err.textContent = "This browser wouldn't save the recipe. Check that site storage is allowed."; return; }
+    var id = draft.id; draft = null; go(id);
+  });
+  document.getElementById("b-clear").addEventListener("click", function () {
+    if (existing) { var id = existing.id; draft = null; go(id); return; }
+    draft = newDraft(); renderBuilder();
+  });
+  drawList(); drawTotals();
+}
+
 function route() {
-  var id = location.hash.replace("#", ""), r = id && id !== "home" ? find(id) : null;
-  if (r) renderRecipe(r); else renderHome();
+  var id = location.hash.replace("#", "");
+  render(id);
+}
+function render(id) {
+  if (id === "builder") renderBuilder();
+  else if (id.indexOf("edit-") === 0) renderBuilder(id.slice(5));
+  else { var r = id && id !== "home" ? find(id) : null; if (r) renderRecipe(r); else renderHome(); }
   window.scrollTo(0, 0);
 }
+loadMine();
 window.addEventListener("hashchange", route);
 /* Handle in-page links directly so they work even where the viewer blocks hash navigation */
 function go(id) {
-  var r = id && id !== "home" ? find(id) : null;
-  if (r) renderRecipe(r); else renderHome();
-  window.scrollTo(0, 0);
+  render(id);
   try { if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id); } catch (e) {}
 }
 document.addEventListener("click", function (e) {
@@ -354,6 +654,7 @@ document.addEventListener("click", function (e) {
   e.preventDefault();
   go(a.getAttribute("href").slice(1));
 });
+
 /* ---- Themes ---- */
 var THEMES = [
   { id: "default",   name: "Lemon Basil",   H: 154, S: 55, A: "#f0b429", AI: "#2a1f00" },
