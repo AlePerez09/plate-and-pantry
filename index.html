@@ -122,6 +122,9 @@ ol.steps p { margin: 0; max-width: 62ch; }
 .sw { display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; cursor: pointer; font-weight: 600; text-align: left; }
 .sw i { width: 22px; height: 22px; border-radius: 50%; flex: none; }
 .sw[aria-pressed="true"] { border-color: var(--deep); box-shadow: inset 0 0 0 1px var(--deep); }
+.morebtn { background: none; border: 0; padding: 8px 0 0; color: var(--deep); font-weight: 700; font-size: 0.9rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+#moreswatches { margin-top: 8px; }
+.customrow label { font-size: 0.9rem; }
 .customrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; font-weight: 600; }
 .customrow input[type="color"] { width: 48px; height: 32px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: transparent; cursor: pointer; }
 .btn { background: color-mix(in srgb, var(--surface) 70%, transparent); color: inherit; border: 1px solid currentColor; border-radius: 10px; padding: 8px 14px; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
@@ -210,6 +213,11 @@ ul.blist li { display: grid; grid-template-columns: 1fr 5.5em auto 4.5em 32px; g
 #b-status:empty, #b-results:empty { display: none; }
 .brand { white-space: nowrap; }
 @media (max-width: 520px) { .hright .navlink { display: none; } }
+.tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; vertical-align: 1px; }
+.tag.full { background: color-mix(in srgb, var(--deep) 16%, transparent); color: var(--deep); }
+.tag.lbl { background: color-mix(in srgb, var(--accent) 26%, transparent); color: var(--ink); }
+.atl { font-size: 0.75rem; color: var(--muted); }
+tr.part td, tr.part th { color: var(--muted); }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
@@ -369,13 +377,13 @@ function niceName(s) {
 
 /* ---- Nutrition math: every food stores nutrients per 100 g ---- */
 function totals(ing, servings) {
-  var t = {}, cover = {}, n = ing.length, sv = servings > 0 ? servings : 1;
+  var t = {}, cover = {}, miss = {}, n = ing.length, sv = servings > 0 ? servings : 1;
   ALL_KEYS.forEach(function (k) {
-    var sum = 0, have = 0;
-    ing.forEach(function (x) { var v = x.n && x.n[k]; if (typeof v === "number") { sum += v * (x.g || 0) / 100; have++; } });
-    if (have) { t[k] = sum / sv; cover[k] = have; }
+    var sum = 0, have = 0, lacking = [];
+    ing.forEach(function (x) { var v = x.n && x.n[k]; if (typeof v === "number") { sum += v * (x.g || 0) / 100; have++; } else lacking.push(x.name); });
+    if (have) { t[k] = sum / sv; cover[k] = have; miss[k] = lacking; }
   });
-  return { per: t, cover: cover, count: n };
+  return { per: t, cover: cover, miss: miss, count: n };
 }
 
 /* ---- My recipes, kept in this browser ---- */
@@ -429,15 +437,17 @@ function renderHome() {
 function nutTable(t) {
   var rows = MICROS.filter(function (m) { return t.per[m[0]] !== undefined; });
   if (!rows.length) return '<p class="muted">No vitamin or mineral data for these ingredients.</p>';
-  var partial = false;
+  var lacking = {};
   var html = '<table class="nut"><thead><tr><th scope="col">Nutrient</th><th scope="col" class="num">Amount</th><th scope="col" class="num">% DV</th></tr></thead><tbody>' +
     rows.map(function (m) {
       var v = t.per[m[0]], dv = m[3] ? Math.round(v / m[3] * 100) : null, part = t.cover[m[0]] < t.count;
-      if (part) partial = true;
-      return '<tr><th scope="row">' + m[1] + (part ? '<sup>*</sup>' : '') + '</th><td class="num">' + amt(v) + ' ' + m[2] + '</td><td class="num dv">' +
-        (dv === null ? '–' : '<span class="bar"><i style="width:' + Math.min(100, dv) + '%"></i></span>' + dv + '%') + '</td></tr>';
+      if (part) (t.miss && t.miss[m[0]] || []).forEach(function (nm) { lacking[nm] = true; });
+      return '<tr' + (part ? ' class="part"' : '') + '><th scope="row">' + m[1] + (part ? '<sup>*</sup>' : '') + '</th><td class="num">' + (part ? '<span class="atl">at least</span> ' : '') + amt(v) + ' ' + m[2] + '</td><td class="num dv">' +
+        (dv === null ? '\u2013' : '<span class="bar"><i style="width:' + Math.min(100, dv) + '%"></i></span>' + (part ? '\u2265' : '') + dv + '%') + '</td></tr>';
     }).join("") + '</tbody></table>';
-  return html + '<p class="muted small">% Daily Value is based on FDA values for adults.' + (partial ? ' * Some ingredients have no data for this nutrient, so the real amount may be higher.' : '') + '</p>';
+  var names = Object.keys(lacking);
+  return html + '<p class="muted small">% Daily Value is based on FDA values for adults.</p>' +
+    (names.length ? '<p class="muted small">* Not counted, because the database has no data for it: ' + names.map(esc).join(", ") + '. Brand-name foods often list only what is on the package label. For full vitamins and minerals, use a matching food from the Common foods results.</p>' : '');
 }
 
 /* ---- Recipe page ---- */
@@ -540,7 +550,8 @@ function renderBuilder(editId) {
     if (!draft.ing.length) { box.innerHTML = '<p class="muted emptyin">No ingredients yet. Search for a food above.</p>'; return; }
     box.innerHTML = '<ul class="blist">' + draft.ing.map(function (x, i) {
       var kc = x.n && typeof x.n.kcal === "number" ? Math.round(x.n.kcal * x.g / 100) + ' kcal' : '';
-      return '<li><div class="bname"><span>' + esc(x.name) + '</span><span class="src">' + esc(x.srcLabel || "") + '</span></div>' +
+      var micro = MICROS.filter(function (m) { return x.n && typeof x.n[m[0]] === "number"; }).length;
+      return '<li><div class="bname"><span>' + esc(x.name) + '</span><span class="src">' + esc(x.srcLabel || "") + (micro < 10 ? ' \u00B7 no vitamin/mineral data' : '') + '</span></div>' +
         '<label class="vh" for="g' + i + '">Grams of ' + esc(x.name) + '</label><input class="grams" id="g' + i + '" data-i="' + i + '" type="number" min="0" step="any" value="' + x.g + '"><span class="gunit">g</span>' +
         '<span class="kc">' + kc + '</span><button class="x" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(x.name) + '">×</button></li>';
     }).join("") + '</ul>';
@@ -564,7 +575,7 @@ function renderBuilder(editId) {
       (draft.ing.length ? '<h3>Vitamins and minerals</h3>' + nutTable(t) : '<p class="muted">Add ingredients to see the numbers.</p>');
   }
   function addFood(f) {
-    var g = f.serving && f.serving > 0 ? f.serving : 100;
+    var g = 100;
     var srcLabel = f.type === "Branded" ? (f.brand ? niceName(f.brand) + " · label data" : "Branded") : "USDA " + (f.type === "Foundation" ? "Foundation" : "SR Legacy");
     draft.ing.push({ name: niceName(f.name), g: Math.round(g * 10) / 10, src: f.type === "Branded" ? "branded" : "usda", srcLabel: srcLabel, fdcId: f.id, n: f.n });
     drawList(); drawTotals();
@@ -583,18 +594,20 @@ function renderBuilder(editId) {
       if (j.error || !j.generic) { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; return; }
       lastResults = j.generic.concat(j.branded);
       if (!lastResults.length) { status.textContent = "No foods found for “" + q + "”. Try a simpler word."; return; }
-      status.textContent = (j.demoKey ? "Using the shared demo key, so searches may run out. " : "") + "Pick a food to add it. Calories are per 100 g.";
+      status.textContent = (j.demoKey ? "Using the shared demo key, so searches may run out. " : "") + "Pick a food to add it. Calories are per 100 g. Common foods usually have full vitamins and minerals; brand-name foods often have label data only.";
       function group(title, list, off) {
         if (!list.length) return "";
         return '<h3 class="rhd">' + title + '</h3><ul class="results">' + list.map(function (f, i) {
           var kc = typeof f.n.kcal === "number" ? Math.round(f.n.kcal) + " kcal" : "no calories";
+          var micro = MICROS.filter(function (m) { return typeof f.n[m[0]] === "number"; }).length;
+          var tag = micro >= 10 ? '<span class="tag full">Full nutrients</span>' : '<span class="tag lbl">Label data only</span>';
           return '<li><button type="button" data-pick="' + (off + i) + '"><span class="rn">' + esc(niceName(f.name)) + '</span>' +
-            '<span class="rm">' + (f.brand ? esc(niceName(f.brand)) + ' · ' : '') + kc + ' · ' + amt(f.n.p || 0) + 'g protein</span></button></li>';
+            '<span class="rm">' + (f.brand ? esc(niceName(f.brand)) + ' · ' : '') + kc + ' · ' + amt(f.n.p || 0) + 'g protein ' + tag + '</span></button></li>';
         }).join("") + '</ul>';
       }
       out.innerHTML = group("Common foods (USDA)", j.generic, 0) + group("Brand-name products", j.branded, j.generic.length);
       Array.prototype.forEach.call(out.querySelectorAll("[data-pick]"), function (b) {
-        b.addEventListener("click", function () { addFood(lastResults[+b.getAttribute("data-pick")]); status.textContent = "Added. Set the grams in the list below."; out.innerHTML = ""; });
+        b.addEventListener("click", function () { addFood(lastResults[+b.getAttribute("data-pick")]); status.textContent = "Added at 100 g. Change the grams in the list below."; out.innerHTML = ""; });
       });
     }).catch(function () { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; });
   });
@@ -662,7 +675,13 @@ var THEMES = [
   { id: "blueberry", name: "Blueberry", H: 232, S: 48, A: "#93a9ff", AI: "#0e1633" },
   { id: "tomato",    name: "Tomato",    H: 6,   S: 62, A: "#ff9a78", AI: "#3a0f05" },
   { id: "turmeric",  name: "Turmeric",  H: 38,  S: 78, A: "#ffc933", AI: "#2a1f00" },
-  { id: "beet",      name: "Beet",      H: 330, S: 52, A: "#ff8fc0", AI: "#3a0620" }
+  { id: "beet",      name: "Beet",      H: 330, S: 52, A: "#ff8fc0", AI: "#3a0620" },
+  { id: "matcha",    name: "Matcha",    H: 82,  S: 38, A: "#bcd98a", AI: "#1c2a08", more: true },
+  { id: "mango",     name: "Mango",     H: 30,  S: 80, A: "#ffb547", AI: "#3a2000", more: true },
+  { id: "eggplant",  name: "Eggplant",  H: 285, S: 50, A: "#c79af0", AI: "#260a3a", more: true },
+  { id: "chocolate", name: "Chocolate", H: 22,  S: 45, A: "#dba571", AI: "#2e1605", more: true },
+  { id: "lavender",  name: "Lavender",  H: 255, S: 42, A: "#c2b8fb", AI: "#1c1442", more: true },
+  { id: "turnip",    name: "Turnip",    H: 312, S: 34, A: "#ecb3e2", AI: "#33102e", more: true }
 ];
 var currentTheme = { id: "default" };
 function themeById(id) { for (var i = 0; i < THEMES.length; i++) if (THEMES[i].id === id) return THEMES[i]; return null; }
@@ -699,12 +718,22 @@ function setTheme(t, save) {
 }
 function buildThemePanel() {
   var panel = document.getElementById("themepanel"), btn = document.getElementById("themebtn");
-  panel.innerHTML = '<h2>Site colors</h2><p>Pick a food and the site takes on its colors.</p><div class="swatches">' +
-    THEMES.map(function (t) {
-      var deep = "hsl(" + t.H + " " + t.S + "% 30%)";
-      return '<button class="sw" type="button" data-id="' + t.id + '" aria-pressed="false"><i style="background:linear-gradient(135deg,' + deep + ' 50%,' + t.A + ' 50%)"></i>' + t.name + '</button>';
-    }).join("") + '</div>' +
-    '<div class="customrow"><label for="custom">Your own color</label><input id="custom" type="color" value="#2f7d4f"></div>';
+  function sw(t) {
+    var deep = "hsl(" + t.H + " " + t.S + "% 30%)";
+    return '<button class="sw" type="button" data-id="' + t.id + '" aria-pressed="false"><i style="background:linear-gradient(135deg,' + deep + ' 50%,' + t.A + ' 50%)"></i>' + t.name + '</button>';
+  }
+  var extra = THEMES.filter(function (t) { return t.more; });
+  panel.innerHTML = '<h2>Eat the rainbow</h2><p>Sprinkle your favorite food\u2019s colors all over the site.</p>' +
+    '<div class="swatches">' + THEMES.filter(function (t) { return !t.more; }).map(sw).join("") + '</div>' +
+    '<button class="morebtn" type="button" id="morefoods" aria-expanded="false" aria-controls="moreswatches">More foods (' + extra.length + ')</button>' +
+    '<div class="swatches" id="moreswatches" hidden>' + extra.map(sw).join("") + '</div>' +
+    '<div class="customrow"><label for="custom">Not hungry for these? Pick any color.</label><input id="custom" type="color" value="#2f7d4f"></div>';
+  var moreBtn = panel.querySelector("#morefoods"), moreBox = panel.querySelector("#moreswatches");
+  moreBtn.addEventListener("click", function () {
+    var open = moreBox.hidden; moreBox.hidden = !open;
+    moreBtn.setAttribute("aria-expanded", String(open));
+    moreBtn.textContent = open ? "Fewer foods" : "More foods (" + extra.length + ")";
+  });
   Array.prototype.forEach.call(panel.querySelectorAll(".sw"), function (b) {
     b.addEventListener("click", function () { setTheme({ id: b.getAttribute("data-id") }, true); });
   });
@@ -720,6 +749,8 @@ buildThemePanel();
   var saved = null;
   try { saved = JSON.parse(localStorage.getItem("pp-theme") || "null"); } catch (e) {}
   setTheme(saved && saved.id ? saved : { id: "default" }, false);
+  var t = themeById(currentTheme.id);
+  if (t && t.more) document.getElementById("morefoods").click();
 })();
 
 route();
