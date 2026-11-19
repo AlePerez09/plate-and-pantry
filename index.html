@@ -642,10 +642,10 @@ function renderBuilder(editId) {
     var q = document.getElementById("b-q").value.trim(), status = document.getElementById("b-status"), out = document.getElementById("b-results");
     if (!q) { status.textContent = "Type a food to search for."; return; }
     status.textContent = "Searching…"; out.innerHTML = "";
-    fetch("/api/foods?q=" + encodeURIComponent(q)).then(function (res) {
+    fetch("/api/foods?q=" + encodeURIComponent(q.toLowerCase().replace(/\s+/g, " "))).then(function (res) {
       return res.json().catch(function () { return { error: "nojson" }; }).then(function (j) { j._status = res.status; return j; });
     }).then(function (j) {
-      if (j.error === "rate") { status.textContent = "The food database is getting too many searches right now. Wait a few minutes and try again."; return; }
+      if (j.error === "rate") { var m = j.retryAfter ? Math.max(1, Math.ceil(j.retryAfter / 60)) : 0; status.textContent = "That\u2019s a lot of searches in a short time. Try again " + (m ? "in about " + m + (m === 1 ? " minute." : " minutes.") : "in a few minutes.") + " You can still add foods from a label below."; return; }
       if (j.error || !j.generic) { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; return; }
       lastResults = j.generic.concat(j.branded);
       if (!lastResults.length) { status.textContent = "No foods found for “" + q + "”. Try a simpler word."; return; }
@@ -699,22 +699,34 @@ function renderBuilder(editId) {
   drawList(); drawTotals();
 }
 
+var currentView = null;
+function viewId() { return location.hash.replace("#", "") || "home"; }
 function route() {
-  var id = location.hash.replace("#", "");
-  render(id);
+  var id = viewId();
+  if (id !== currentView) render(id);
 }
-function render(id) {
+function render(id, y) {
+  currentView = id || "home";
   if (id === "builder") renderBuilder();
   else if (id.indexOf("edit-") === 0) renderBuilder(id.slice(5));
   else { var r = id && id !== "home" ? find(id) : null; if (r) renderRecipe(r); else renderHome(); }
-  window.scrollTo(0, 0);
+  window.scrollTo(0, y || 0);
 }
 loadMine();
+/* Browser Back/Forward: show the page for that history entry and put the scroll position back */
+window.addEventListener("popstate", function (e) {
+  render(viewId(), e.state && e.state.y);
+});
 window.addEventListener("hashchange", route);
-/* Handle in-page links directly so they work even where the viewer blocks hash navigation */
+/* In-page links add a history entry, so Back returns to the previous page.
+   Rendering happens first, so links still work where a viewer blocks history changes. */
 function go(id) {
+  id = id || "home";
+  try {
+    history.replaceState({ y: window.scrollY || 0 }, "", location.hash || "#home");
+    if (viewId() !== id) history.pushState({ y: 0 }, "", "#" + id);
+  } catch (e) {}
   render(id);
-  try { if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id); } catch (e) {}
 }
 document.addEventListener("click", function (e) {
   var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
