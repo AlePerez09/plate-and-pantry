@@ -222,11 +222,13 @@ details.srcs { margin-top: 18px; border-top: 1px solid var(--line); padding-top:
 details.srcs summary { cursor: pointer; font-weight: 600; color: var(--deep); }
 details.srcs ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
 
-/* Side doodles: decorative, only on screens wide enough that they stay clear of the content */
+/* Side doodles: decorative; sized and placed inside the side space so they never cover content */
 .doodles { display: none; }
-@media (min-width: 1800px) {
-  .doodles { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-  .dd { position: absolute; opacity: .9; transform: rotate(var(--rot)); animation: bob 7s ease-in-out var(--d) infinite; }
+@media (min-width: 1480px) {
+  .doodles { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 0; --gutter: calc((100vw - 1320px) / 2); }
+  .dd { position: absolute; opacity: .9; width: min(var(--w), calc(var(--gutter) * .62)); transform: rotate(var(--rot)); animation: bob 7s ease-in-out var(--d) infinite; }
+  .dd.l { left: calc(var(--gutter) * var(--x)); translate: -50% 0; }
+  .dd.r { right: calc(var(--gutter) * var(--x)); translate: 50% 0; }
   .dd svg { display: block; width: 100%; height: auto; }
   main.wrap, header.top, footer { position: relative; z-index: 1; }
   header.top { z-index: 5; }
@@ -279,6 +281,24 @@ details.srcs ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid;
 :root[data-contrast="high"] a:not(.card):not(.btn):not(.brand):not(.skip) { text-decoration: underline; text-underline-offset: 3px; }
 :root[data-contrast="high"] .rhead .note, :root[data-contrast="high"] .rhead p.note { opacity: 1; }
 :root[data-contrast="high"] :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* ---- Units and tags ---- */
+.unitseg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 0 0 14px; }
+.unitseg button { background: transparent; border: 0; padding: 6px 12px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+.unitseg button + button { border-left: 1px solid var(--line); }
+.unitseg button[aria-pressed="true"] { background: var(--deep); color: var(--bg); }
+.dtags { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 10px; }
+.dtag { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.rhead p.contains { margin: 0 0 16px; font-size: 0.9rem; }
+.cnote { opacity: 0.75; }
+details.filters { margin: 4px 0 6px; }
+details.filters summary { cursor: pointer; font-weight: 700; color: var(--deep); padding: 4px 0; width: max-content; }
+details.filters .count { display: inline-block; min-width: 1.4em; padding: 0 6px; margin-left: 4px; border-radius: 999px; background: var(--deep); color: var(--bg); font-size: 0.8rem; text-align: center; }
+.frow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 10px 0 0; }
+.flabel { font-weight: 600; font-size: 0.9rem; min-width: 9.5em; }
+.chip.avoid[aria-pressed="true"] { background: #b42318; border-color: #b42318; color: #fff; }
+details.filters p.muted { margin: 10px 0 0; }
+@media print { .unitseg, details.filters { display: none !important; } }
 footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 
@@ -311,7 +331,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
     <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="a11ybtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="a11ypanel" aria-label="Settings" title="Settings"><svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div id="a11ypanel" class="themepanel" role="group" aria-label="Settings" hidden></div></div><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel"><i class="dot"></i>Theme</button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
   </div>
 </header>
-<div class="doodles" aria-hidden="true"><span class="dd l" style="top:14vh;left:6vw;width:96px;--rot:-8deg;--d:0s"><svg viewBox="0 0 100 120"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></svg></span><span class="dd l" style="top:44vh;left:3vw;width:74px;--rot:10deg;--d:2s"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></svg></span><span class="dd l" style="top:72vh;left:7vw;width:84px;--rot:-6deg;--d:4s"><svg viewBox="0 0 110 100"><path d="M52 30c-4-12 2-22 14-24M52 30c8-8 20-8 28-2" stroke="#4f7a32" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="22" fill="#3d4fb8"/><circle cx="70" cy="62" r="24" fill="#5162cf"/><circle cx="28" cy="51" r="5" fill="#fff" opacity=".4"/><circle cx="63" cy="55" r="5" fill="#fff" opacity=".4"/></svg></span><span class="dd r" style="top:12vh;right:4vw;width:100px;--rot:8deg;--d:6s"><svg viewBox="0 0 120 100"><path d="M60 8c26 0 52 10 52 38 0 22-14 24-18 40-3 12-22 10-34 10S28 98 24 84C20 70 8 66 8 46 8 18 34 8 60 8z" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="58" cy="50" r="20" fill="#f6b82b"/><circle cx="51" cy="44" r="5" fill="#fff" opacity=".55"/></svg></span><span class="dd r" style="top:42vh;right:7vw;width:78px;--rot:14deg;--d:8s"><svg viewBox="0 0 100 120"><path d="M50 30c12 0 18 8 16 18L54 112c-1 6-7 6-8 0L34 48c-2-10 4-18 16-18z" fill="#f08a2c"/><g stroke="#c9661a" stroke-width="3" stroke-linecap="round"><path d="M40 56h8M52 70h8M42 84h7"/></g><path d="M50 30C46 18 38 10 30 8M50 30c0-12 2-20 6-26M50 30c6-10 14-14 22-14" stroke="#4f9a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:70vh;right:3vw;width:70px;--rot:-12deg;--d:10s"><svg viewBox="0 0 100 100"><path d="M14 86C10 46 40 12 88 12c2 44-28 78-74 74z" fill="#4f9a3a"/><path d="M20 80C40 58 58 40 78 22" stroke="#a6d68a" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:88vh;right:8vw;width:80px;--rot:6deg;--d:12s"><svg viewBox="0 0 110 100"><path d="M20 40c-12-2-14-30 12-30h46c26 0 24 28 12 30v50H20z" fill="#c68a4a"/><path d="M28 42c-8-2-8-22 8-22h38c16 0 16 20 8 22v40H28z" fill="#f2d39c"/><path d="M40 56c6 6 12 6 18 0" stroke="#6b4423" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="42" cy="48" r="3" fill="#6b4423"/><circle cx="58" cy="48" r="3" fill="#6b4423"/><circle cx="35" cy="56" r="4" fill="#f29a9a" opacity=".7"/><circle cx="65" cy="56" r="4" fill="#f29a9a" opacity=".7"/></svg></span><span class="dd l" style="top:92vh;left:4vw;width:70px;--rot:8deg;--d:14s"><svg viewBox="0 0 100 120"><path d="M50 116V20" stroke="#3f7d34" stroke-width="4" stroke-linecap="round"/><g fill="#5aa547"><ellipse cx="36" cy="40" rx="14" ry="7" transform="rotate(-30 36 40)"/><ellipse cx="64" cy="56" rx="14" ry="7" transform="rotate(30 64 56)"/><ellipse cx="36" cy="72" rx="14" ry="7" transform="rotate(-30 36 72)"/><ellipse cx="64" cy="88" rx="14" ry="7" transform="rotate(30 64 88)"/><ellipse cx="50" cy="18" rx="7" ry="12"/></g></svg></span></div>
+<div class="doodles" aria-hidden="true"><span class="dd l" style="top:14vh;--x:0.55;--w:96px;--rot:-8deg;--d:0s"><svg viewBox="0 0 100 120"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></svg></span><span class="dd l" style="top:44vh;--x:0.35;--w:74px;--rot:10deg;--d:2s"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></svg></span><span class="dd l" style="top:72vh;--x:0.6;--w:84px;--rot:-6deg;--d:4s"><svg viewBox="0 0 110 100"><path d="M52 30c-4-12 2-22 14-24M52 30c8-8 20-8 28-2" stroke="#4f7a32" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="22" fill="#3d4fb8"/><circle cx="70" cy="62" r="24" fill="#5162cf"/><circle cx="28" cy="51" r="5" fill="#fff" opacity=".4"/><circle cx="63" cy="55" r="5" fill="#fff" opacity=".4"/></svg></span><span class="dd r" style="top:12vh;--x:0.4;--w:100px;--rot:8deg;--d:6s"><svg viewBox="0 0 120 100"><path d="M60 8c26 0 52 10 52 38 0 22-14 24-18 40-3 12-22 10-34 10S28 98 24 84C20 70 8 66 8 46 8 18 34 8 60 8z" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="58" cy="50" r="20" fill="#f6b82b"/><circle cx="51" cy="44" r="5" fill="#fff" opacity=".55"/></svg></span><span class="dd r" style="top:42vh;--x:0.6;--w:78px;--rot:14deg;--d:8s"><svg viewBox="0 0 100 120"><path d="M50 30c12 0 18 8 16 18L54 112c-1 6-7 6-8 0L34 48c-2-10 4-18 16-18z" fill="#f08a2c"/><g stroke="#c9661a" stroke-width="3" stroke-linecap="round"><path d="M40 56h8M52 70h8M42 84h7"/></g><path d="M50 30C46 18 38 10 30 8M50 30c0-12 2-20 6-26M50 30c6-10 14-14 22-14" stroke="#4f9a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:70vh;--x:0.35;--w:70px;--rot:-12deg;--d:10s"><svg viewBox="0 0 100 100"><path d="M14 86C10 46 40 12 88 12c2 44-28 78-74 74z" fill="#4f9a3a"/><path d="M20 80C40 58 58 40 78 22" stroke="#a6d68a" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:88vh;--x:0.55;--w:80px;--rot:6deg;--d:12s"><svg viewBox="0 0 110 100"><path d="M20 40c-12-2-14-30 12-30h46c26 0 24 28 12 30v50H20z" fill="#c68a4a"/><path d="M28 42c-8-2-8-22 8-22h38c16 0 16 20 8 22v40H28z" fill="#f2d39c"/><path d="M40 56c6 6 12 6 18 0" stroke="#6b4423" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="42" cy="48" r="3" fill="#6b4423"/><circle cx="58" cy="48" r="3" fill="#6b4423"/><circle cx="35" cy="56" r="4" fill="#f29a9a" opacity=".7"/><circle cx="65" cy="56" r="4" fill="#f29a9a" opacity=".7"/></svg></span><span class="dd l" style="top:92vh;--x:0.4;--w:70px;--rot:8deg;--d:14s"><svg viewBox="0 0 100 120"><path d="M50 116V20" stroke="#3f7d34" stroke-width="4" stroke-linecap="round"/><g fill="#5aa547"><ellipse cx="36" cy="40" rx="14" ry="7" transform="rotate(-30 36 40)"/><ellipse cx="64" cy="56" rx="14" ry="7" transform="rotate(30 64 56)"/><ellipse cx="36" cy="72" rx="14" ry="7" transform="rotate(-30 36 72)"/><ellipse cx="64" cy="88" rx="14" ry="7" transform="rotate(30 64 88)"/><ellipse cx="50" cy="18" rx="7" ry="12"/></g></svg></span></div>
 <main class="wrap" id="app" tabindex="-1"></main>
 <footer><div class="wrap">Plate and Pantry. Tap ingredients to cross them off while you shop or cook.</div></footer>
 
@@ -422,11 +442,27 @@ function unitLabel(u, v) {
   if (u === "ml") return "mL";
   return u;
 }
+/* Units: "as" = as written, "metric" = g/mL (tsp/tbsp kept, as metric recipes use them), "us" = oz/cups/tbsp/tsp. Small gram amounts (spices) stay in grams in US mode. */
+var UNITS = "as";
+try { UNITS = localStorage.getItem("pp-units") || "as"; } catch (e) {}
+if (["as", "metric", "us"].indexOf(UNITS) < 0) UNITS = "as";
+function conv(v, u) {
+  var ul = (u || "").toLowerCase();
+  if (UNITS === "metric") {
+    if (ul === "oz") return { f: 28.35, u: "g" };
+    if (ul === "lb") return { f: 453.6, u: "g" };
+    if (ul === "cup") return { f: 240, u: "ml" };
+  } else if (UNITS === "us") {
+    if (ul === "g" && v >= 15) return { f: 1 / 28.35, u: "oz" };
+    if (ul === "ml") { if (v >= 60) return { f: 1 / 240, u: "cup" }; if (v >= 15) return { f: 1 / 15, u: "tbsp" }; return { f: 1 / 5, u: "tsp" }; }
+  }
+  return { f: 1, u: u };
+}
 function fmtQ(it, k) {
-  var q = it[0], u = it[1], kk = it[3] ? 1 : k;
+  var q = it[0], u = it[1], kk = it[3] ? 1 : k, c;
   if (typeof q === "string") return q.charAt(0).toUpperCase() + q.slice(1);
-  if (Array.isArray(q)) { return fmtNum(q[0] * kk, u) + "–" + fmtNum(q[1] * kk, u) + (u ? " " + unitLabel(u, q[1] * kk) : ""); }
-  var v = q * kk; return fmtNum(v, u) + (u ? " " + unitLabel(u, v) : "");
+  if (Array.isArray(q)) { c = conv(q[1] * kk, u); return fmtNum(q[0] * kk * c.f, c.u) + "\u2013" + fmtNum(q[1] * kk * c.f, c.u) + (c.u ? " " + unitLabel(c.u, q[1] * kk * c.f) : ""); }
+  var v = q * kk; c = conv(v, u); v = v * c.f; return fmtNum(v, c.u) + (c.u ? " " + unitLabel(c.u, v) : "");
 }
 function amt(v) { if (v === 0) return "0"; if (v < 1) return String(Math.round(v * 100) / 100); if (v < 10) return String(Math.round(v * 10) / 10); return String(Math.round(v)); }
 function mline(m) {
@@ -504,6 +540,51 @@ function featured() { return draftList().concat(RECIPES); }
 function allRecipes() { return MINE.map(toDisplay).concat(featured()); }
 function find(id) { var a = allRecipes(); for (var i = 0; i < a.length; i++) if (a[i].id === id) return a[i]; return null; }
 
+/* ---- Diet and allergen tags (matched from ingredient names; a helper, not a guarantee) ---- */
+var ALLERGENS = [
+  ["Dairy", /\b(milk|yogurt|cheese|cottage|sour cream|cream|butter|whey|crema|fairlife|lactaid|ghee|kefir)\b/i],
+  ["Eggs", /\beggs?\b/i],
+  ["Fish", /\b(tuna|cod|salmon|tilapia|haddock|fish|anchov\w*|sardines?|trout|halibut)\b/i],
+  ["Shellfish", /\b(shrimp|prawns?|crab|lobster|scallops?|clams?|mussels?|oysters?)\b/i],
+  ["Tree nuts", /\b(almonds?|walnuts?|pecans?|cashews?|pistachios?|hazelnuts?|macadamias?)\b/i],
+  ["Peanuts", /\bpeanuts?\b/i],
+  ["Wheat", /\b(bread|tortillas?|wraps?|flour|pasta|wheat|couscous|bulgur|647|soy sauce|crackers?|noodles?)\b/i],
+  ["Soy", /\b(soy|soybeans?|tofu|edamame|tempeh|miso)\b/i],
+  ["Sesame", /\b(sesame|tahini)\b/i]
+];
+var MEAT = /\b(chicken|beef|pork|turkey|bacon|ham|sausage|lamb|veal|steak|prosciutto|pepperoni|gelatin)\b/i;
+var DIETS = ["Vegetarian", "Vegan", "High protein", "High fiber"];
+function cleanName(n) {
+  return String(n || "").replace(/butter\s*lettuce|butterhead/gi, "lettuce")
+    .replace(/peanut butter/gi, "peanut").replace(/almond butter/gi, "almond").replace(/cocoa butter/gi, "cocoa")
+    .replace(/\b(almond|oat|soy|coconut|rice|cashew) milk/gi, "$1 drink").replace(/cream of tartar/gi, "tartar");
+}
+function tagsOf(r) {
+  if (r._tags) return r._tags;
+  var text = r.ing.filter(function (i) { return !isH(i); }).map(function (i) { return cleanName(i[2]); }).join(" | ");
+  var contains = ALLERGENS.filter(function (a) { return a[1].test(text); }).map(function (a) { return a[0]; });
+  var veg = !MEAT.test(text) && contains.indexOf("Fish") < 0 && contains.indexOf("Shellfish") < 0;
+  var vegan = veg && contains.indexOf("Dairy") < 0 && contains.indexOf("Eggs") < 0 && !/\bhoney\b/i.test(text);
+  var diet = [];
+  if (vegan) diet.push("Vegan"); else if (veg) diet.push("Vegetarian");
+  if (r.macros.p >= 25) diet.push("High protein");
+  if (r.macros.fib >= 5.6) diet.push("High fiber");
+  r._tags = { contains: contains, diet: diet, veg: veg, vegan: vegan };
+  return r._tags;
+}
+var filt = { only: [], avoid: [] };
+try { var fs = JSON.parse(localStorage.getItem("pp-filters") || "null"); if (fs && fs.only && fs.avoid) filt = fs; } catch (e) {}
+function saveFilt() { try { localStorage.setItem("pp-filters", JSON.stringify(filt)); } catch (e) {} }
+function passesFilters(r) {
+  var t = tagsOf(r);
+  for (var i = 0; i < filt.avoid.length; i++) if (t.contains.indexOf(filt.avoid[i]) >= 0) return false;
+  for (var j = 0; j < filt.only.length; j++) {
+    var d = filt.only[j];
+    if (d === "Vegetarian" ? !t.veg : d === "Vegan" ? !t.vegan : t.diet.indexOf(d) < 0) return false;
+  }
+  return true;
+}
+
 /* ---- Home ---- */
 function cardHtml(r) {
   return '<a class="card" href="#' + r.id + '"><div class="tile" style="--h:' + r.h + '"><span class="cat">' + esc(r.cat) + (r.mine ? ' \u00B7 Mine' : '') + (r.draft ? ' \u00B7 Draft' : '') + '</span><span class="mins">' + r.macros.kcal + '<small>kcal</small></span></div>' +
@@ -515,7 +596,7 @@ function renderHome() {
   if (cats.indexOf(state.cat) < 0) state.cat = "All";
   function match(r) {
     var hay = (r.name + " " + r.blurb + " " + r.cat + " " + r.ing.filter(function (i) { return !isH(i); }).map(function (i) { return i[2]; }).join(" ")).toLowerCase();
-    return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0;
+    return (state.cat === "All" || r.cat === state.cat) && hay.indexOf(state.q.toLowerCase()) >= 0 && passesFilters(r);
   }
   var mine = all.filter(function (r) { return r.mine && match(r); }), feat = featured().filter(match);
   app.innerHTML =
@@ -523,12 +604,23 @@ function renderHome() {
     '<p class="herocta"><a class="btn solid" href="#builder">Build a recipe</a></p></section>' +
     '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + esc(state.q) + '">' +
     '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === state.cat) + '">' + esc(c) + '</button>'; }).join("") + '</div></div>' +
+    '<details class="filters" id="filters"' + (filt.only.length || filt.avoid.length || state.filtOpen ? ' open' : '') + '><summary>Diet and allergen filters' + (filt.only.length + filt.avoid.length ? ' <span class="count">' + (filt.only.length + filt.avoid.length) + '</span>' : '') + '</summary>' +
+    '<div class="frow"><span class="flabel" id="onlylabel">Show only</span><div class="chips" role="group" aria-labelledby="onlylabel">' + DIETS.map(function (d) { return '<button class="chip" type="button" data-only="' + d + '" aria-pressed="' + (filt.only.indexOf(d) >= 0) + '">' + d + '</button>'; }).join("") + '</div></div>' +
+    '<div class="frow"><span class="flabel" id="avoidlabel">Hide recipes with</span><div class="chips" role="group" aria-labelledby="avoidlabel">' + ALLERGENS.map(function (a) { return '<button class="chip avoid" type="button" data-avoid="' + a[0] + '" aria-pressed="' + (filt.avoid.indexOf(a[0]) >= 0) + '">' + a[0] + '</button>'; }).join("") + '</div></div>' +
+    '<p class="muted small">Matched from ingredient names, so always check package labels for allergens.' + (filt.only.length + filt.avoid.length ? ' <button type="button" class="resetbtn" id="clearfilt">Clear filters</button>' : '') + '</p></details>' +
     (mine.length ? '<h2 class="sect">My recipes</h2><div class="grid">' + mine.map(cardHtml).join("") + '</div>' : '') +
     (feat.length ? '<h2 class="sect">Featured recipes</h2><div class="grid">' + feat.map(cardHtml).join("") + '</div>' : '') +
     (!mine.length && !feat.length ? '<p class="empty">No recipes match. Try a different word or clear the filter.</p>' : '');
   var q = document.getElementById("q");
   q.addEventListener("input", function () { state.q = q.value; var pos = q.selectionStart; renderHome(); var n = document.getElementById("q"); n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} });
-  Array.prototype.forEach.call(app.querySelectorAll(".chip"), function (b) { b.addEventListener("click", function () { state.cat = b.getAttribute("data-cat"); renderHome(); }); });
+  Array.prototype.forEach.call(app.querySelectorAll(".chip[data-cat]"), function (b) { b.addEventListener("click", function () { state.cat = b.getAttribute("data-cat"); renderHome(); }); });
+  function toggle(list, v) { var i = list.indexOf(v); if (i >= 0) list.splice(i, 1); else list.push(v); }
+  function refocus(sel) { var y = window.scrollY; renderHome(); window.scrollTo(0, y); var el = app.querySelector(sel); if (el) el.focus(); }
+  Array.prototype.forEach.call(app.querySelectorAll(".chip[data-only]"), function (b) { b.addEventListener("click", function () { var v = b.getAttribute("data-only"); toggle(filt.only, v); saveFilt(); state.filtOpen = true; refocus('[data-only="' + v + '"]'); }); });
+  Array.prototype.forEach.call(app.querySelectorAll(".chip[data-avoid]"), function (b) { b.addEventListener("click", function () { var v = b.getAttribute("data-avoid"); toggle(filt.avoid, v); saveFilt(); state.filtOpen = true; refocus('[data-avoid="' + v + '"]'); }); });
+  var cf = document.getElementById("clearfilt");
+  if (cf) cf.addEventListener("click", function () { filt = { only: [], avoid: [] }; saveFilt(); state.filtOpen = true; refocus("#filters summary"); });
+  document.getElementById("filters").addEventListener("toggle", function (e) { state.filtOpen = e.target.open; });
 }
 
 /* ---- Nutrient table (per serving, with % Daily Value) ---- */
@@ -569,12 +661,15 @@ function renderRecipe(r) {
   app.innerHTML =
     '<a class="back" href="#home">← All recipes</a>' +
     '<section class="rhead" style="--h:' + r.h + '"><span class="cat">' + esc(r.cat) + (r.draft ? ' \u00B7 Draft for review' : '') + '</span><h1>' + esc(r.name) + '</h1><p>' + esc(r.blurb) + '</p>' +
+    (function () { var t = tagsOf(r); return (t.diet.length ? '<div class="dtags" aria-label="Diet tags">' + t.diet.map(function (d) { return '<span class="dtag">' + d + '</span>'; }).join("") + '</div>' : '') +
+      '<p class="contains">' + (t.contains.length ? '<b>Contains:</b> ' + t.contains.join(", ") : 'No major allergens found in the ingredient names.') + ' <span class="cnote">Check labels to be sure.</span></p>'; })() +
     '<div class="facts">' + facts + '</div>' +
     '<div class="macros" role="group" aria-label="Nutrition per serving">' + macros + '</div><p class="note">Per serving. ' + source + (r.macros.net !== undefined ? ' Net carbs = carbs minus fiber' + (r.nut && r.nut.per.allu ? ' and allulose' : '') + '.' : '') + '</p>' +
     '<div class="actions"><button class="btn" type="button" id="print">Print recipe</button>' +
     (r.mine ? '<a class="btn" href="#edit-' + r.id + '">Edit</a><button class="btn" type="button" id="del">Delete</button>' : '') + '</div></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
     '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
+    '<div class="unitseg" role="group" aria-label="Units">' + [["as", "As written"], ["metric", "Metric"], ["us", "US"]].map(function (x) { return '<button type="button" data-units="' + x[0] + '" aria-pressed="' + (UNITS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div>' +
     '<ul class="ing">' + r.ing.map(function (i) {
       if (isH(i)) return '<li class="grp">' + esc(i.h) + '</li>';
       var id = n++;
@@ -591,6 +686,9 @@ function renderRecipe(r) {
   document.getElementById("minus").addEventListener("click", function () { if (state.servings > 1) { state.servings--; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("plus").addEventListener("click", function () { if (state.servings < 24) { state.servings++; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("print").addEventListener("click", function () { try { window.print(); } catch (e) {} });
+  Array.prototype.forEach.call(app.querySelectorAll("[data-units]"), function (b) {
+    b.addEventListener("click", function () { UNITS = b.getAttribute("data-units"); try { localStorage.setItem("pp-units", UNITS); } catch (e) {} var c = checks(), y = window.scrollY; renderRecipe(r); restore(c); window.scrollTo(0, y); var f = app.querySelector('[data-units="' + UNITS + '"]'); if (f) f.focus(); });
+  });
   var del = document.getElementById("del");
   if (del) del.addEventListener("click", function () {
     if (del.getAttribute("data-armed") !== "1") { del.setAttribute("data-armed", "1"); del.textContent = "Tap again to delete"; return; }
