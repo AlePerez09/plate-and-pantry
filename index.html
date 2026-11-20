@@ -50,7 +50,32 @@ header.top .wrap { position: relative; display: flex; align-items: center; justi
 .brand i { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); display: inline-block; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent); }
 .top .tag { color: var(--muted); font-size: 0.9rem; }
 
-.hero { padding: 36px 0 12px; }
+.hero { padding: 28px 0 6px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; gap: 12px 32px; }
+.herocta { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0 !important; }
+.herocta .btn { padding: 10px 18px; font-size: 1rem; }
+.herofacts { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); font-size: 0.92rem; }
+.herofacts li { display: flex; align-items: baseline; gap: 6px; }
+.herofacts b { font-family: var(--display); font-size: 1.35rem; color: var(--ink); letter-spacing: -0.02em; }
+.heroart { position: relative; max-width: 420px; width: 100%; justify-self: center; }
+.bowlart { display: block; width: 100%; height: auto; overflow: visible; }
+.hb-bg { fill: color-mix(in srgb, var(--accent) 22%, transparent); }
+.hb-spark { fill: var(--accent); }
+.hb-inner { fill: color-mix(in srgb, var(--deep) 55%, #000); }
+.hb-bowl { fill: var(--deep); }
+.hb-rim { fill: color-mix(in srgb, var(--deep) 75%, #fff); }
+.hb-face { fill: var(--bg); stroke: var(--bg); }
+.htag { position: absolute; display: inline-flex; align-items: center; gap: 7px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; font-size: 0.84rem; font-weight: 700; box-shadow: 0 6px 18px rgba(0,0,0,.10); white-space: nowrap; animation: tagfloat 6s ease-in-out infinite; }
+.htag i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.htag.t1 { top: 6%; left: -4%; } .htag.t1 i { background: #4f9a3a; }
+.htag.t2 { top: 38%; right: -8%; animation-delay: -2s; } .htag.t2 i { background: #f08a2c; }
+.htag.t3 { bottom: 10%; left: -2%; animation-delay: -4s; } .htag.t3 i { background: #5162cf; }
+@keyframes tagfloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+:root[data-motion="reduce"] .htag { animation: none; }
+@media (prefers-reduced-motion: reduce) { .htag { animation: none; } }
+@media (max-width: 1240px) { .htag.t2 { right: -1%; } }
+@media (max-width: 1000px) { .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.8fr); gap: 12px 16px; } .htag { font-size: 0.74rem; padding: 4px 9px; } .htag.t2 { right: 0; } }
+@media (max-width: 700px) { .hero { grid-template-columns: 1fr; } .heroart { display: none; } }
+@media print { .heroart, .herofacts, #browse { display: none !important; } }
 .hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.02; letter-spacing: -0.03em; margin: 0 0 10px; text-wrap: balance; max-width: 16ch; }
 .hero p { margin: 0; color: var(--muted); max-width: 50ch; }
 
@@ -299,7 +324,10 @@ details.filters .count { display: inline-block; min-width: 1.4em; padding: 0 6px
 .chip.avoid[aria-pressed="true"] { background: #b42318; border-color: #b42318; color: #fff; }
 details.filters p.muted { margin: 10px 0 0; }
 .mfrow { align-items: flex-start; }
-.mgrid { flex: 1 1 520px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 22px; }
+.mfrow { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 14px; }
+.mwrap { flex: 1 1 520px; }
+.mnote { margin: 8px 0 0; }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 22px; }
 .mf label { display: flex; justify-content: space-between; gap: 8px; font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; }
 .mf output { font-weight: 700; color: var(--deep); }
 .mf input[type="range"] { width: 100%; accent-color: var(--deep); margin: 4px 0 0; }
@@ -608,13 +636,20 @@ try { var fs = JSON.parse(localStorage.getItem("pp-filters") || "null"); if (fs 
 function saveFilt() { try { localStorage.setItem("pp-filters", JSON.stringify(filt)); } catch (e) {} }
 function activeFilters() { return filt.only.length + filt.avoid.length + MACROF.filter(function (m) { return filt[m.k] !== null; }).length; }
 function macroText(m) { var v = filt[m.k]; return v === null ? "Any" : (m.dir === "max" ? "up to " : "at least ") + v + m.unit; }
-function passesFilters(r) {
+function dietActive() { return filt.only.length + filt.avoid.length; }
+/* Diet and allergen choices: what you can eat. Used by the list and the weekly picks. */
+function passesDiet(r) {
   var t = tagsOf(r);
   for (var i = 0; i < filt.avoid.length; i++) if (t.contains.indexOf(filt.avoid[i]) >= 0) return false;
   for (var j = 0; j < filt.only.length; j++) {
     var d = filt.only[j];
     if (d === "Vegetarian" ? !t.veg : d === "Vegan" ? !t.vegan : t.diet.indexOf(d) < 0) return false;
   }
+  return true;
+}
+/* Diet + macro sliders: used only by the recipe list. */
+function passesFilters(r) {
+  if (!passesDiet(r)) return false;
   for (var k = 0; k < MACROF.length; k++) {
     var m = MACROF[k], lim = filt[m.k], v = r.macros[m.k];
     if (lim === null) continue;
@@ -698,7 +733,7 @@ function weeklyPicks() {
     Object.keys(df).forEach(function (w) { idf[w] = Math.log((feat.length + 1) / df[w]); });
   }
   return MEALORDER.map(function (meal) {
-    var cands = feat.filter(function (r) { return r.cat === meal && passesFilters(r); });
+    var cands = feat.filter(function (r) { return r.cat === meal && passesDiet(r); });
     if (!cands.length) return { meal: meal, r: null };
     function rank(key) {
     var rnd = seeded(key + "|" + meal);
@@ -751,10 +786,10 @@ function renderPicks() {
   var swapped = Object.keys(picksState.swaps).some(function (k) { return picksState.swaps[k]; });
   box.innerHTML =
     '<div class="pickhead"><div><h2 class="sect" id="picks-h" tabindex="-1">This week’s picks</h2>' +
-    '<p class="muted small">Week of ' + esc(label) + '. New picks every Monday' + (activeFilters() ? ', matching your filters' : '') + (MINE.length ? ', inspired by your saved recipes' : '') + '.</p></div>' +
+    '<p class="muted small">Week of ' + esc(label) + '. New picks every Monday.' + (dietActive() || MINE.length ? ' ' + [dietActive() ? 'Following your diet and allergen filters' : '', MINE.length ? (dietActive() ? 'inspired' : 'Inspired') + ' by your saved recipes' : ''].filter(Boolean).join(' and ') + '.' : '') + '</p></div>' +
     '<div class="pickctl">' + (swapped ? '<button type="button" class="resetbtn" id="picks-reset">Undo swaps</button>' : '') + '<button type="button" class="resetbtn" id="picks-hide">Hide</button></div></div>' +
     '<div class="grid picks3">' + list.map(function (x) {
-      if (!x.r) return '<div class="pick nopick"><p class="muted">No ' + x.meal.toLowerCase() + ' matches your filters right now.</p></div>';
+      if (!x.r) return '<div class="pick nopick"><p class="muted">No ' + x.meal.toLowerCase() + ' matches your diet and allergen filters.</p></div>';
       return '<div class="pick">' + cardHtml(x.r) + '<div class="pickbar"><span class="small muted">' + esc(x.reason || x.meal + " pick") + '</span>' +
         (x.count > 1 ? '<button type="button" class="chip pickswap" data-swap="' + x.meal + '" aria-label="Swap the ' + x.meal.toLowerCase() + ' pick for another recipe">Swap</button>' : '') + '</div></div>';
     }).join("") + '</div>';
@@ -767,6 +802,7 @@ function renderPicks() {
   document.getElementById("picks-hide").addEventListener("click", function () { picksHidden = true; try { localStorage.setItem("pp-picks-hidden", "1"); } catch (e) {} renderPicks(); document.getElementById("picks-show").focus(); });
 }
 
+var HERO_ART = '<svg class="bowlart" viewBox="0 0 400 330" role="img" aria-label="A smiling bowl filled with avocado, egg, lemon, tomatoes, berries and greens"><circle class="hb-bg" cx="200" cy="168" r="150"/><g class="hb-spark"><path d="M58 70l5 13 13 5-13 5-5 13-5-13-13-5 13-5z"/><path d="M344 52l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/><path d="M362 212l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/></g><ellipse cx="200" cy="314" rx="112" ry="10" fill="#000" opacity=".12"/><ellipse class="hb-inner" cx="200" cy="170" rx="138" ry="16"/><g fill="#5aa547"><ellipse cx="112" cy="150" rx="34" ry="14" transform="rotate(-28 112 150)"/><ellipse cx="290" cy="146" rx="34" ry="14" transform="rotate(26 290 146)"/></g><g fill="#7cc35f"><ellipse cx="150" cy="156" rx="30" ry="12" transform="rotate(-12 150 156)"/><ellipse cx="258" cy="158" rx="30" ry="12" transform="rotate(14 258 158)"/></g><g transform="translate(270 70) scale(.62)"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></g><g transform="translate(92 56) rotate(-16 50 60) scale(.98)"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></g><g><ellipse cx="214" cy="138" rx="36" ry="27" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="214" cy="140" r="15" fill="#f6b82b"/><circle cx="209" cy="135" r="4" fill="#fff" opacity=".55"/></g><g><circle cx="276" cy="154" r="15" fill="#e5483b"/><circle cx="302" cy="162" r="13" fill="#d93a2e"/><path d="M276 141l-5-5M276 141l5-5M276 141v-6" stroke="#3f7d34" stroke-width="3" stroke-linecap="round"/><circle cx="271" cy="149" r="4" fill="#fff" opacity=".4"/></g><g fill="#3d4fb8"><circle cx="166" cy="160" r="8"/><circle cx="182" cy="163" r="8"/><circle cx="173" cy="150" r="8" fill="#5162cf"/></g><g fill="#e3c27a"><circle cx="238" cy="166" r="7"/><circle cx="251" cy="168" r="7"/><circle cx="244" cy="160" r="6"/></g><path class="hb-bowl" d="M56 168H344C344 250 282 304 200 304S56 250 56 168Z"/><path class="hb-rim" d="M56 168H344a144 14 0 0 1-288 0Z"/><path d="M84 196c4 36 26 64 54 80" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity=".18"/><g class="hb-face"><circle cx="178" cy="230" r="6"/><circle cx="222" cy="230" r="6"/><path d="M188 246q12 11 24 0" fill="none" stroke-width="4" stroke-linecap="round"/></g><circle cx="160" cy="244" r="9" fill="#f29a9a" opacity=".6"/><circle cx="240" cy="244" r="9" fill="#f29a9a" opacity=".6"/></svg>';
 function renderHome() {
   var all = allRecipes(), cats = ["All"];
   all.forEach(function (r) { if (cats.indexOf(r.cat) < 0) cats.push(r.cat); });
@@ -774,25 +810,32 @@ function renderHome() {
   if (cats.indexOf(state.cat) < 0) state.cat = "All";
   var n = activeFilters();
   app.innerHTML =
-    '<section class="hero"><h1>What are we cooking tonight?</h1><p>Recipes with calories, macros and micronutrients per serving. Build your own from the USDA food database, or start from a featured recipe.</p>' +
-    '<p class="herocta"><a class="btn solid" href="#builder">Build a recipe</a></p></section>' +
+    '<section class="hero"><div class="herotext"><h1>What are we cooking tonight?</h1><p>Recipes with calories, macros and micronutrients per serving. Build your own from the USDA food database, or start from a featured recipe.</p>' +
+    '<p class="herocta"><a class="btn solid" href="#builder">Build a recipe</a><button type="button" class="btn" id="browse">Browse recipes</button></p>' +
+    '<ul class="herofacts"><li><b>' + featured().length + '</b> featured recipes</li><li><b>' + (MICROS.length + 5) + '</b> nutrients per serving</li><li><b>USDA</b> FoodData Central</li></ul></div>' +
+    '<div class="heroart" aria-hidden="true">' + HERO_ART + '<span class="htag t1"><i></i>Macros</span><span class="htag t2"><i></i>Vitamins &amp; minerals</span><span class="htag t3"><i></i>% Daily Value</span></div></section>' +
     '<section class="picks" id="picks" aria-labelledby="picks-h"></section>' +
     '<div class="tools"><input class="search" id="q" type="search" placeholder="Search recipes or ingredients" aria-label="Search recipes" value="' + esc(state.q) + '">' +
     '<div class="chips" role="group" aria-label="Filter by meal">' + cats.map(function (c) { return '<button class="chip" type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === state.cat) + '">' + esc(c) + '</button>'; }).join("") + '</div></div>' +
     '<details class="filters" id="filters"' + (n || state.filtOpen ? ' open' : '') + '><summary>Filters <span class="count" id="fcount"' + (n ? '' : ' hidden') + '>' + n + '</span></summary>' +
     '<div class="frow"><span class="flabel" id="onlylabel">Show only</span><div class="chips" role="group" aria-labelledby="onlylabel">' + DIETS.map(function (d) { return '<button class="chip" type="button" data-only="' + d + '" aria-pressed="' + (filt.only.indexOf(d) >= 0) + '">' + d + '</button>'; }).join("") + '</div></div>' +
     '<div class="frow"><span class="flabel" id="avoidlabel">Hide recipes with</span><div class="chips" role="group" aria-labelledby="avoidlabel">' + ALLERGENS.map(function (a) { return '<button class="chip avoid" type="button" data-avoid="' + a[0] + '" aria-pressed="' + (filt.avoid.indexOf(a[0]) >= 0) + '">' + a[0] + '</button>'; }).join("") + '</div></div>' +
-    '<div class="frow mfrow"><span class="flabel">Per serving</span><div class="mgrid">' + MACROF.map(function (m) {
+    '<div class="frow mfrow"><span class="flabel">Per serving</span><div class="mwrap"><div class="mgrid">' + MACROF.map(function (m) {
       var v = filt[m.k] === null ? (m.dir === "max" ? m.max : m.min) : filt[m.k];
       return '<div class="mf"><label for="mf-' + m.k + '"><span>' + m.label + '</span> <output id="mo-' + m.k + '" for="mf-' + m.k + '">' + macroText(m) + '</output></label>' +
         '<input type="range" id="mf-' + m.k + '" data-mk="' + m.k + '" min="' + m.min + '" max="' + m.max + '" step="' + m.step + '" value="' + v + '" aria-valuetext="' + m.label + ' ' + macroText(m) + '"></div>';
-    }).join("") + '</div></div>' +
-    '<p class="muted small">Allergens are matched from ingredient names, so always check package labels. <button type="button" class="resetbtn" id="clearfilt"' + (n ? '' : ' hidden') + '>Clear filters</button></p></details>' +
+    }).join("") + '</div><p class="muted small mnote">Sliders only filter the recipe list below, not this week\u2019s picks.</p></div></div>' +
+    '<p class="muted small">Diet and allergen filters also apply to this week\u2019s picks. Allergens are matched from ingredient names, so always check package labels. <button type="button" class="resetbtn" id="clearfilt"' + (n ? '' : ' hidden') + '>Clear filters</button></p></details>' +
     '<div class="resbar"><p id="rescount" class="muted" role="status" aria-live="polite"></p><label class="sortlbl" for="sort">Sort by <select id="sort">' + SORTS.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === sortBy ? ' selected' : '') + '>' + x[1] + '</option>'; }).join("") + '</select></label></div>' +
     '<div id="results"></div>';
-  renderResults();
+  renderResults(); renderPicks();
 
   var q = document.getElementById("q");
+  document.getElementById("browse").addEventListener("click", function () {
+    var reduce = document.documentElement.getAttribute("data-motion") === "reduce" || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    document.querySelector(".tools").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    q.focus({ preventScroll: true });
+  });
   q.addEventListener("input", function () { state.q = q.value; renderResults(); });
   Array.prototype.forEach.call(app.querySelectorAll(".chip[data-cat]"), function (b) { b.addEventListener("click", function () {
     state.cat = b.getAttribute("data-cat");
@@ -803,7 +846,7 @@ function renderHome() {
   function chipToggle(attr, list) {
     Array.prototype.forEach.call(app.querySelectorAll(".chip[" + attr + "]"), function (b) { b.addEventListener("click", function () {
       var v = b.getAttribute(attr); toggle(filt[list], v); saveFilt();
-      b.setAttribute("aria-pressed", String(filt[list].indexOf(v) >= 0)); renderResults();
+      b.setAttribute("aria-pressed", String(filt[list].indexOf(v) >= 0)); renderResults(); renderPicks();
     }); });
   }
   chipToggle("data-only", "only"); chipToggle("data-avoid", "avoid");
@@ -826,7 +869,7 @@ function renderHome() {
       var inp = document.getElementById("mf-" + m.k); inp.value = m.dir === "max" ? m.max : m.min;
       inp.setAttribute("aria-valuetext", m.label + " Any"); document.getElementById("mo-" + m.k).textContent = "Any";
     });
-    renderResults(); document.querySelector("#filters summary").focus();
+    renderResults(); renderPicks(); document.querySelector("#filters summary").focus();
   });
   document.getElementById("sort").addEventListener("change", function (e) {
     sortBy = e.target.value; try { localStorage.setItem("pp-sort", sortBy); } catch (er) {} renderResults();
@@ -848,7 +891,6 @@ function renderResults() {
     (feat.length ? '<h2 class="sect">Featured recipes</h2><div class="grid">' + feat.map(cardHtml).join("") + '</div>' : '') +
     (!shown ? '<p class="empty">No recipes match. Try a different word, loosen a slider, or clear the filters.</p>' : '');
   document.getElementById("rescount").textContent = shown === total ? "Showing all " + total + " recipes" : "Showing " + shown + " of " + total + " recipes";
-  renderPicks();
   var n = activeFilters(), fc = document.getElementById("fcount"), cf = document.getElementById("clearfilt");
   fc.textContent = n; fc.hidden = !n; cf.hidden = !n;
 }
