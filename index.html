@@ -125,6 +125,7 @@ ul.ing li.grp { border-bottom: 0; padding: 16px 2px 6px; font-family: var(--disp
 ul.ing label { display: flex; gap: 12px; padding: 10px 2px; cursor: pointer; align-items: baseline; }
 ul.ing input { accent-color: var(--deep); width: 18px; height: 18px; flex: none; transform: translateY(3px); }
 ul.ing .q { font-weight: 700; min-width: 5em; font-variant-numeric: tabular-nums; }
+ul.ing .qg { display: block; font-weight: 500; font-size: 0.8em; color: var(--muted); margin-top: 1px; }
 ul.ing input:checked ~ span { color: var(--muted); text-decoration: line-through; }
 .fixednote { color: var(--muted); font-size: 0.85rem; margin: 0 0 14px; }
 .copy { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 700; cursor: pointer; }
@@ -173,7 +174,61 @@ ol.steps p { margin: 0; max-width: 62ch; }
 .btn.solid:hover { filter: brightness(1.08); background: var(--deep); }
 a.btn { text-decoration: none; display: inline-block; }
 .herocta { margin-top: 16px !important; }
-.hero.slim { padding-bottom: 4px; }
+.hero.slim { padding-bottom: 4px; display: block; }
+.planicon { display: inline-flex; text-decoration: none; color: inherit; }
+.planicon[aria-current="page"] { background: var(--deep); border-color: var(--deep); color: var(--bg); }
+.planicon svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+#themebtn .tlabel { display: none; }
+#themebtn .dot { width: 18px; height: 18px; }
+.hright { gap: 8px; }
+.buildbtn { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; padding: 8px 15px; border-radius: 999px; background: var(--deep); color: var(--bg); font-weight: 700; font-size: 0.92rem; text-decoration: none; white-space: nowrap; }
+.buildbtn span { font-size: 1.1rem; line-height: 1; }
+.buildbtn:hover { filter: brightness(1.08); }
+@media (max-width: 520px) { .buildbtn { display: none; } }
+.planbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 4px; }
+#plan-msg { min-height: 1.2em; margin: 6px 0 4px; }
+.weekavg { margin: 6px 0 18px; }
+.weekavg .sect { margin: 0; }
+.weekavg p { margin: 2px 0 0; }
+.weekavg .macros { max-width: 720px; margin-top: 10px; }
+.weekavg .macros div { background: color-mix(in srgb, var(--deep) 8%, var(--surface)); }
+.plangrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.pday { border: 1px solid var(--line); border-radius: 16px; padding: 14px 14px 10px; background: var(--surface); display: flex; flex-direction: column; }
+.pday.today { border-color: var(--deep); box-shadow: inset 0 0 0 1px var(--deep); }
+.pday h2 { font-size: 1.1rem; margin: 0 0 4px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.todaytag { font-family: var(--body); font-size: 0.7rem; font-weight: 700; background: var(--deep); color: var(--bg); border-radius: 999px; padding: 2px 9px; }
+.pslot { padding: 8px 0 6px; border-top: 1px solid var(--line); }
+.pslot h3 { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin: 0 0 4px; }
+.pslot ul { list-style: none; margin: 0; padding: 0; }
+.pslot li { display: grid; grid-template-columns: minmax(0, 1fr) auto 30px; gap: 6px; align-items: center; padding: 4px 0; }
+.pslot li a { font-weight: 600; text-decoration: none; color: inherit; font-size: 0.93rem; line-height: 1.25; overflow-wrap: anywhere; }
+.pslot li a:hover { text-decoration: underline; }
+.pslot .pk { display: block; font-weight: 500; font-size: 0.78rem; color: var(--muted); }
+.pserv { display: flex; align-items: center; gap: 2px; }
+.pserv button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; color: inherit; font-size: 0.95rem; line-height: 1; }
+.pserv output { min-width: 4.7em; text-align: center; font-size: 0.76rem; color: var(--muted); }
+.addbtn { background: none; border: 1px dashed var(--line); border-radius: 10px; padding: 4px 10px; color: var(--deep); font-weight: 700; cursor: pointer; font-size: 0.84rem; margin-top: 4px; }
+.addbtn:hover { border-color: var(--deep); }
+.dtot { margin: auto 0 0; padding-top: 8px; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); line-height: 1.45; }
+.dtot b { color: var(--ink); }
+.planlist { max-width: 760px; margin-bottom: 30px; }
+.planlist .from { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
+dialog#picker { border: 1px solid var(--line); border-radius: 18px; padding: 16px; width: min(560px, 94vw); max-height: 86vh; background: var(--bg); color: var(--ink); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+dialog#picker::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog#picker .search { width: 100%; margin-bottom: 10px; }
+.pkhead { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 0 0 12px; }
+.pkhead h2 { margin: 0; font-size: 1.15rem; }
+#pk-note { margin: 8px 0 0; min-height: 1em; }
+.pklist { list-style: none; margin: 6px 0 0; padding: 0; overflow: auto; max-height: 52vh; border-top: 1px solid var(--line); }
+.pklist button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--line); padding: 10px 6px; cursor: pointer; color: inherit; font: inherit; font-weight: 600; }
+.pklist button:hover, .pklist button:focus-visible { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.pklist .pm { display: block; font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+.addplan { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-top: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); max-width: 620px; }
+.addplan label { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; font-weight: 700; }
+.addplan select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; color: inherit; }
+.addplan p { flex-basis: 100%; margin: 0; }
+.addplan p:empty { display: none; }
+@media print { .planbar, #plan-msg, .addbtn, .pserv button, .pslot .x, dialog, .planlist .unitseg, #plan-copy, .addplan, #addplan { display: none !important; } .pday { break-inside: avoid; } }
 h2.sect { font-family: var(--display); font-size: 1.35rem; letter-spacing: -0.01em; margin: 18px 0 0; }
 .muted { color: var(--muted); }
 .small { font-size: 0.85rem; }
@@ -244,7 +299,7 @@ ul.blist li { display: grid; grid-template-columns: 1fr 4.6em minmax(6.5em, 11em
 @media (max-width: 360px) { table.nut th, table.nut td { font-size: 0.82rem; padding: 6px 2px; } table.nut .num { white-space: normal; } }
 #b-status:empty, #b-results:empty { display: none; }
 .brand { white-space: nowrap; }
-@media (max-width: 380px) { .brand { font-size: 1.12rem; gap: 8px; } .hright { gap: 8px; } #themebtn { padding: 8px 10px; } #themebtn .tlabel { display: none; } }
+@media (max-width: 380px) { .brand { font-size: 1.02rem; gap: 7px; } .hright { gap: 6px; } .hright .iconbtn { width: 34px; height: 34px; } #themebtn { padding: 8px 10px; } #themebtn .tlabel { display: none; } }
 @media (max-width: 520px) { .hright .navlink { display: none; } }
 .tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; vertical-align: 1px; }
 .tag.full { background: color-mix(in srgb, var(--deep) 16%, transparent); color: var(--deep); }
@@ -388,7 +443,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#home"><i></i>Plate and Pantry</a>
-    <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="a11ybtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="a11ypanel" aria-label="Settings" title="Settings"><svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div id="a11ypanel" class="themepanel" role="group" aria-label="Settings" hidden></div></div><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel" aria-label="Theme"><i class="dot"></i><span class="tlabel">Theme</span></button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
+    <div class="hright"><a class="buildbtn" href="#builder"><span aria-hidden="true">+</span> Build a recipe</a><a class="themebtn iconbtn planicon" href="#planner" aria-label="Meal plan" title="Meal plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></a><div class="themewrap"><button id="a11ybtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="a11ypanel" aria-label="Settings" title="Settings"><svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div id="a11ypanel" class="themepanel" role="group" aria-label="Settings" hidden></div></div><div class="themewrap"><button id="themebtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="themepanel" aria-label="Theme" title="Theme"><i class="dot"></i><span class="tlabel">Theme</span></button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
   </div>
 </header>
 <div class="doodles" aria-hidden="true"><span class="dd l" style="top:14vh;--x:0.55;--w:96px;--rot:-8deg;--d:0s"><svg viewBox="0 0 100 120"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></svg></span><span class="dd l" style="top:44vh;--x:0.35;--w:74px;--rot:10deg;--d:2s"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></svg></span><span class="dd l" style="top:72vh;--x:0.6;--w:84px;--rot:-6deg;--d:4s"><svg viewBox="0 0 110 100"><path d="M52 30c-4-12 2-22 14-24M52 30c8-8 20-8 28-2" stroke="#4f7a32" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="22" fill="#3d4fb8"/><circle cx="70" cy="62" r="24" fill="#5162cf"/><circle cx="28" cy="51" r="5" fill="#fff" opacity=".4"/><circle cx="63" cy="55" r="5" fill="#fff" opacity=".4"/></svg></span><span class="dd r" style="top:12vh;--x:0.4;--w:100px;--rot:8deg;--d:6s"><svg viewBox="0 0 120 100"><path d="M60 8c26 0 52 10 52 38 0 22-14 24-18 40-3 12-22 10-34 10S28 98 24 84C20 70 8 66 8 46 8 18 34 8 60 8z" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="58" cy="50" r="20" fill="#f6b82b"/><circle cx="51" cy="44" r="5" fill="#fff" opacity=".55"/></svg></span><span class="dd r" style="top:42vh;--x:0.6;--w:78px;--rot:14deg;--d:8s"><svg viewBox="0 0 100 120"><path d="M50 30c12 0 18 8 16 18L54 112c-1 6-7 6-8 0L34 48c-2-10 4-18 16-18z" fill="#f08a2c"/><g stroke="#c9661a" stroke-width="3" stroke-linecap="round"><path d="M40 56h8M52 70h8M42 84h7"/></g><path d="M50 30C46 18 38 10 30 8M50 30c0-12 2-20 6-26M50 30c6-10 14-14 22-14" stroke="#4f9a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:70vh;--x:0.35;--w:70px;--rot:-12deg;--d:10s"><svg viewBox="0 0 100 100"><path d="M14 86C10 46 40 12 88 12c2 44-28 78-74 74z" fill="#4f9a3a"/><path d="M20 80C40 58 58 40 78 22" stroke="#a6d68a" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:88vh;--x:0.55;--w:80px;--rot:6deg;--d:12s"><svg viewBox="0 0 110 100"><path d="M20 40c-12-2-14-30 12-30h46c26 0 24 28 12 30v50H20z" fill="#c68a4a"/><path d="M28 42c-8-2-8-22 8-22h38c16 0 16 20 8 22v40H28z" fill="#f2d39c"/><path d="M40 56c6 6 12 6 18 0" stroke="#6b4423" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="42" cy="48" r="3" fill="#6b4423"/><circle cx="58" cy="48" r="3" fill="#6b4423"/><circle cx="35" cy="56" r="4" fill="#f29a9a" opacity=".7"/><circle cx="65" cy="56" r="4" fill="#f29a9a" opacity=".7"/></svg></span><span class="dd l" style="top:92vh;--x:0.4;--w:70px;--rot:8deg;--d:14s"><svg viewBox="0 0 100 120"><path d="M50 116V20" stroke="#3f7d34" stroke-width="4" stroke-linecap="round"/><g fill="#5aa547"><ellipse cx="36" cy="40" rx="14" ry="7" transform="rotate(-30 36 40)"/><ellipse cx="64" cy="56" rx="14" ry="7" transform="rotate(30 64 56)"/><ellipse cx="36" cy="72" rx="14" ry="7" transform="rotate(-30 36 72)"/><ellipse cx="64" cy="88" rx="14" ry="7" transform="rotate(30 64 88)"/><ellipse cx="50" cy="18" rx="7" ry="12"/></g></svg></span></div>
@@ -488,10 +543,12 @@ function isH(i) { return i && i.h !== undefined; }
 function fmtNum(v, u) {
   var ul = (u || "").toLowerCase();
   if (ul === "g" || ul === "ml") {
+    if (v < 1) return String(Math.max(0.1, Math.round(v * 10) / 10));
     if (v < 10) return String(Math.round(v * 2) / 2);
     if (v < 100) return String(Math.round(v));
     return String(Math.round(v / 5) * 5);
   }
+  if (ul === "oz" && v < 0.875) return v < 0.05 ? "<0.1" : String(Math.round(v * 10) / 10);
   var w = Math.round(v * 4) / 4; if (w < 0.25) w = 0.25;
   var whole = Math.floor(w), frac = FRACS[Math.round((w - whole) * 100) / 100] || "";
   return (whole ? String(whole) : "") + frac;
@@ -502,7 +559,7 @@ function unitLabel(u, v) {
   if (u === "ml") return "mL";
   return u;
 }
-/* Units: "metric" = g/mL (tsp/tbsp kept, as metric recipes use them), "us" = oz/cups/tbsp/tsp. Small gram amounts (spices) stay in grams in US mode. */
+/* Units: "metric" = grams and mL only; "us" = oz, lb, cups, tbsp and tsp only. */
 var UNITS = "metric";
 try { UNITS = localStorage.getItem("pp-units") || "metric"; } catch (e) {}
 if (["metric", "us"].indexOf(UNITS) < 0) UNITS = "metric";
@@ -512,8 +569,13 @@ function conv(v, u) {
     if (ul === "oz") return { f: 28.35, u: "g" };
     if (ul === "lb") return { f: 453.6, u: "g" };
     if (ul === "cup") return { f: 240, u: "ml" };
-  } else if (UNITS === "us") {
-    if (ul === "g" && v >= 15) return { f: 1 / 28.35, u: "oz" };
+    if (ul === "tbsp") return { f: 15, u: "ml" };
+    if (ul === "tsp") return { f: 5, u: "ml" };
+    if (ul === "fl oz") return { f: 29.57, u: "ml" };
+  } else {
+    if (ul === "g") return v >= 453 ? { f: 1 / 453.6, u: "lb" } : { f: 1 / 28.35, u: "oz" };
+    if (ul === "oz" && v >= 16) return { f: 1 / 16, u: "lb" };
+    if (ul === "kg") return { f: 2.205, u: "lb" };
     if (ul === "ml") { if (v >= 60) return { f: 1 / 240, u: "cup" }; if (v >= 15) return { f: 1 / 15, u: "tbsp" }; return { f: 1 / 5, u: "tsp" }; }
   }
   return { f: 1, u: u };
@@ -528,6 +590,7 @@ function fmtQ(it, k) {
 var PLURALS = { cup: "cups", slice: "slices", piece: "pieces", fillet: "fillets", breast: "breasts", link: "links", patty: "patties", tortilla: "tortillas", bar: "bars", container: "containers", scoop: "scoops", packet: "packets", clove: "cloves", stalk: "stalks", fruit: "fruits", serving: "servings", egg: "eggs", leaf: "leaves", can: "cans", package: "packages", strip: "strips", wedge: "wedges", spear: "spears", sprig: "sprigs", stick: "sticks", bun: "buns", roll: "rolls", muffin: "muffins", bagel: "bagels", cookie: "cookies", cracker: "crackers", pepper: "peppers", banana: "bananas", avocado: "avocados", apple: "apples", tomato: "tomatoes", onion: "onions", potato: "potatoes", carrot: "carrots", tbsp: "tbsp", tsp: "tsp", oz: "oz", cookie: "cookies", pancake: "pancakes", waffle: "waffles", wrap: "wraps", pouch: "pouches", bottle: "bottles", cake: "cakes", pie: "pies", taco: "tacos", nugget: "nuggets", sausage: "sausages", meatball: "meatballs", chip: "chips", pretzel: "pretzels" };
 function qtyStr(q) { var r = Math.round(q * 4) / 4; if (Math.abs(r - q) < 0.02) return fmtNum(r, ""); return String(Math.round(q * 10) / 10); }
 function portionText(q, label) {
+  if (label === "1") return qtyStr(q);
   var m = /^1 (.*)$/.exec(label || "");
   if (!m) return qtyStr(q) + " × " + label;
   var rest = m[1];
@@ -556,6 +619,73 @@ function bestPortion(list) {
   var head = function (l) { return String(l).replace(/^1 /, "").split(/[(,]/)[0].trim(); };
   for (var t = 0; t < tiers.length; t++) for (var i = 0; i < list.length; i++) { var h = head(list[i].label); if (tiers[t].test(h) && !/^(extra large|jumbo|small)\b/i.test(h)) return i; }
   return 0;
+}
+/* Amount as written, no unit conversion ("2 slices", "½"). */
+/* Household amounts ("2 tbsp", "1 can, 14.5 oz", "2 cloves") kept as data so each unit mode shows only its own units. */
+var FRACMAP = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3 };
+var US_RE = /\b(cups?|tbsp|tsp|tablespoons?|teaspoons?|oz|ounces?|lbs?|pounds?|pints?|quarts?)\b/i;
+function parseNum(t) {
+  var m = /^(\d+(?:\.\d+)?)?\s*([½¼¾⅓⅔])?$/.exec(String(t).trim());
+  if (!m || (!m[1] && !m[2])) return null;
+  return (m[1] ? +m[1] : 0) + (m[2] ? FRACMAP[m[2]] : 0);
+}
+function porKind(label) {
+  var head = String(label).replace(/^1\s*/, "").split(/[\s,(]/)[0].toLowerCase();
+  if (/^(cups?|tbsp|tablespoons?|tsp|teaspoons?)$/.test(head)) return "vol";
+  if (/^(oz|ounces?|lbs?|pounds?)$/.test(head)) return "wt";
+  return "count";
+}
+function singularWord(w) {
+  var lw = w.toLowerCase();
+  for (var k in PLURALS) if (PLURALS[k] === lw && k !== lw) return k;
+  if (/^(limes|lemons|heads|bunches|blocks|cans|lbs)$/.test(lw)) return lw.replace(/ches$/, "ch").replace(/s$/, "");
+  return w;
+}
+function makePor(g, house) {
+  var t = String(house).trim();
+  var m = /^(?:about\s+)?(\d+(?:\.\d+)?\s*[½¼¾⅓⅔]?|[½¼¾⅓⅔])(?:\s+([^,]+?))?(,.*)?$/.exec(t);
+  var n = m ? parseNum(m[1].replace(/\s+/g, "")) : null;
+  if (!m || !n || !(g > 0)) return { kind: "raw", raw: t };
+  var words = (m[2] || "").split(" ");
+  if (words[0]) words[0] = singularWord(words[0]);
+  var label = "1" + (words[0] ? " " + words.join(" ") : "");
+  return { g: g / n, l: label, kind: porKind(label), extra: m[3] || "" };
+}
+function splitName(name) {
+  var m = /^(.*?)\s*\(([^()]*)\)\s*$/.exec(name);
+  return m ? { name: m[1], house: m[2] } : { name: name, house: null };
+}
+/* What one ingredient row shows in the current unit mode: main amount, name and a small note. */
+function ingView(i, k) {
+  var po = i[4], kk = i[3] ? 1 : k, main = qParts(i, k).main, name = i[2];
+  if (!po) {
+    var u = String(i[1] || "").toLowerCase();
+    var countNote = UNITS === "metric" && i.gw && typeof i[0] === "number" && !US_RE.test(u) && !/^(g|ml|kg|l)$/.test(u) ? fmtRaw(i, k) : "";
+    return { main: main, name: name.replace(/\s*\(\s*[\d½¼¾.]+\s*(oz|g|lb|cups?|tbsp|tsp|ml)\s*\)\s*$/i, ""), note: countNote };
+  }
+  if (po.kind === "raw") return { main: main, name: name, note: UNITS === "metric" && US_RE.test(po.raw) ? "" : po.raw };
+  var cnt = portionText(i[0] * kk / po.g, po.l);
+  if (UNITS === "us") {
+    if (po.kind === "vol") return { main: cnt, name: name, note: "" };
+    if (po.kind === "wt") return { main: main, name: name, note: "" };
+    return { main: main, name: name, note: cnt + po.extra };
+  }
+  if (po.kind === "count") return { main: main, name: name, note: cnt + (US_RE.test(po.extra) ? "" : po.extra) };
+  return { main: main, name: name, note: "" };
+}
+/* Household portions like "2 large" are fine in both systems; "1 cup" or "1 oz" only show in US mode. */
+function showPor(i) { return !!i[4] && !(UNITS === "metric" && /^1 (cups?|tbsp|tablespoons?|tsp|teaspoons?|oz|fl oz|pints?|quarts?|lbs?)\b/i.test(i[4].l)); }
+function fmtRaw(it, k) {
+  var v = it[0] * (it[3] ? 1 : k), u = it[1] || "";
+  return fmtNum(v, u) + (u ? " " + unitLabel(u, v) : "");
+}
+/* Metric shows grams for anything with a known USDA weight; the household amount goes underneath. */
+function qParts(it, k) {
+  var u = String(it[1] || "").toLowerCase();
+  if (UNITS === "metric" && it.gw && typeof it[0] === "number" && u !== "ml") {
+    return { main: fmtNum(it.gw * (it[3] ? 1 : k), "g") + " g", sub: "" };
+  }
+  return { main: fmtQ(it, k), sub: "" };
 }
 function amt(v) { if (v === 0) return "0"; if (v < 1) return String(Math.round(v * 100) / 100); if (v < 10) return String(Math.round(v * 10) / 10); return String(Math.round(v)); }
 function mline(m) {
@@ -603,7 +733,12 @@ function toDisplay(d) {
     blurb: d.blurb || (d.ing.length + " ingredients, nutrition calculated from the USDA database"),
     macros: { kcal: Math.round(p.kcal || 0), p: r1(p.p), c: r1(p.c), f: r1(p.f), fib: r1(p.fib), net: r1(netCarbs(p)) },
     nut: t,
-    ing: d.ing.map(function (x) { var po = x.portions && x.pi >= 0 ? x.portions[x.pi] : null; return po ? [x.g, "g", x.name, false, { g: po.g, l: po.label }] : [x.g, "g", x.name]; }),
+    ing: d.ing.map(function (x) {
+      var po = x.portions && x.pi >= 0 ? x.portions[x.pi] : null;
+      if (po) return [x.g, "g", x.name, false, { g: po.g, l: po.label, kind: porKind(po.label), extra: "" }];
+      var sp = splitName(x.name);
+      return sp.house ? [x.g, "g", sp.name, false, makePor(x.g, sp.house)] : [x.g, "g", x.name];
+    }),
     steps: d.steps || [],
     tip: d.tip,
     sources: d.ing.map(function (x) { return { name: x.name, usda: x.usda || "", id: x.fdcId || null, label: x.srcLabel || "" }; })
@@ -618,6 +753,7 @@ function toDisplay(d) {
       var m = map[idx];
       if (!m) { skipped.push(i[2]); return; }
       var f = FOODS[m[0]];
+      if (typeof i[0] === "number") i.gw = m[1];
       counted.push({ name: i[2], g: m[1], n: f.n });
       sources.push({ name: i[2] + " (" + (m[1] < 10 ? Math.round(m[1] * 10) / 10 : Math.round(m[1])) + " g counted)", usda: f.usda, id: f.id, label: "USDA " + f.type });
     });
@@ -828,7 +964,7 @@ function renderPicks() {
   box.innerHTML =
     '<div class="pickhead"><div><h2 class="sect" id="picks-h" tabindex="-1">This week’s picks</h2>' +
     '<p class="muted small">Week of ' + esc(label) + '. New picks every Monday.' + (dietActive() || MINE.length ? ' ' + [dietActive() ? 'Following your diet and allergen filters' : '', MINE.length ? (dietActive() ? 'inspired' : 'Inspired') + ' by your saved recipes' : ''].filter(Boolean).join(' and ') + '.' : '') + '</p></div>' +
-    '<div class="pickctl">' + (swapped ? '<button type="button" class="resetbtn" id="picks-reset">Undo swaps</button>' : '') + '<button type="button" class="resetbtn" id="picks-hide">Hide</button></div></div>' +
+    '<div class="pickctl"><a class="resetbtn" href="#planner">Plan my week</a>' + (swapped ? '<button type="button" class="resetbtn" id="picks-reset">Undo swaps</button>' : '') + '<button type="button" class="resetbtn" id="picks-hide">Hide</button></div></div>' +
     '<div class="grid picks3">' + list.map(function (x) {
       if (!x.r) return '<div class="pick nopick"><p class="muted">No ' + x.meal.toLowerCase() + ' matches your diet and allergen filters.</p></div>';
       return '<div class="pick">' + cardHtml(x.r) + '<div class="pickbar"><span class="small muted">' + esc(x.reason || x.meal + " pick") + '</span>' +
@@ -978,15 +1114,19 @@ function renderRecipe(r) {
       '<p class="contains">' + (t.contains.length ? '<b>Contains:</b> ' + t.contains.join(", ") : 'No major allergens found in the ingredient names.') + ' <span class="cnote">Check labels to be sure.</span></p>'; })() +
     '<div class="facts">' + facts + '</div>' +
     '<div class="macros" role="group" aria-label="Nutrition per serving">' + macros + '</div><p class="note">Per serving. ' + source + (r.macros.net !== undefined ? ' Net carbs = carbs minus fiber' + (r.nut && r.nut.per.allu ? ' and allulose' : '') + '.' : '') + '</p>' +
-    '<div class="actions"><button class="btn" type="button" id="print">Print recipe</button>' +
-    (r.mine ? '<a class="btn" href="#edit-' + r.id + '">Edit</a><button class="btn" type="button" id="del">Delete</button>' : '') + '</div></section>' +
+    '<div class="actions"><button class="btn solid" type="button" id="addplan" aria-expanded="false" aria-controls="addplanbox">Add to meal plan</button><button class="btn" type="button" id="print">Print recipe</button>' +
+    (r.mine ? '<a class="btn" href="#edit-' + r.id + '">Edit</a><button class="btn" type="button" id="del">Delete</button>' : '') + '</div>' +
+    '<div class="addplan" id="addplanbox" hidden><label>Day<select id="ap-day">' + DAYS.map(function (d) { return '<option' + (d === todayName() ? ' selected' : '') + '>' + d + '</option>'; }).join("") + '</select></label>' +
+    '<label>Meal<select id="ap-slot">' + SLOTS.map(function (x) { return '<option' + (x === (SLOTS.indexOf(r.cat) >= 0 ? r.cat : "Snack") ? ' selected' : '') + '>' + x + '</option>'; }).join("") + '</select></label>' +
+    '<label>Servings<select id="ap-s">' + [0.5, 1, 1.5, 2, 3].map(function (v) { return '<option value="' + v + '"' + (v === 1 ? ' selected' : '') + '>' + qtyStr(v) + '</option>'; }).join("") + '</select></label>' +
+    '<button class="btn solid" type="button" id="ap-go">Add</button><p id="ap-msg" class="small" role="status" aria-live="polite"></p></div></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
     '<div class="ingctl"><div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
     '<div class="unitseg" role="group" aria-label="Units">' + [["metric", "Metric"], ["us", "US"]].map(function (x) { return '<button type="button" data-units="' + x[0] + '" aria-pressed="' + (UNITS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div></div>' +
     '<ul class="ing">' + r.ing.map(function (i) {
       if (isH(i)) return '<li class="grp">' + esc(i.h) + '</li>';
-      var id = n++;
-      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + esc(i[2]) + (i[4] ? ' <span class="por">(' + esc(portionText(i[0] * k / i[4].g, i[4].l)) + ')</span>' : '') + '</span></label></li>';
+      var id = n++, v = ingView(i, k);
+      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + esc(v.main) + '</span><span>' + esc(v.name) + (v.note ? ' <span class="por">(' + esc(v.note) + ')</span>' : '') + '</span></label></li>';
     }).join("") + '</ul>' +
     (hasFixed ? '<p class="fixednote">Batch amounts stay the same when you change servings.</p>' : '') +
     '<button class="copy" type="button" id="copy">Copy shopping list</button></section>' +
@@ -999,6 +1139,14 @@ function renderRecipe(r) {
   document.getElementById("minus").addEventListener("click", function () { if (state.servings > 1) { state.servings--; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("plus").addEventListener("click", function () { if (state.servings < 24) { state.servings++; var c = checks(); renderRecipe(r); restore(c); } });
   document.getElementById("print").addEventListener("click", function () { try { window.print(); } catch (e) {} });
+  var apb = document.getElementById("addplan"), apbox = document.getElementById("addplanbox");
+  apb.addEventListener("click", function () { var open = apbox.hidden; apbox.hidden = !open; apb.setAttribute("aria-expanded", String(open)); if (open) document.getElementById("ap-day").focus(); });
+  document.getElementById("ap-go").addEventListener("click", function () {
+    var d = document.getElementById("ap-day").value, sl = document.getElementById("ap-slot").value, sv = parseFloat(document.getElementById("ap-s").value) || 1;
+    PLAN[d][sl].push({ id: r.id, s: sv });
+    var ok = savePlan(), m = document.getElementById("ap-msg");
+    m.innerHTML = ok ? 'Added to ' + d + ' ' + sl.toLowerCase() + '. <a href="#planner">See your meal plan</a>' : 'This browser wouldn\u2019t save the plan. Check that site storage is allowed.';
+  });
   Array.prototype.forEach.call(app.querySelectorAll("[data-units]"), function (b) {
     b.addEventListener("click", function () { UNITS = b.getAttribute("data-units"); try { localStorage.setItem("pp-units", UNITS); } catch (e) {} var c = checks(), y = window.scrollY; renderRecipe(r); restore(c); window.scrollTo(0, y); var f = app.querySelector('[data-units="' + UNITS + '"]'); if (f) f.focus(); });
   });
@@ -1008,7 +1156,7 @@ function renderRecipe(r) {
     MINE = MINE.filter(function (x) { return x.id !== r.id; }); saveMine(); go("home");
   });
   document.getElementById("copy").addEventListener("click", function () {
-    var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + fmtQ(i, k) + " " + i[2] + (i[4] ? " (" + portionText(i[0] * k / i[4].g, i[4].l) + ")" : ""); }).join("\n");
+    var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + (function (v) { return v.main + " " + v.name + (v.note ? " (" + v.note + ")" : ""); })(ingView(i, k)); }).join("\n");
     var btn = this;
     try { navigator.clipboard.writeText(text).then(function () { btn.textContent = "Copied"; }, function () { btn.textContent = "Copy blocked"; }); }
     catch (e) { btn.textContent = "Copy blocked"; }
@@ -1205,6 +1353,196 @@ function renderBuilder(editId) {
   drawList(); drawTotals();
 }
 
+/* ---- Meal plan: 7 days x 4 meals, saved on this device ---- */
+var DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+var SLOTS = ["Breakfast", "Lunch", "Dinner", "Snack"];
+function blankPlan() { var p = {}; DAYS.forEach(function (d) { p[d] = {}; SLOTS.forEach(function (s) { p[d][s] = []; }); }); return p; }
+var PLAN = blankPlan();
+try {
+  var pl0 = JSON.parse(localStorage.getItem("pp-plan") || "null");
+  if (pl0) DAYS.forEach(function (d) { SLOTS.forEach(function (s) {
+    if (pl0[d] && Array.isArray(pl0[d][s])) PLAN[d][s] = pl0[d][s].filter(function (e) { return e && e.id; }).map(function (e) { return { id: String(e.id), s: Math.max(0.5, Math.min(12, +e.s || 1)) }; });
+  }); });
+} catch (e) {}
+function savePlan() { try { localStorage.setItem("pp-plan", JSON.stringify(PLAN)); return true; } catch (e) { return false; } }
+function planCount() { var n = 0; DAYS.forEach(function (d) { SLOTS.forEach(function (s) { n += PLAN[d][s].length; }); }); return n; }
+function todayName() { return DAYS[(new Date().getDay() + 6) % 7]; }
+function recipeIndex() { var idx = {}; allRecipes().forEach(function (r) { idx[r.id] = r; }); return idx; }
+function servText(s) { return qtyStr(s) + (s === 1 ? " serving" : s < 1 ? " serving" : " servings"); }
+var MK = ["kcal", "p", "c", "f", "fib", "net"];
+function dayTotals(day, idx) {
+  var t = { kcal: 0, p: 0, c: 0, f: 0, fib: 0, net: 0, n: 0 };
+  SLOTS.forEach(function (s) { PLAN[day][s].forEach(function (e) {
+    var r = idx[e.id]; if (!r) return; t.n++;
+    MK.forEach(function (k) { if (typeof r.macros[k] === "number") t[k] += r.macros[k] * e.s; });
+  }); });
+  return t;
+}
+function totLine(t) {
+  return '<b>' + Math.round(t.kcal).toLocaleString() + ' kcal</b> · ' + Math.round(t.p) + 'g protein · ' + Math.round(t.c) + 'g carbs · ' + Math.round(t.f) + 'g fat · ' + Math.round(t.fib) + 'g fiber';
+}
+/* Combine every planned recipe's ingredients, scaled to the servings planned. */
+function planShopping(idx) {
+  var map = {}, order = [];
+  DAYS.forEach(function (d) { SLOTS.forEach(function (s) { PLAN[d][s].forEach(function (e) {
+    var r = idx[e.id]; if (!r) return;
+    var k = e.s / (r.base || 1);
+    r.ing.forEach(function (i) {
+      if (isH(i)) return;
+      var kk = i[3] ? Math.max(1, Math.ceil(k)) : k;
+      var key = (Array.isArray(i[0]) ? "r" : typeof i[0]) + "|" + String(i[1] || "").toLowerCase() + "|" + String(i[2]).toLowerCase().trim() + "|" + (i[4] && i[4].l ? i[4].l : "");
+      var a = map[key];
+      if (!a) { a = map[key] = { row: i, amt: 0, lo: 0, hi: 0, gw: 0, gwOk: true, from: {} }; order.push(key); }
+      a.from[r.name] = 1;
+      if (typeof i[0] === "number") { a.amt += i[0] * kk; if (i.gw) a.gw += i.gw * kk; else a.gwOk = false; }
+      else if (Array.isArray(i[0])) { a.lo += i[0][0] * kk; a.hi += i[0][1] * kk; }
+    });
+  }); }); });
+  return order.map(function (key) {
+    var a = map[key], i = a.row, row;
+    if (typeof i[0] === "number") { row = [a.amt, i[1], i[2], false, i[4]]; if (a.gwOk && a.gw) row.gw = a.gw; }
+    else if (Array.isArray(i[0])) row = [[a.lo, a.hi], i[1], i[2]];
+    else row = [i[0], i[1], i[2]];
+    row.key = key; row.from = Object.keys(a.from);
+    return row;
+  }).sort(function (x, y) {
+    var sx = typeof x[0] === "string", sy = typeof y[0] === "string";
+    if (sx !== sy) return sx ? 1 : -1;
+    return ingView(x, 1).name.toLowerCase().localeCompare(ingView(y, 1).name.toLowerCase());
+  });
+}
+var planChecked = {}, pickTarget = null;
+function renderPlanner(focusSel) {
+  var idx = recipeIndex(), today = todayName(), n = planCount();
+  var tots = DAYS.map(function (d) { return dayTotals(d, idx); });
+  var planned = tots.filter(function (t) { return t.n; });
+  var avg = {}; MK.forEach(function (k) { avg[k] = planned.length ? planned.reduce(function (a, t) { return a + t[k]; }, 0) / planned.length : 0; });
+  var list = n ? planShopping(idx) : [];
+  app.innerHTML =
+    '<a class="back" href="#home">← All recipes</a>' +
+    '<section class="hero slim"><h1>Meal plan</h1><p>Plan your week, see each day’s totals, and get one shopping list. Saved on this device.</p></section>' +
+    '<div class="planbar"><button class="btn solid" type="button" id="plan-picks">Add this week’s picks</button>' +
+    (n ? '<a class="btn" href="#planlist" id="plan-golist">Shopping list</a><button class="btn" type="button" id="plan-print">Print plan</button><button class="btn" type="button" id="plan-clear">Clear plan</button>' : '') +
+    '</div><p id="plan-msg" class="muted small" role="status" aria-live="polite"></p>' +
+    (planned.length ? '<section class="weekavg" aria-labelledby="avg-h"><h2 id="avg-h" class="sect">Daily average</h2><p class="muted small">Across the ' + planned.length + (planned.length === 1 ? ' day' : ' days') + ' with meals planned.</p><div class="macros">' +
+      FIELDS.map(function (f) { return '<div><b>' + (f[0] === "kcal" ? Math.round(avg.kcal).toLocaleString() : Math.round(avg[f[0]]) + f[2]) + '</b>' + f[1] + '</div>'; }).join("") + '</div></section>' : '') +
+    '<div class="plangrid">' + DAYS.map(function (d, di) {
+      var t = tots[di];
+      return '<section class="pday' + (d === today ? ' today' : '') + '" aria-labelledby="pd-' + d + '"><h2 id="pd-' + d + '">' + d + (d === today ? ' <span class="todaytag">Today</span>' : '') + '</h2>' +
+        SLOTS.map(function (slot) {
+          var items = PLAN[d][slot];
+          return '<div class="pslot"><h3>' + slot + '</h3>' + (items.length ? '<ul>' + items.map(function (e, ei) {
+            var r = idx[e.id], key = d + "|" + slot + "|" + ei;
+            if (!r) return '<li><span class="muted">Recipe no longer available</span><span></span><button class="x" type="button" data-prm="' + key + '" aria-label="Remove missing recipe from ' + d + ' ' + slot + '">×</button></li>';
+            return '<li><a href="#' + esc(r.id) + '">' + esc(r.name) + '<span class="pk">' + Math.round((r.macros.kcal || 0) * e.s) + ' kcal</span></a>' +
+              '<span class="pserv" role="group" aria-label="Servings of ' + esc(r.name) + '"><button type="button" data-pdec="' + key + '" aria-label="Fewer servings of ' + esc(r.name) + '">−</button><output>' + servText(e.s) + '</output><button type="button" data-pinc="' + key + '" aria-label="More servings of ' + esc(r.name) + '">+</button></span>' +
+              '<button class="x" type="button" data-prm="' + key + '" aria-label="Remove ' + esc(r.name) + ' from ' + d + ' ' + slot + '">×</button></li>';
+          }).join("") + '</ul>' : '') +
+          '<button class="addbtn" type="button" data-padd="' + d + '|' + slot + '" aria-label="Add a recipe to ' + d + ' ' + slot + '">+ Add</button></div>';
+        }).join("") +
+        (t.n ? '<p class="dtot">' + totLine(t) + '</p>' : '<p class="dtot muted">Nothing planned yet.</p>') + '</section>';
+    }).join("") + '</div>' +
+    (n ? '<section class="planlist" id="planlist" aria-labelledby="pl-h" tabindex="-1"><h2 id="pl-h">Shopping list</h2><p class="muted small">Amounts cover exactly the servings in your plan.</p>' +
+      '<div class="ingctl"><span></span><div class="unitseg" role="group" aria-label="Units">' + [["metric", "Metric"], ["us", "US"]].map(function (x) { return '<button type="button" data-units="' + x[0] + '" aria-pressed="' + (UNITS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div></div>' +
+      '<ul class="ing">' + list.map(function (row, li) {
+        var v = ingView(row, 1);
+        return '<li><label><input type="checkbox" id="sl' + li + '" data-key="' + esc(row.key) + '"' + (planChecked[row.key] ? ' checked' : '') + '><span class="q">' + esc(v.main) + '</span><span>' + esc(v.name) + (v.note ? ' <span class="por">(' + esc(v.note) + ')</span>' : '') + '<small class="from">' + esc(row.from.join(", ")) + '</small></span></label></li>';
+      }).join("") + '</ul><button class="copy" type="button" id="plan-copy">Copy shopping list</button></section>' : '') +
+    '<dialog id="picker" aria-labelledby="pk-h"><div class="pkhead"><h2 id="pk-h">Add a recipe</h2><button class="x" type="button" id="pk-close" aria-label="Close">×</button></div>' +
+    '<label class="vh" for="pk-q">Search recipes</label><input class="search" id="pk-q" type="search" placeholder="Search recipes">' +
+    '<div class="chips" role="group" aria-label="Which recipes"><button class="chip" type="button" id="pk-meal" aria-pressed="true">This meal</button><button class="chip" type="button" id="pk-all" aria-pressed="false">All recipes</button></div>' +
+    '<p id="pk-note" class="muted small"></p><ul class="pklist" id="pk-list"></ul></dialog>';
+
+  var msg = document.getElementById("plan-msg");
+  function rerender(sel, text) { var y = window.scrollY; renderPlanner(sel); window.scrollTo(0, y); if (text) document.getElementById("plan-msg").textContent = text; }
+  function entry(key) { var p = key.split("|"); return { d: p[0], s: p[1], i: +p[2] }; }
+  Array.prototype.forEach.call(app.querySelectorAll("[data-pinc],[data-pdec]"), function (b) {
+    b.addEventListener("click", function () {
+      var inc = b.hasAttribute("data-pinc"), key = b.getAttribute(inc ? "data-pinc" : "data-pdec"), e = entry(key), it = PLAN[e.d][e.s][e.i];
+      it.s = inc ? Math.min(12, it.s + 0.5) : Math.max(0.5, it.s - 0.5);
+      savePlan(); rerender('[' + (inc ? 'data-pinc' : 'data-pdec') + '="' + key + '"]');
+    });
+  });
+  Array.prototype.forEach.call(app.querySelectorAll("[data-prm]"), function (b) {
+    b.addEventListener("click", function () {
+      var e = entry(b.getAttribute("data-prm")), r = idx[PLAN[e.d][e.s][e.i].id];
+      PLAN[e.d][e.s].splice(e.i, 1); savePlan();
+      rerender('[data-padd="' + e.d + '|' + e.s + '"]', "Removed " + (r ? r.name : "recipe") + " from " + e.d + " " + e.s + ".");
+    });
+  });
+  document.getElementById("plan-picks").addEventListener("click", function () {
+    var picks = weeklyPicks(), added = 0;
+    DAYS.forEach(function (d) { picks.forEach(function (x) { if (x.r && !PLAN[d][x.meal].length) { PLAN[d][x.meal].push({ id: x.r.id, s: 1 }); added++; } }); });
+    savePlan();
+    rerender("#plan-picks", added ? "Added this week’s picks to " + added + " empty " + (added === 1 ? "slot" : "slots") + "." : "No empty breakfast, lunch or dinner slots to fill.");
+  });
+  var clr = document.getElementById("plan-clear");
+  if (clr) {
+    var armed = null;
+    clr.addEventListener("click", function () {
+      if (!armed) { clr.textContent = "Click again to clear"; armed = setTimeout(function () { armed = null; clr.textContent = "Clear plan"; }, 4000); return; }
+      clearTimeout(armed); PLAN = blankPlan(); planChecked = {}; savePlan(); rerender("#plan-picks", "Meal plan cleared.");
+    });
+  }
+  var pr = document.getElementById("plan-print");
+  if (pr) pr.addEventListener("click", function () { try { window.print(); } catch (e) {} });
+  var gl = document.getElementById("plan-golist");
+  if (gl) gl.addEventListener("click", function (ev) { ev.preventDefault(); var t = document.getElementById("planlist"); t.scrollIntoView({ block: "start" }); t.focus({ preventScroll: true }); });
+  Array.prototype.forEach.call(app.querySelectorAll(".planlist input[type=checkbox]"), function (c) {
+    c.addEventListener("change", function () { planChecked[c.getAttribute("data-key")] = c.checked; });
+  });
+  Array.prototype.forEach.call(app.querySelectorAll(".planlist [data-units]"), function (b) {
+    b.addEventListener("click", function () { UNITS = b.getAttribute("data-units"); try { localStorage.setItem("pp-units", UNITS); } catch (e) {} rerender('.planlist [data-units="' + UNITS + '"]'); });
+  });
+  var cp = document.getElementById("plan-copy");
+  if (cp) cp.addEventListener("click", function () {
+    var text = "Shopping list (Plate and Pantry meal plan)\n" + list.map(function (row) { var v = ingView(row, 1); return "- " + v.main + " " + v.name + (v.note ? " (" + v.note + ")" : ""); }).join("\n");
+    var btn = this;
+    try { navigator.clipboard.writeText(text).then(function () { btn.textContent = "Copied"; }, function () { btn.textContent = "Copy blocked"; }); } catch (e) { btn.textContent = "Copy blocked"; }
+  });
+
+  /* Recipe picker */
+  var dlg = document.getElementById("picker"), pq = document.getElementById("pk-q"), allMode = false;
+  function drawPicks() {
+    var t = pickTarget; if (!t) return;
+    var ql = pq.value.toLowerCase().trim();
+    var pool = allRecipes().filter(passesDiet);
+    var sameMeal = pool.filter(function (r) { return r.cat === t.s; });
+    var useAll = allMode || !sameMeal.length;
+    document.getElementById("pk-meal").setAttribute("aria-pressed", String(!useAll));
+    document.getElementById("pk-all").setAttribute("aria-pressed", String(useAll));
+    var shown = (useAll ? pool : sameMeal).filter(function (r) { return !ql || (r.name + " " + r.cat).toLowerCase().indexOf(ql) >= 0; });
+    document.getElementById("pk-note").textContent = (!allMode && !sameMeal.length ? "No " + t.s.toLowerCase() + " recipes yet, so showing all recipes. " : "") + (dietActive() ? "Following your diet and allergen filters." : "");
+    document.getElementById("pk-list").innerHTML = shown.length ? shown.map(function (r) {
+      return '<li><button type="button" data-pick="' + esc(r.id) + '"><span>' + esc(r.name) + '</span><span class="pm">' + esc(r.cat) + ' · ' + (r.macros.kcal || 0) + ' kcal · ' + (r.macros.p !== undefined ? r.macros.p + 'g protein' : '') + (r.mine ? ' · My recipe' : '') + '</span></button></li>';
+    }).join("") : '<li class="muted small">No recipes match.</li>';
+    Array.prototype.forEach.call(dlg.querySelectorAll("[data-pick]"), function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-pick"), r = idx[id];
+        PLAN[t.d][t.s].push({ id: id, s: 1 }); savePlan(); dlg.close(); pickTarget = null;
+        rerender('[data-padd="' + t.d + '|' + t.s + '"]', "Added " + (r ? r.name : "recipe") + " to " + t.d + " " + t.s + ".");
+      });
+    });
+  }
+  Array.prototype.forEach.call(app.querySelectorAll("[data-padd]"), function (b) {
+    b.addEventListener("click", function () {
+      var p = b.getAttribute("data-padd").split("|");
+      pickTarget = { d: p[0], s: p[1], from: '[data-padd="' + p[0] + '|' + p[1] + '"]' };
+      document.getElementById("pk-h").textContent = "Add to " + p[0] + " · " + p[1];
+      allMode = false; pq.value = ""; drawPicks();
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+      pq.focus();
+    });
+  });
+  pq.addEventListener("input", drawPicks);
+  document.getElementById("pk-meal").addEventListener("click", function () { allMode = false; drawPicks(); });
+  document.getElementById("pk-all").addEventListener("click", function () { allMode = true; drawPicks(); });
+  document.getElementById("pk-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("close", function () { if (pickTarget) { var f = app.querySelector(pickTarget.from); pickTarget = null; if (f) f.focus(); } });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  if (focusSel) { var fe = app.querySelector(focusSel); if (fe) fe.focus({ preventScroll: true }); }
+}
+
 var currentView = null;
 function viewId() { return location.hash.replace("#", "") || "home"; }
 function route() {
@@ -1213,7 +1551,15 @@ function route() {
 }
 function render(id, y) {
   currentView = id || "home";
+  var pi = document.querySelector(".planicon");
+  if (pi) {
+    var onPlan = currentView === "planner";
+    if (onPlan) pi.setAttribute("aria-current", "page"); else pi.removeAttribute("aria-current");
+    pi.setAttribute("aria-label", onPlan ? "Close meal plan" : "Meal plan");
+    pi.setAttribute("title", onPlan ? "Close meal plan" : "Meal plan");
+  }
   if (id === "builder") renderBuilder();
+  else if (id === "planner") renderPlanner();
   else if (id.indexOf("edit-") === 0) renderBuilder(id.slice(5));
   else { var r = id && id !== "home" ? find(id) : null; if (r) renderRecipe(r); else renderHome(); }
   window.scrollTo(0, y || 0);
@@ -1230,7 +1576,7 @@ function go(id) {
   id = id || "home";
   try {
     history.replaceState({ y: window.scrollY || 0 }, "", location.hash || "#home");
-    if (viewId() !== id) history.pushState({ y: 0 }, "", "#" + id);
+    if (viewId() !== id) history.pushState({ y: 0, from: currentView }, "", "#" + id);
   } catch (e) {}
   render(id);
 }
@@ -1239,6 +1585,12 @@ document.addEventListener("click", function (e) {
   if (!a) return;
   e.preventDefault();
   if (a.classList.contains("skip")) { app.focus(); return; }
+  /* The calendar works as a toggle: on the meal plan, clicking it again goes back to where you were. */
+  if (a.classList.contains("planicon") && currentView === "planner") {
+    var st = history.state;
+    if (st && st.from && st.from !== "planner") history.back(); else go("home");
+    return;
+  }
   go(a.getAttribute("href").slice(1));
 });
 
