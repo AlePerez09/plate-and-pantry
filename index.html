@@ -219,24 +219,32 @@ details.label summary { cursor: pointer; font-weight: 600; color: var(--deep); }
 .labelgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin: 12px 0 6px; }
 .labelgrid .span2 { grid-column: 1 / -1; }
 ul.blist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-ul.blist li { display: grid; grid-template-columns: 1fr 5.5em auto 4.5em 32px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+ul.blist li { display: grid; grid-template-columns: 1fr 4.6em minmax(6.5em, 11em) 4.8em 32px; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .bname { display: flex; flex-direction: column; min-width: 0; }
 .bname span:first-child { font-weight: 600; overflow-wrap: anywhere; }
 .src { color: var(--muted); font-size: 0.8rem; }
 .grams { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; text-align: right; font-variant-numeric: tabular-nums; }
 .gunit { color: var(--muted); }
+.unitsel { width: 100%; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 6px; color: inherit; font: inherit; font-size: 0.9rem; }
+.kc { line-height: 1.25; }
+.ingctl { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; margin-bottom: 12px; }
+.ingctl .servings, .ingctl .unitseg { margin: 0; }
+.ing .por { color: var(--muted); font-size: 0.92em; }
 .kc { text-align: right; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
 .x { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 1.1rem; line-height: 1; }
 .x:hover { border-color: #c2410c; color: #c2410c; }
 .emptyin { margin: 0; }
 .macros.side { max-width: none; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
 .macros.side div { background: color-mix(in srgb, var(--deep) 8%, var(--surface)); }
-@media (max-width: 520px) { ul.blist li { grid-template-columns: 1fr 5em auto 32px; } .kc { display: none; } .hright .navlink { font-size: 0.9rem; } }
+@media (max-width: 520px) { ul.blist li { grid-template-columns: 4.6em 1fr 32px; } ul.blist .bname { grid-column: 1 / -1; } .kc { display: none; } .hright .navlink { font-size: 0.9rem; } }
 .bside .bar { display: none; }
 .bside table.nut .dv { width: auto; }
 .bside table.nut th, .bside table.nut td { padding: 6px 2px; font-size: 0.9rem; }
+@media (max-width: 480px) { table.nut .dv { width: auto; } table.nut th, table.nut td { font-size: 0.9rem; padding: 7px 3px; } table.nut thead th { font-size: 0.72rem; letter-spacing: 0.03em; } }
+@media (max-width: 360px) { table.nut th, table.nut td { font-size: 0.82rem; padding: 6px 2px; } table.nut .num { white-space: normal; } }
 #b-status:empty, #b-results:empty { display: none; }
 .brand { white-space: nowrap; }
+@media (max-width: 380px) { .brand { font-size: 1.12rem; gap: 8px; } .hright { gap: 8px; } #themebtn { padding: 8px 10px; } #themebtn .tlabel { display: none; } }
 @media (max-width: 520px) { .hright .navlink { display: none; } }
 .tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; vertical-align: 1px; }
 .tag.full { background: color-mix(in srgb, var(--deep) 16%, transparent); color: var(--deep); }
@@ -380,7 +388,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9r
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#home"><i></i>Plate and Pantry</a>
-    <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="a11ybtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="a11ypanel" aria-label="Settings" title="Settings"><svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div id="a11ypanel" class="themepanel" role="group" aria-label="Settings" hidden></div></div><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel"><i class="dot"></i>Theme</button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
+    <div class="hright"><a class="navlink" href="#builder">Build a recipe</a><div class="themewrap"><button id="a11ybtn" class="themebtn iconbtn" type="button" aria-expanded="false" aria-controls="a11ypanel" aria-label="Settings" title="Settings"><svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><div id="a11ypanel" class="themepanel" role="group" aria-label="Settings" hidden></div></div><div class="themewrap"><button id="themebtn" class="themebtn" type="button" aria-expanded="false" aria-controls="themepanel" aria-label="Theme"><i class="dot"></i><span class="tlabel">Theme</span></button><div id="themepanel" class="themepanel" role="group" aria-label="Site theme" hidden></div></div></div>
   </div>
 </header>
 <div class="doodles" aria-hidden="true"><span class="dd l" style="top:14vh;--x:0.55;--w:96px;--rot:-8deg;--d:0s"><svg viewBox="0 0 100 120"><path d="M50 6c18 0 30 22 36 46 7 28-8 62-36 62S7 80 14 52C20 28 32 6 50 6z" fill="#3d6b2c"/><path d="M50 18c13 0 22 18 26 37 5 22-6 48-26 48S19 77 24 55c4-19 13-37 26-37z" fill="#cfe58a"/><circle cx="50" cy="72" r="16" fill="#8a5a36"/><circle cx="45" cy="67" r="4" fill="#fff" opacity=".35"/></svg></span><span class="dd l" style="top:44vh;--x:0.35;--w:74px;--rot:10deg;--d:2s"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#f5d33b"/><circle cx="50" cy="50" r="36" fill="#fbeea0"/><g stroke="#f5d33b" stroke-width="4" stroke-linecap="round"><path d="M50 16v68M16 50h68M26 26l48 48M74 26 26 74"/></g><circle cx="50" cy="50" r="6" fill="#f5d33b"/></svg></span><span class="dd l" style="top:72vh;--x:0.6;--w:84px;--rot:-6deg;--d:4s"><svg viewBox="0 0 110 100"><path d="M52 30c-4-12 2-22 14-24M52 30c8-8 20-8 28-2" stroke="#4f7a32" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="58" r="22" fill="#3d4fb8"/><circle cx="70" cy="62" r="24" fill="#5162cf"/><circle cx="28" cy="51" r="5" fill="#fff" opacity=".4"/><circle cx="63" cy="55" r="5" fill="#fff" opacity=".4"/></svg></span><span class="dd r" style="top:12vh;--x:0.4;--w:100px;--rot:8deg;--d:6s"><svg viewBox="0 0 120 100"><path d="M60 8c26 0 52 10 52 38 0 22-14 24-18 40-3 12-22 10-34 10S28 98 24 84C20 70 8 66 8 46 8 18 34 8 60 8z" fill="#fbfaf5" stroke="#e6e1d3" stroke-width="3"/><circle cx="58" cy="50" r="20" fill="#f6b82b"/><circle cx="51" cy="44" r="5" fill="#fff" opacity=".55"/></svg></span><span class="dd r" style="top:42vh;--x:0.6;--w:78px;--rot:14deg;--d:8s"><svg viewBox="0 0 100 120"><path d="M50 30c12 0 18 8 16 18L54 112c-1 6-7 6-8 0L34 48c-2-10 4-18 16-18z" fill="#f08a2c"/><g stroke="#c9661a" stroke-width="3" stroke-linecap="round"><path d="M40 56h8M52 70h8M42 84h7"/></g><path d="M50 30C46 18 38 10 30 8M50 30c0-12 2-20 6-26M50 30c6-10 14-14 22-14" stroke="#4f9a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:70vh;--x:0.35;--w:70px;--rot:-12deg;--d:10s"><svg viewBox="0 0 100 100"><path d="M14 86C10 46 40 12 88 12c2 44-28 78-74 74z" fill="#4f9a3a"/><path d="M20 80C40 58 58 40 78 22" stroke="#a6d68a" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><span class="dd r" style="top:88vh;--x:0.55;--w:80px;--rot:6deg;--d:12s"><svg viewBox="0 0 110 100"><path d="M20 40c-12-2-14-30 12-30h46c26 0 24 28 12 30v50H20z" fill="#c68a4a"/><path d="M28 42c-8-2-8-22 8-22h38c16 0 16 20 8 22v40H28z" fill="#f2d39c"/><path d="M40 56c6 6 12 6 18 0" stroke="#6b4423" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="42" cy="48" r="3" fill="#6b4423"/><circle cx="58" cy="48" r="3" fill="#6b4423"/><circle cx="35" cy="56" r="4" fill="#f29a9a" opacity=".7"/><circle cx="65" cy="56" r="4" fill="#f29a9a" opacity=".7"/></svg></span><span class="dd l" style="top:92vh;--x:0.4;--w:70px;--rot:8deg;--d:14s"><svg viewBox="0 0 100 120"><path d="M50 116V20" stroke="#3f7d34" stroke-width="4" stroke-linecap="round"/><g fill="#5aa547"><ellipse cx="36" cy="40" rx="14" ry="7" transform="rotate(-30 36 40)"/><ellipse cx="64" cy="56" rx="14" ry="7" transform="rotate(30 64 56)"/><ellipse cx="36" cy="72" rx="14" ry="7" transform="rotate(-30 36 72)"/><ellipse cx="64" cy="88" rx="14" ry="7" transform="rotate(30 64 88)"/><ellipse cx="50" cy="18" rx="7" ry="12"/></g></svg></span></div>
@@ -494,10 +502,10 @@ function unitLabel(u, v) {
   if (u === "ml") return "mL";
   return u;
 }
-/* Units: "as" = as written, "metric" = g/mL (tsp/tbsp kept, as metric recipes use them), "us" = oz/cups/tbsp/tsp. Small gram amounts (spices) stay in grams in US mode. */
-var UNITS = "as";
-try { UNITS = localStorage.getItem("pp-units") || "as"; } catch (e) {}
-if (["as", "metric", "us"].indexOf(UNITS) < 0) UNITS = "as";
+/* Units: "metric" = g/mL (tsp/tbsp kept, as metric recipes use them), "us" = oz/cups/tbsp/tsp. Small gram amounts (spices) stay in grams in US mode. */
+var UNITS = "metric";
+try { UNITS = localStorage.getItem("pp-units") || "metric"; } catch (e) {}
+if (["metric", "us"].indexOf(UNITS) < 0) UNITS = "metric";
 function conv(v, u) {
   var ul = (u || "").toLowerCase();
   if (UNITS === "metric") {
@@ -515,6 +523,39 @@ function fmtQ(it, k) {
   if (typeof q === "string") return q.charAt(0).toUpperCase() + q.slice(1);
   if (Array.isArray(q)) { c = conv(q[1] * kk, u); return fmtNum(q[0] * kk * c.f, c.u) + "\u2013" + fmtNum(q[1] * kk * c.f, c.u) + (c.u ? " " + unitLabel(c.u, q[1] * kk * c.f) : ""); }
   var v = q * kk; c = conv(v, u); v = v * c.f; return fmtNum(v, c.u) + (c.u ? " " + unitLabel(c.u, v) : "");
+}
+/* Household portions ("1 large" = 50 g) */
+var PLURALS = { cup: "cups", slice: "slices", piece: "pieces", fillet: "fillets", breast: "breasts", link: "links", patty: "patties", tortilla: "tortillas", bar: "bars", container: "containers", scoop: "scoops", packet: "packets", clove: "cloves", stalk: "stalks", fruit: "fruits", serving: "servings", egg: "eggs", leaf: "leaves", can: "cans", package: "packages", strip: "strips", wedge: "wedges", spear: "spears", sprig: "sprigs", stick: "sticks", bun: "buns", roll: "rolls", muffin: "muffins", bagel: "bagels", cookie: "cookies", cracker: "crackers", pepper: "peppers", banana: "bananas", avocado: "avocados", apple: "apples", tomato: "tomatoes", onion: "onions", potato: "potatoes", carrot: "carrots", tbsp: "tbsp", tsp: "tsp", oz: "oz", cookie: "cookies", pancake: "pancakes", waffle: "waffles", wrap: "wraps", pouch: "pouches", bottle: "bottles", cake: "cakes", pie: "pies", taco: "tacos", nugget: "nuggets", sausage: "sausages", meatball: "meatballs", chip: "chips", pretzel: "pretzels" };
+function qtyStr(q) { var r = Math.round(q * 4) / 4; if (Math.abs(r - q) < 0.02) return fmtNum(r, ""); return String(Math.round(q * 10) / 10); }
+function portionText(q, label) {
+  var m = /^1 (.*)$/.exec(label || "");
+  if (!m) return qtyStr(q) + " × " + label;
+  var rest = m[1];
+  if (q > 1) rest = rest.replace(/^([A-Za-z]+)/, function (w) { return PLURALS[w.toLowerCase()] || w; });
+  return qtyStr(q) + " " + rest;
+}
+/* "2 slices" on a label (57 g) -> unit "1 slice" = 28.5 g, starting at 2. */
+function servingPortion(text, g) {
+  var t = String(text || "").toLowerCase().replace(/\bonz\b/g, "oz").replace(/\s+/g, " ").trim();
+  var m = /^(\d+(?:\.\d+)?|\d+\/\d+|\d+ \d+\/\d+)\s+([a-z][a-z .'-]*)$/.exec(t);
+  if (m && g > 0) {
+    var parts = m[1].split(" "), n = 0;
+    parts.forEach(function (x) { if (x.indexOf("/") > 0) { var f = x.split("/"); n += +f[0] / +f[1]; } else n += +x; });
+    var w = m[2].trim(), unit = null;
+    Object.keys(PLURALS).forEach(function (k) { if (w === k || w === PLURALS[k]) unit = k; });
+    if (n > 0 && n <= 50 && unit) return { portion: { label: "1 " + unit, g: Math.round(g / n * 100) / 100 }, qty: n };
+  }
+  return { portion: { label: "1 serving", g: g }, qty: 1, note: text };
+}
+function bestPortion(list) {
+  if (!list || !list.length) return -1;
+  var tiers = [
+    /^(large|medium|whole|each|fruit|slice|piece|egg|clove|stalk|fillet|breast|link|patty|tortilla|bar|container|scoop|packet|bun|muffin|bagel|spear|stick|banana|apple|avocado|tomato|onion|potato|carrot|pepper)\b/i,
+    /\bserving\b/i, /\b(tbsp|tablespoon)\b/i, /\bcup\b/i, /\boz\b/i
+  ];
+  var head = function (l) { return String(l).replace(/^1 /, "").split(/[(,]/)[0].trim(); };
+  for (var t = 0; t < tiers.length; t++) for (var i = 0; i < list.length; i++) { var h = head(list[i].label); if (tiers[t].test(h) && !/^(extra large|jumbo|small)\b/i.test(h)) return i; }
+  return 0;
 }
 function amt(v) { if (v === 0) return "0"; if (v < 1) return String(Math.round(v * 100) / 100); if (v < 10) return String(Math.round(v * 10) / 10); return String(Math.round(v)); }
 function mline(m) {
@@ -562,7 +603,7 @@ function toDisplay(d) {
     blurb: d.blurb || (d.ing.length + " ingredients, nutrition calculated from the USDA database"),
     macros: { kcal: Math.round(p.kcal || 0), p: r1(p.p), c: r1(p.c), f: r1(p.f), fib: r1(p.fib), net: r1(netCarbs(p)) },
     nut: t,
-    ing: d.ing.map(function (x) { return [x.g, "g", x.name]; }),
+    ing: d.ing.map(function (x) { var po = x.portions && x.pi >= 0 ? x.portions[x.pi] : null; return po ? [x.g, "g", x.name, false, { g: po.g, l: po.label }] : [x.g, "g", x.name]; }),
     steps: d.steps || [],
     tip: d.tip,
     sources: d.ing.map(function (x) { return { name: x.name, usda: x.usda || "", id: x.fdcId || null, label: x.srcLabel || "" }; })
@@ -940,12 +981,12 @@ function renderRecipe(r) {
     '<div class="actions"><button class="btn" type="button" id="print">Print recipe</button>' +
     (r.mine ? '<a class="btn" href="#edit-' + r.id + '">Edit</a><button class="btn" type="button" id="del">Delete</button>' : '') + '</div></section>' +
     '<div class="spread"><section><h2>Ingredients</h2>' +
-    '<div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
-    '<div class="unitseg" role="group" aria-label="Units">' + [["as", "As written"], ["metric", "Metric"], ["us", "US"]].map(function (x) { return '<button type="button" data-units="' + x[0] + '" aria-pressed="' + (UNITS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div>' +
+    '<div class="ingctl"><div class="servings"><button type="button" id="minus" aria-label="Fewer servings">−</button><output aria-live="polite">' + s + (s === 1 ? ' serving' : ' servings') + '</output><button type="button" id="plus" aria-label="More servings">+</button></div>' +
+    '<div class="unitseg" role="group" aria-label="Units">' + [["metric", "Metric"], ["us", "US"]].map(function (x) { return '<button type="button" data-units="' + x[0] + '" aria-pressed="' + (UNITS === x[0]) + '">' + x[1] + '</button>'; }).join("") + '</div></div>' +
     '<ul class="ing">' + r.ing.map(function (i) {
       if (isH(i)) return '<li class="grp">' + esc(i.h) + '</li>';
       var id = n++;
-      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + esc(i[2]) + '</span></label></li>';
+      return '<li><label><input type="checkbox" id="i' + id + '"><span class="q">' + fmtQ(i, k) + '</span><span>' + esc(i[2]) + (i[4] ? ' <span class="por">(' + esc(portionText(i[0] * k / i[4].g, i[4].l)) + ')</span>' : '') + '</span></label></li>';
     }).join("") + '</ul>' +
     (hasFixed ? '<p class="fixednote">Batch amounts stay the same when you change servings.</p>' : '') +
     '<button class="copy" type="button" id="copy">Copy shopping list</button></section>' +
@@ -967,7 +1008,7 @@ function renderRecipe(r) {
     MINE = MINE.filter(function (x) { return x.id !== r.id; }); saveMine(); go("home");
   });
   document.getElementById("copy").addEventListener("click", function () {
-    var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + fmtQ(i, k) + " " + i[2]; }).join("\n");
+    var text = r.name + " (" + s + (s === 1 ? " serving" : " servings") + ")\n" + r.ing.map(function (i) { return isH(i) ? "\n" + i.h + ":" : "- " + fmtQ(i, k) + " " + i[2] + (i[4] ? " (" + portionText(i[0] * k / i[4].g, i[4].l) + ")" : ""); }).join("\n");
     var btn = this;
     try { navigator.clipboard.writeText(text).then(function () { btn.textContent = "Copied"; }, function () { btn.textContent = "Copy blocked"; }); }
     catch (e) { btn.textContent = "Copy blocked"; }
@@ -985,7 +1026,7 @@ function renderBuilder(editId) {
   draft = existing ? JSON.parse(JSON.stringify(existing)) : (draft && !draft.id ? draft : newDraft());
   app.innerHTML =
     '<a class="back" href="#home">← All recipes</a>' +
-    '<section class="hero slim"><h1>' + (existing ? 'Edit recipe' : 'Build a recipe') + '</h1><p>Search the USDA food database, enter grams, and the nutrition adds up as you go.</p></section>' +
+    '<section class="hero slim"><h1>' + (existing ? 'Edit recipe' : 'Build a recipe') + '</h1><p>Search the USDA food database, pick an amount like 2 large eggs or 1 cup, and the nutrition adds up as you go.</p></section>' +
     '<div class="builder"><div class="bmain">' +
     '<div class="fieldrow"><div class="field grow"><label for="b-name">Recipe name</label><input id="b-name" type="text" value="' + esc(draft.name) + '" placeholder="Chicken and rice bowl"></div>' +
     '<div class="field"><label for="b-cat">Meal</label><select id="b-cat">' + CATS.map(function (c) { return '<option' + (c === draft.cat ? ' selected' : '') + '>' + c + '</option>'; }).join("") + '</select></div>' +
@@ -1002,7 +1043,7 @@ function renderBuilder(editId) {
     '<div class="field"><label for="l-f">Fat (g)</label><input id="l-f" type="number" min="0" step="any"></div>' +
     '<div class="field"><label for="l-c">Carbs (g)</label><input id="l-c" type="number" min="0" step="any"></div>' +
     '<div class="field"><label for="l-fib">Fiber (g)</label><input id="l-fib" type="number" min="0" step="any"></div>' +
-    '</div><p class="muted small">Enter the numbers for one serving, as printed on the package. The food is added at one serving; change the grams after.</p>' +
+    '</div><p class="muted small">Enter the numbers for one serving, as printed on the package. The food is added at one serving; change the amount after.</p>' +
     '<p id="l-err" class="err" aria-live="polite"></p><button class="btn" type="button" id="l-add">Add food</button></details>' +
     '<div id="b-list"></div>' +
     '<h2>Method</h2><div class="field"><label for="b-steps">Steps, one per line</label><textarea id="b-steps" rows="6" placeholder="Preheat the oven to 400°F.">' + esc(draft.steps.join("\n")) + '</textarea></div>' +
@@ -1021,21 +1062,42 @@ function renderBuilder(editId) {
   }
   ["b-name","b-cat","b-serv","b-blurb","b-steps"].forEach(function (id) { var el = document.getElementById(id); el.addEventListener("input", function () { sync(); if (id === "b-serv") drawTotals(); }); el.addEventListener("change", sync); });
 
+  function norm(x) {
+    if (x.pi === undefined || !x.portions || !x.portions[x.pi]) { x.pi = -1; }
+    if (x.qty === undefined) x.qty = x.pi >= 0 ? Math.round(x.g / x.portions[x.pi].g * 100) / 100 : x.g;
+  }
+  function regram(x) { x.g = x.pi >= 0 ? Math.round(x.qty * x.portions[x.pi].g * 10) / 10 : x.qty; }
+  function kcLine(x) { return (x.pi >= 0 ? amt(x.g) + ' g' : '') + (x.n && typeof x.n.kcal === "number" ? (x.pi >= 0 ? '<br>' : '') + Math.round(x.n.kcal * x.g / 100) + ' kcal' : ''); }
   function drawList() {
     var box = document.getElementById("b-list");
     if (!draft.ing.length) { box.innerHTML = '<p class="muted emptyin">No ingredients yet. Search for a food above.</p>'; return; }
+    draft.ing.forEach(norm);
     box.innerHTML = '<ul class="blist">' + draft.ing.map(function (x, i) {
-      var kc = x.n && typeof x.n.kcal === "number" ? Math.round(x.n.kcal * x.g / 100) + ' kcal' : '';
       var micro = MICROS.filter(function (m) { return x.n && typeof x.n[m[0]] === "number"; }).length;
-      return '<li><div class="bname"><span>' + esc(x.name) + '</span><span class="src">' + esc(x.srcLabel || "") + (micro < 10 ? ' \u00B7 no vitamin/mineral data' : '') + '</span></div>' +
-        '<label class="vh" for="g' + i + '">Grams of ' + esc(x.name) + '</label><input class="grams" id="g' + i + '" data-i="' + i + '" type="number" min="0" step="any" value="' + x.g + '"><span class="gunit">g</span>' +
-        '<span class="kc">' + kc + '</span><button class="x" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(x.name) + '">×</button></li>';
+      var opts = '<option value="-1"' + (x.pi < 0 ? ' selected' : '') + '>g</option>' + (x.portions || []).map(function (po, j) {
+        return '<option value="' + j + '"' + (x.pi === j ? ' selected' : '') + '>' + esc(po.label.replace(/^1 /, "")) + ' (' + amt(po.g) + ' g)</option>';
+      }).join("");
+      return '<li><div class="bname"><span>' + esc(x.name) + '</span><span class="src">' + esc(x.srcLabel || "") + (micro < 10 ? ' · no vitamin/mineral data' : '') + (x.loading ? ' · loading serving sizes…' : '') + '</span></div>' +
+        '<label class="vh" for="q' + i + '">Amount of ' + esc(x.name) + '</label><input class="grams qty" id="q' + i + '" data-i="' + i + '" type="number" min="0" step="any" value="' + x.qty + '">' +
+        '<label class="vh" for="u' + i + '">Unit for ' + esc(x.name) + '</label><select class="unitsel" id="u' + i + '" data-i="' + i + '"' + ((x.portions || []).length ? '' : ' title="No standard servings from USDA for this food"') + '>' + opts + '</select>' +
+        '<span class="kc">' + kcLine(x) + '</span><button class="x" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(x.name) + '">×</button></li>';
     }).join("") + '</ul>';
-    Array.prototype.forEach.call(box.querySelectorAll(".grams"), function (el) {
+    Array.prototype.forEach.call(box.querySelectorAll(".qty"), function (el) {
       el.addEventListener("input", function () {
-        var i = +el.getAttribute("data-i"); draft.ing[i].g = Math.max(0, parseFloat(el.value) || 0);
-        var x = draft.ing[i], kc = el.parentNode.querySelector(".kc");
-        if (kc && x.n && typeof x.n.kcal === "number") kc.textContent = Math.round(x.n.kcal * x.g / 100) + " kcal";
+        var i = +el.getAttribute("data-i"), x = draft.ing[i];
+        x.qty = Math.max(0, parseFloat(el.value) || 0); x.touched = true; regram(x);
+        el.parentNode.querySelector(".kc").innerHTML = kcLine(x);
+        drawTotals();
+      });
+    });
+    Array.prototype.forEach.call(box.querySelectorAll(".unitsel"), function (el) {
+      el.addEventListener("change", function () {
+        var i = +el.getAttribute("data-i"), x = draft.ing[i], pi = parseInt(el.value, 10);
+        x.pi = pi; x.touched = true;
+        x.qty = pi >= 0 ? Math.max(0.25, Math.round(x.g / x.portions[pi].g * 4) / 4) : Math.round(x.g * 10) / 10;
+        regram(x);
+        var q = document.getElementById("q" + i); q.value = x.qty;
+        el.parentNode.querySelector(".kc").innerHTML = kcLine(x);
         drawTotals();
       });
     });
@@ -1050,10 +1112,32 @@ function renderBuilder(editId) {
       tile("kcal","Calories","") + tile("p","Protein","g") + tile("c","Carbs","g") + tile("f","Fat","g") + tile("fib","Fiber","g") + '<div><b>' + (p.c === undefined ? '\u2013' : amt(netCarbs(p)) + 'g') + '</b>Net carbs</div></div>' +
       (draft.ing.length ? '<h3>Vitamins and minerals</h3>' + nutTable(t) : '<p class="muted">Add ingredients to see the numbers.</p>');
   }
+  function usePortions(x, list) {
+    x.portions = (list || []).filter(function (po) { return po && po.g > 0 && po.label; });
+    if (x.touched) return;
+    var bi = bestPortion(x.portions);
+    if (bi >= 0) { x.pi = bi; x.qty = 1; } else { x.pi = -1; x.qty = 100; }
+    regram(x);
+  }
   function addFood(f) {
-    var g = 100;
     var srcLabel = f.type === "Branded" ? (f.brand ? niceName(f.brand) + " · label data" : "Branded") : "USDA " + (f.type === "Foundation" ? "Foundation" : "SR Legacy");
-    draft.ing.push({ name: niceName(f.name), g: Math.round(g * 10) / 10, src: f.type === "Branded" ? "branded" : "usda", srcLabel: srcLabel, fdcId: f.id, n: f.n });
+    var x = { name: niceName(f.name), g: 100, qty: 100, pi: -1, portions: [], src: f.type === "Branded" ? "branded" : "usda", srcLabel: srcLabel, fdcId: f.id, n: f.n };
+    if (f.portions && f.portions.length) usePortions(x, f.portions);
+    else if (f.serving) { var sp = servingPortion(f.servingText, f.serving); usePortions(x, [sp.portion]); if (x.pi === 0) { x.qty = sp.qty; regram(x); } }
+    draft.ing.push(x);
+    var status = document.getElementById("b-status");
+    var said = function () { status.textContent = "Added " + (x.pi >= 0 ? portionText(x.qty, x.portions[x.pi].label) + " (" + amt(x.g) + " g)" : "100 g") + " of " + x.name + ". Change the amount or unit in the list below."; };
+    said();
+    if (f.type !== "Branded" && f.id && !(f.portions && f.portions.length)) {
+      x.loading = true;
+      fetch("/api/foods?ids=" + f.id + "&portions=1").then(function (r) { return r.json(); }).then(function (j) {
+        var full = j && j.foods && j.foods[0];
+        if (full && full.portions && full.portions.length) usePortions(x, full.portions);
+      }).catch(function () {}).then(function () {
+        x.loading = false;
+        if (draft && draft.ing.indexOf(x) >= 0 && document.getElementById("b-list")) { drawList(); drawTotals(); if (!x.touched) said(); }
+      });
+    }
     drawList(); drawTotals();
   }
 
@@ -1070,7 +1154,7 @@ function renderBuilder(editId) {
       if (j.error || !j.generic) { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; return; }
       lastResults = j.generic.concat(j.branded);
       if (!lastResults.length) { status.textContent = "No foods found for “" + q + "”. Try a simpler word."; return; }
-      status.textContent = (j.demoKey ? "Using the shared demo key, so searches may run out. " : "") + "Pick a food to add it. Calories are per 100 g. Common foods usually have full vitamins and minerals; brand-name foods often have label data only.";
+      status.textContent = (j.demoKey ? "Using the shared demo key, so searches may run out. " : "") + "Pick a food to add it. Calories shown are per 100 g; it\u2019s added at one normal serving. Common foods usually have full vitamins and minerals; brand-name foods often have label data only.";
       function group(title, list, off) {
         if (!list.length) return "";
         return '<h3 class="rhd">' + title + '</h3><ul class="results">' + list.map(function (f, i) {
@@ -1083,7 +1167,7 @@ function renderBuilder(editId) {
       }
       out.innerHTML = group("Common foods (USDA)", j.generic, 0) + group("Brand-name products", j.branded, j.generic.length);
       Array.prototype.forEach.call(out.querySelectorAll("[data-pick]"), function (b) {
-        b.addEventListener("click", function () { addFood(lastResults[+b.getAttribute("data-pick")]); status.textContent = "Added at 100 g. Change the grams in the list below."; out.innerHTML = ""; });
+        b.addEventListener("click", function () { out.innerHTML = ""; addFood(lastResults[+b.getAttribute("data-pick")]); });
       });
     }).catch(function () { status.textContent = "Food search isn't reachable from here. It runs on your live Vercel site. You can still add foods from a label below."; });
   });
@@ -1097,7 +1181,7 @@ function renderBuilder(editId) {
     [["l-kcal","kcal"],["l-p","p"],["l-f","f"],["l-c","c"],["l-fib","fib"]].forEach(function (pair) { var x = v(pair[0]); if (x !== undefined) n[pair[1]] = x * per; });
     if (n.kcal === undefined) { err.textContent = "Add the calories, from the label."; return; }
     err.textContent = "";
-    draft.ing.push({ name: name, g: sv, src: "label", srcLabel: "From label", n: n });
+    draft.ing.push({ name: name, g: sv, qty: 1, pi: 0, portions: [{ label: "1 serving", g: sv }], src: "label", srcLabel: "From label", n: n });
     ["l-name","l-serv","l-kcal","l-p","l-f","l-c","l-fib"].forEach(function (id) { document.getElementById(id).value = ""; });
     drawList(); drawTotals();
   });
@@ -1108,6 +1192,7 @@ function renderBuilder(editId) {
     if (!draft.name.trim()) { err.textContent = "Give the recipe a name."; document.getElementById("b-name").focus(); return; }
     if (!draft.ing.length) { err.textContent = "Add at least one ingredient."; return; }
     err.textContent = "";
+    draft.ing.forEach(function (x) { delete x.loading; delete x.touched; });
     if (!draft.id) { draft.id = "my-" + Date.now().toString(36); MINE.unshift(draft); }
     else { for (var i = 0; i < MINE.length; i++) if (MINE[i].id === draft.id) MINE[i] = draft; }
     if (!saveMine()) { err.textContent = "This browser wouldn't save the recipe. Check that site storage is allowed."; return; }

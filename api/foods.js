@@ -67,6 +67,31 @@ function rank(list, q) {
   return list.map((f, i) => ({ f, i, s: score(f) })).sort((a, b) => b.s - a.s || a.i - b.i).map((x) => x.f);
 }
 
+// Common household portions from USDA, like "1 large" = 50 g or "1 cup, chopped" = 30 g.
+// Only full food records (the ?ids= lookup) include them. Each is scaled to an amount of 1.
+function portions(f, gramServing) {
+  const out = [], seen = {};
+  const add = (label, g) => {
+    label = String(label || "").replace(/\s+/g, " ").trim();
+    if (!label || !(g > 0) || g > 5000) return;
+    const k = label.toLowerCase();
+    if (seen[k]) return;
+    seen[k] = 1;
+    out.push({ label: label.slice(0, 60), g: round(g) });
+  };
+  (f.foodPortions || []).forEach((p) => {
+    const g = Number(p.gramWeight), amount = Number(p.amount) > 0 ? Number(p.amount) : 1;
+    const unit = p.measureUnit && p.measureUnit.name && !/undetermined/i.test(p.measureUnit.name) ? p.measureUnit.name : "";
+    const desc = p.portionDescription && !/not specified|^\s*$/i.test(p.portionDescription) ? String(p.portionDescription) : "";
+    if (!g || /not specified/i.test(String(p.portionDescription || "") + " " + String(p.modifier || ""))) return;
+    if (desc && !unit && !p.modifier) { add(desc, g); return; }
+    const rest = [unit, p.modifier || ""].filter(Boolean).join(" ").replace(/^\d+(\.\d+)?\s+/, "");
+    add("1 " + (rest || "serving"), g / amount);
+  });
+  if (gramServing) add(f.householdServingFullText ? "1 serving (" + f.householdServingFullText + ")" : "1 serving", gramServing);
+  return out.slice(0, 12);
+}
+
 function food(f) {
   const unit = String(f.servingSizeUnit || "").toLowerCase();
   const gramServing = (unit === "g" || unit === "grm" || unit === "ml" || unit === "mlt") && f.servingSize ? round(f.servingSize) : null;
@@ -77,6 +102,7 @@ function food(f) {
     type: f.dataType || "",
     serving: gramServing,
     servingText: f.householdServingFullText || "",
+    portions: portions(f, gramServing),
     n: nutrients(f.foodNutrients)
   };
 }
